@@ -20,9 +20,14 @@ export default {
   .page
     min-height 100vh
     font-family 'Open Sans', sans-serif
-    color #33
+    color #3
+    padding-bottom 250px
 
   .container
     max-width 980px
     margin auto
+
+    +mobile()
+      padding 0 15px
+
 </style>

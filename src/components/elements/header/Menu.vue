@@ -21,20 +21,16 @@ export default {
 </script>
 
 <style lang="stylus">
-//  @import '../../../styles/mixins.styl';
-
   .header-menu
     display flex
     padding-top 5px
-
-    &__divider
-      margin-left 16px
+    flex-wrap wrap
 
     &__item
       font-size 14px
 
     &__link
       a-reset()
-      margin-left 16px
+      margin 0 16px
 
 </style>

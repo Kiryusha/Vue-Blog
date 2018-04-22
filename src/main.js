@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import 'normalize.css'
 
+const requireAll = r => r.keys().forEach(r)
+requireAll(require.context('./assets/ico/', true, /\.svg$/))
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

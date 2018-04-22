@@ -22,7 +22,7 @@ export default {
 
 <style lang="stylus">
   .header
-    background #EEC80D
+    background $yellow
 
     &__content
       padding 30px 0
@@ -32,4 +32,14 @@ export default {
     &__logo
       a-reset()
       font-size 30px
+      margin 0 16px 0 0
+
+    +mobile()
+
+      &__logo
+        margin 0 0 8px 0
+
+      &__content
+        align-items flex-start
+        flex-direction column
 </style>
