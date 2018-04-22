@@ -1,23 +1,28 @@
-<template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-  </div>
+<template lang="pug">
+  .page
+    #app
+      Header
+      router-view
 </template>
 
 <script>
+import Header from '@/components/layout/header'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Header
+  }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus">
+  .page
+    min-height 100vh
+    font-family 'Open Sans', sans-serif
+    color #33
+
+  .container
+    max-width 980px
+    margin auto
 </style>
