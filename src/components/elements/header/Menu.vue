@@ -5,10 +5,14 @@
       a.header-menu__link(href="#") Проекты
     .header-menu__item
       span.header-menu__divider /
-      a.header-menu__link(href="#") Блог
+      router-link.header-menu__link(
+        :to="'/'"
+      ) Блог
     .header-menu__item
       span.header-menu__divider /
-      a.header-menu__link(href="#") Детальная
+      router-link.header-menu__link(
+        :to="'/detail/'"
+      ) Детальная
     .header-menu__item
       span.header-menu__divider /
       a.header-menu__link(href="#") Контакты
@@ -17,7 +21,7 @@
 
 <script>
 export default {
-}
+};
 </script>
 
 <style lang="stylus">

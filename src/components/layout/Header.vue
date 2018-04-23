@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import Menu from '../elements/header/Menu'
+import Menu from '../elements/header/Menu';
 
 export default {
   components: {
-    Menu
-  }
-}
+    Menu,
+  },
+};
 </script>
 
 <style lang="stylus">

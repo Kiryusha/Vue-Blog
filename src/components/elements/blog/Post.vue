@@ -12,25 +12,22 @@
         | velit esse cillum dolore eu fugiat nulla pariatur.
     .post__controls
       Button(
-        :type="'more'"
+        :view="'more'"
       ) Подробнее
 </template>
 
 <script>
-import Button from '../general/Button'
+import Button from '../general/Button';
 
 export default {
   components: {
-    Button
-  }
-}
+    Button,
+  },
+};
 </script>
 
 <style lang="stylus">
   .post
-
-    & + &
-      margin-top 75px
 
     &__title
       font-size 30px

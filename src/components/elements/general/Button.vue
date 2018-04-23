@@ -1,11 +1,12 @@
 <template lang="pug">
-  button.button(
-    :class="`_${type}`"
+  component.button(
+    :is="type"
+    :class="`_${view}`"
   )
     .button__caption
       slot
     .button__icon(
-        v-if="type === 'more'"
+        v-if="view === 'more'"
     )
       Icon(
         :name="'arrow'",
@@ -15,23 +16,28 @@
 </template>
 
 <script>
-import Icon from '../general/Icon'
+import Icon from '../general/Icon';
 
 export default {
   components: {
-    Icon
+    Icon,
   },
   props: {
     type: {
       type: String,
-      default: ''
-    }
-  }
-}
+      default: 'button',
+    },
+    view: {
+      type: String,
+      default: '',
+    },
+  },
+};
 </script>
 
 <style lang="stylus">
   .button
+    display inline-block
     font-family 'Open Sans', sans-serif
     border none
     padding 7px 16px
@@ -40,9 +46,10 @@ export default {
     color #F
     cursor pointer
     outline none
-    transition background, color .33s
+    transition .33s
 
-    &:active
+    &:active,
+    &._active
       background $yellow
       color #0
 
