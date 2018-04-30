@@ -46,7 +46,7 @@ export default {
     color #F
     cursor pointer
     outline none
-    transition .33s
+    transition .2s
 
     &:active,
     &._active

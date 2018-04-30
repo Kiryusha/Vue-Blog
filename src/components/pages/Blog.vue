@@ -2,9 +2,11 @@
   .blog
     .container
       .blog__content
-        section.blog__posts
-          .blog__post(v-for="n in 6")
-            Post
+        section.blog__inner
+          transition(name="fade")
+            router-view(
+              :list="list"
+            )
         section.blog__sidebar
           SidebarBlock
             span(slot="title") Тэги
@@ -12,40 +14,44 @@
 </template>
 
 <script>
-import Post from '../elements/blog/Post';
+import axios from 'axios';
 import SidebarBlock from '../elements/blog/SidebarBlock';
 import Tags from '../elements/blog/Tags';
 
 export default {
   components: {
-    Post,
     SidebarBlock,
     Tags,
   },
   data() {
     return {
-      tags: [{
-        title: 'Frontend',
-        link: 'https://www.google.com',
-      }, {
-        title: 'Twitch',
-        link: 'https://www.google.com',
-      }, {
-        title: 'Забавное',
-        link: 'https://www.google.com',
-      }, {
-        title: 'Забавное 1',
-        link: 'https://www.google.com',
-      }, {
-        title: 'Забавное 2',
-        link: 'https://www.google.com',
-      }],
+      list: [],
+      tags: [],
     };
+  },
+  mounted() {
+    this.fetchData('list', '/static/data/list.json');
+    this.fetchData('tags', '/static/data/tags.json');
+  },
+  methods: {
+    fetchData(name, path) {
+      axios.get(path).then((response) => {
+        this[name] = response.data;
+      });
+    },
   },
 };
 </script>
 
 <style lang="stylus">
+  .fade-enter-active,
+  .fade-leave-active
+    transition opacity .2s
+
+  .fade-enter,
+  .fade-leave-to
+    opacity 0
+
   .blog
     padding-top 60px
 
@@ -53,14 +59,9 @@ export default {
       display flex
       justify-content space-between
 
-    &__posts
+    &__inner
       max-width 640px
       flex-grow 1
-
-    &__post
-
-      & + &
-        margin-top 75px
 
     &__sidebar
       flex-basis 295px

@@ -1,22 +1,18 @@
 <template lang="pug">
   .header-menu
-    .header-menu__item
-      span.header-menu__divider /
-      a.header-menu__link(href="#") Проекты
+    //- .header-menu__item
+    //-   span.header-menu__divider /
+    //-   a.header-menu__link(href="#") Проекты
     .header-menu__item
       span.header-menu__divider /
       router-link.header-menu__link(
-        :to="'/'"
+        :to="'/blog/'"
       ) Блог
-    .header-menu__item
       span.header-menu__divider /
-      router-link.header-menu__link(
-        :to="'/detail/'"
-      ) Детальная
-    .header-menu__item
-      span.header-menu__divider /
-      a.header-menu__link(href="#") Контакты
-      span.header-menu__divider /
+    //- .header-menu__item
+    //-   span.header-menu__divider /
+    //-   a.header-menu__link(href="#") Контакты
+    //-   span.header-menu__divider /
 </template>
 
 <script>
