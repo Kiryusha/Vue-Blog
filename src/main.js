@@ -4,6 +4,7 @@ import 'normalize.css';
 import Vue from 'vue';
 import VueProgressBar from 'vue-progressbar';
 import Vuelidate from 'vuelidate';
+import VModal from 'vue-js-modal';
 import App from './App';
 import router from './router';
 
@@ -28,6 +29,7 @@ const options = {
 
 Vue.use(VueProgressBar, options);
 Vue.use(Vuelidate);
+Vue.use(VModal);
 
 /* eslint-disable no-new */
 new Vue({

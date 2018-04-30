@@ -93,6 +93,8 @@ export default {
       if (!this.$v.$invalid) {
         // this.$Progress.start();
 
+        this.$modal.show('response');
+
         // axios.post('/static/data/post.json', {
         //   TITLE: this.title,
         //   CATEGORY: this.category,

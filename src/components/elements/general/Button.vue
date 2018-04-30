@@ -2,6 +2,7 @@
   component.button(
     :is="type"
     :class="`_${view}`"
+    @click="$emit('click')"
   )
     .button__caption
       slot

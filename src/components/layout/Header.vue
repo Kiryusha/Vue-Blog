@@ -3,6 +3,7 @@
     :class="{'_fixed': isHeaderFixed}",
     ref="header"
   )
+    Response
     .container
       .header__content
         router-link(
@@ -16,17 +17,19 @@
 
 <script>
 import Menu from '../elements/header/Menu';
+import Response from '../elements/modals/Response';
 
 export default {
+  components: {
+    Menu,
+    Response,
+  },
   data() {
     return {
       scrollPosition: 0,
       isHeaderFixed: false,
       height: 0,
     };
-  },
-  components: {
-    Menu,
   },
   mounted() {
     this.height = this.$refs.header.clientHeight;
