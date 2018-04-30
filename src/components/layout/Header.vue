@@ -67,6 +67,7 @@ export default {
       a-reset()
       font-size 30px
       margin 0 16px 0 0
+      font-family 'Roboto Slab', sans-serif
 
     &._fixed
       position fixed

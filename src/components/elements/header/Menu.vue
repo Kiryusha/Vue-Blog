@@ -30,6 +30,7 @@ export default {
     display flex
     padding-top 5px
     flex-wrap wrap
+    font-family 'Roboto Slab', sans-serif
 
     &__item
       font-size 14px
@@ -37,5 +38,8 @@ export default {
     &__link
       a-reset()
       margin 0 16px
+
+      &._active
+        font-weight bold
 
 </style>
