@@ -17,11 +17,22 @@ export default {
 </script>
 
 <style lang="stylus">
+  *
+    box-sizing border-box
+
+  html,
+  body,
+  .page,
+  #app
+    height 100%
+
   .page
-    min-height 100vh
     font-family 'Open Sans', sans-serif
     color #3
-    padding-bottom 250px
+    padding-top 94px
+
+    +mobile()
+      padding-top 123px
 
   .container
     max-width 980px

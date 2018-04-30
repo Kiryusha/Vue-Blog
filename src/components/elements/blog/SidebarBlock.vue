@@ -13,11 +13,14 @@ export default {
 
 <style lang="stylus">
   .sidebar-block
+    background #f
+    // border 2px solid gray
+    box-shadow 0 0 20px rgba(0, 0, 0, .2)
 
     &__title
       text-align right
       font-weight bold
-      margin-bottom 15px
+      padding 20px 25px
 
     &__content
       background #F7

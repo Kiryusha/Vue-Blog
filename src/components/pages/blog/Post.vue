@@ -29,11 +29,11 @@ export default {
   },
   methods: {
     fetchData() {
-      this.loading = true;
+      this.$Progress.start();
 
       axios.get('/static/data/post.json').then((response) => {
-        this.loading = false;
         this.post = response.data;
+        this.$Progress.finish();
       });
     },
   },
@@ -42,6 +42,9 @@ export default {
 
 <style lang="stylus">
   .post
+    background #f
+    box-shadow 0 0 20px rgba(0, 0, 0, .2)
+    padding 20px 25px
     color #2
 
     &__title-block
