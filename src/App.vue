@@ -41,4 +41,7 @@ export default {
     +mobile()
       padding 0 15px
 
+    +phone()
+      padding 0 10px
+
 </style>

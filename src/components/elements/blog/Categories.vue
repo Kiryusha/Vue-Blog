@@ -1,7 +1,7 @@
 <template lang="pug">
-  .tags
-    .tags__container
-      .tags__item(v-for="tag in tags")
+  .categories
+    .categories__container
+      .categories__item(v-for="tag in categories")
         Button(
           :type="'a'",
           :view="'link'"
@@ -16,7 +16,7 @@ export default {
     Button,
   },
   props: {
-    tags: {
+    categories: {
       type: Array,
       default: () => ([]),
     },
@@ -25,11 +25,12 @@ export default {
 </script>
 
 <style lang="stylus">
-  .tags
+  .categories
 
     &__container
       display flex
       flex-wrap wrap
+      margin-bottom -5px
 
     &__item
       margin 0 5px 5px 0

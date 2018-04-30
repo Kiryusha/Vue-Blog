@@ -37,9 +37,11 @@ export default {
   .blog-list-item
 
     &__title
+      font-family 'Roboto Slab', sans-serif
       font-size 30px
 
     &__info
+      font-family 'Roboto Slab', sans-serif
       font-size 16px
       color #CF
       padding-top 10px

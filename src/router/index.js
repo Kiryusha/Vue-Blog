@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Blog from '@/components/pages/Blog';
 import List from '@/components/pages/blog/List';
 import Post from '@/components/pages/blog/Post';
+import Publish from '@/components/pages/Publish';
 import NotFound from '@/components/pages/NotFound';
 
 Vue.use(Router);
@@ -13,8 +14,7 @@ export default new Router({
     {
       path: '*',
       component: NotFound,
-    },
-    {
+    }, {
       path: '/blog/',
       component: Blog,
       children: [{
@@ -27,6 +27,9 @@ export default new Router({
         component: Post,
         name: 'BlogPost',
       }],
+    }, {
+      path: '/publish/',
+      component: Publish,
     },
   ],
   scrollBehavior(to, from, savedPosition) {

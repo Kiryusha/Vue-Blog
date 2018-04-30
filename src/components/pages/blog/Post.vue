@@ -1,5 +1,5 @@
 <template lang="pug">
-  .post
+  section.post
     .post__content
       .post__title-block
         h1.post__title {{ post.title }}
@@ -42,15 +42,13 @@ export default {
 
 <style lang="stylus">
   .post
-    background #f
-    box-shadow 0 0 20px rgba(0, 0, 0, .2)
-    padding 20px 25px
-    color #2
+    card()
 
     &__title-block
       margin-bottom 70px
 
     &__title
+      font-family 'Roboto Slab', sans-serif
       display inline-block
       margin 0
       font-size 34px
@@ -58,12 +56,16 @@ export default {
       margin-bottom 8px
 
     &__info
+      font-family 'Roboto Slab', sans-serif
       font-size 18px
       color #c
 
     &__text-block
       font-size 18px
       line-height 1.5
+
+      h1, h2, h3, h4, h5
+        font-family 'Roboto Slab', sans-serif
 
       a
         text-decoration none

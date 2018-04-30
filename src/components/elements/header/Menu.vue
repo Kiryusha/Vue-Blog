@@ -8,6 +8,11 @@
       router-link.header-menu__link(
         :to="'/blog/'"
       ) Блог
+    .header-menu__item
+      span.header-menu__divider /
+      router-link.header-menu__link(
+        :to="'/publish/'"
+      ) Опубликовать
       span.header-menu__divider /
     //- .header-menu__item
     //-   span.header-menu__divider /

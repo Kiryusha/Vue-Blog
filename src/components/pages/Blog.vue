@@ -9,31 +9,31 @@
             )
         section.blog__sidebar
           transition(name="fade")
-            SidebarBlock(v-if="tags.length")
-              span(slot="title") Тэги
-              Tags(:tags="tags")
+            SidebarBlock(v-if="categories.length")
+              span(slot="title") Категории
+              Categories(:categories="categories")
 </template>
 
 <script>
 import axios from 'axios';
 import SidebarBlock from '../elements/blog/SidebarBlock';
-import Tags from '../elements/blog/Tags';
+import Categories from '../elements/blog/Categories';
 
 export default {
   components: {
     SidebarBlock,
-    Tags,
+    Categories,
   },
   data() {
     return {
       list: [],
-      tags: [],
+      categories: [],
     };
   },
   mounted() {
     this.$Progress.finish();
     this.fetchData('list', '/static/data/list.json');
-    this.fetchData('tags', '/static/data/tags.json');
+    this.fetchData('categories', '/static/data/categories.json');
   },
   methods: {
     fetchData(name, path) {
@@ -75,4 +75,23 @@ export default {
     &__sidebar
       flex-basis 295px
       margin-left 40px
+
+    +mobile()
+      padding-top 40px
+
+      &__content
+        flex-direction column-reverse
+
+      &__inner
+        max-width none
+
+      &__sidebar
+        flex-basis 0
+        margin 0 0 40px
+
+    +phone()
+      padding-top 20px
+
+      &__sidebar
+        margin 0 0 20px
 </style>

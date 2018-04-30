@@ -1,5 +1,5 @@
 <template lang="pug">
-  .blog-list(:class="{'_loaded': this.list.length}")
+  section.blog-list(:class="{'_loaded': this.list.length}")
     .blog-list__content
       .blog-list__item(
         v-for="item in list"
@@ -32,8 +32,9 @@ export default {
 
 <style lang="stylus">
   .blog-list
-    padding 20px 20px 25px
-    transition .2s
+    card()
+    background transparent
+    box-shadow 0 0 20px rgba(0, 0, 0, 0)
 
     &._loaded
       background #f

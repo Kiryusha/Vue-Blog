@@ -42,10 +42,11 @@ export default {
     border none
     padding 7px 16px
     background #0
-    font-size 12px
+    font-size 16px
     color #F
     cursor pointer
     outline none
+    border-radius 3px
     transition .2s
 
     &:active,
