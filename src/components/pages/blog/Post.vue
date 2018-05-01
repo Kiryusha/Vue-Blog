@@ -3,7 +3,7 @@
     .post__content
       .post__title-block
         h1.post__title {{ post.title }}
-        .post__info {{ post.info }}
+        .post__info {{ post.date }}
       .post__text-block(
         v-html="post.detailText"
       )
@@ -21,18 +21,21 @@ export default {
     };
   },
   mounted() {
-    this.fetchData(this.$route.params.id);
+    this.fetchData(this.$route.params.code);
   },
   beforeRouteUpdate(to, from, next) {
-    this.fetchData(to.params.id);
+    this.fetchData(to.params.code);
     next();
   },
+  computed: {
+
+  },
   methods: {
-    fetchData() {
+    fetchData(code) {
       this.$Progress.start();
 
-      axios.get('/static/data/post.json').then((response) => {
-        this.post = response.data;
+      axios.get(`/api/${code}`).then((response) => {
+        this.post = response.data.data[0];
         this.$Progress.finish();
       });
     },

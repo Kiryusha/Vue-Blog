@@ -30,21 +30,31 @@
               v-model="category"
             )
           .publish-form__row
-            .publish-form__row-title Разметка новости,
+            .publish-form__row-title Описание для анонса,
+              |  текст
+            Textarea(
+              :rows=3
+              :error="getErrorMessage($v.previewText)",
+              :valid="!$v.previewText.$invalid",
+              @input="$v.previewText.$touch()",
+              v-model="previewText"
+            )
+          .publish-form__row
+            .publish-form__row-title Детальное описание,
               b  HTML
             Textarea(
               :rows=5
-              :error="getErrorMessage($v.markup)",
-              :valid="!$v.markup.$invalid",
-              @input="$v.markup.$touch()",
-              v-model="markup"
+              :error="getErrorMessage($v.detailText)",
+              :valid="!$v.detailText.$invalid",
+              @input="$v.detailText.$touch()",
+              v-model="detailText"
             )
           .publish-form__row._tar
             Button Отправить
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 import { required } from 'vuelidate/lib/validators';
 import Textarea from '../../elements/general/Textarea';
 import Button from '../../elements/general/Button';
@@ -59,7 +69,8 @@ export default {
       title: '',
       code: '',
       category: '',
-      markup: '',
+      previewText: '',
+      detailText: '',
       submitted: false,
     };
   },
@@ -91,17 +102,21 @@ export default {
       this.submitted = true;
 
       if (!this.$v.$invalid) {
-        // this.$Progress.start();
+        this.$Progress.start();
 
-        this.$modal.show('response');
+        axios.post('/api/', {
+          title: this.title,
+          code: this.category,
+          category: this.category,
+          previewText: this.previewText,
+          detailText: this.detailText,
+        }).then((response) => {
+          if (response.status === 200) {
+            this.$modal.show('response');
+          }
 
-        // axios.post('/static/data/post.json', {
-        //   TITLE: this.title,
-        //   CATEGORY: this.category,
-        //   MARKUP: this.markup,
-        // }).then((response) => {
-        //   this.$Progress.finish();
-        // });
+          this.$Progress.finish();
+        });
       }
     },
   },
@@ -124,7 +139,8 @@ export default {
       title: { checkTitle, required },
       category: { checkTitle, required },
       code: { checkCode, required },
-      markup: { required },
+      previewText: { required },
+      detailText: { required },
     };
   },
 };

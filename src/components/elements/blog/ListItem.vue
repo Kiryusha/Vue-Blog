@@ -2,7 +2,7 @@
   .blog-list-item
     .blog-list-item__heading
       .blog-list-item__title {{ data.title }}
-      .blog-list-item__info {{ data.info }}
+      .blog-list-item__info {{ data.date }}
     .blog-list-item__text(
       v-html="data.previewText"
     )

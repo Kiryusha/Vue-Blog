@@ -32,15 +32,15 @@ export default {
   },
   mounted() {
     this.$Progress.finish();
-    this.fetchData('list', '/static/data/list.json');
-    this.fetchData('categories', '/static/data/categories.json');
+    this.fetchData('list', '/api/');
+    //this.fetchData('categories', '/static/data/categories.json');
   },
   methods: {
     fetchData(name, path) {
       this.$Progress.start();
 
       axios.get(path).then((response) => {
-        this[name] = response.data;
+        this[name] = response.data.data;
         this.$Progress.finish();
       });
     },
@@ -69,7 +69,6 @@ export default {
       justify-content space-between
 
     &__inner
-      max-width 670px
       flex-grow 1
 
     &__sidebar
