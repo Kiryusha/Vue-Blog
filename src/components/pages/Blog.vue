@@ -43,7 +43,7 @@ export default {
       let root = '/api/';
 
       if (category) {
-        root = `/api/${category}/`;
+        root = `/api/category/${category}/`;
       }
 
       axios.get(root).then((response) => {

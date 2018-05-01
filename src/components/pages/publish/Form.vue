@@ -113,13 +113,22 @@ export default {
 
         axios.post('/api/', {
           title: this.title,
-          code: this.code,
+          code: this.code.toLowerCase(),
           category: this.category,
           previewText: this.previewText,
           detailText: this.detailText,
-        }).then((response) => {
-          if (response.status === 200) {
-            this.$modal.show('response');
+        }).then((res) => {
+          if (res.status === 200) {
+            this.$modal.show('response', { message: res.data.data.message });
+
+            if (res.data.data.unique) {
+              this.submitted = false;
+              this.title = '';
+              this.code = '';
+              this.category = '';
+              this.previewText = '';
+              this.detailText = '';
+            }
           }
 
           this.$Progress.finish();

@@ -3,11 +3,11 @@
     .categories__container
       .categories__item(v-for="item in categories")
         Button(
-          :class="{'_active':activeCategory === item.category}"
+          :class="{'_active':activeCategory === item}"
           :type="'a'",
           :view="'link'"
-          @click="selectCategory(item.category)"
-        ) {{ item.category }}
+          @click="selectCategory(item)"
+        ) {{ item }}
 </template>
 
 <script>

@@ -1,11 +1,12 @@
 <template lang="pug">
   modal(
     name="response",
-    width="100%"
+    width="100%",
+    @before-open="beforeOpen"
   )
     .modal
       .modal__content
-        .modal__title Форма успешно отправлена.
+        .modal__title {{title}}
         Button(
           @click="$modal.hide('response')"
         ) Закрыть
@@ -17,6 +18,16 @@ import Button from '../general/Button';
 export default {
   components: {
     Button,
+  },
+  data() {
+    return {
+      title: '',
+    };
+  },
+  methods: {
+    beforeOpen(event) {
+      this.title = event.params.message;
+    },
   },
 };
 </script>

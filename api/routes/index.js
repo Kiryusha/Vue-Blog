@@ -6,10 +6,9 @@ module.exports = function(app) {
 
   router.get('/api/', Controller.list)
         .get('/api/categories/', Controller.listCategories)
-        .get('/api/:category/', Controller.listByCategory)
+        .get('/api/category/:category/', Controller.listByCategory)
+        .get('/api/:postCode/', Controller.read)
         .post('/api/', Controller.create);
-
-  router.get('/api/:postCode/', Controller.read);
 
   app.use(router.routes());
 };
