@@ -10,6 +10,7 @@ var PostSchema = new Schema({
     default: Date.now
   },
   category: String,
+  previewPicture: String,
   previewText: String,
   detailText: String,
 });

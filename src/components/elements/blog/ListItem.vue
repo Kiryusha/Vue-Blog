@@ -1,6 +1,10 @@
 <template lang="pug">
   .blog-list-item
     .blog-list-item__heading
+      .blog-list-item__image-wrapper(
+        v-if="data.previewPicture",
+        :style="`background-image:url(${data.previewPicture});`"
+      )
       .blog-list-item__title {{ data.title }}
       .blog-list-item__info {{ date }}
     .blog-list-item__text(
@@ -65,4 +69,13 @@ export default {
       padding-top 20px
       display flex
       justify-content flex-end
+
+    &__image-wrapper
+      overflow hidden
+      width 100%
+      height 300px
+      background-size cover
+      background-position center
+      margin-bottom 35px
+      border 2px solid gray
 </style>

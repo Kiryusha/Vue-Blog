@@ -33,13 +33,16 @@
               :maxlength="50"
             )
           .publish-form__row
-            .publish-form__row-title Описание для анонса,
-              |  текст
+            .publish-form__row-title Путь к картинке для анонса
+            Textarea(
+              :rows=1
+              v-model="previewPicture",
+              :maxlength="1000"
+            )
+          .publish-form__row
+            .publish-form__row-title Описание для анонса
             Textarea(
               :rows=3
-              :error="getErrorMessage($v.previewText)",
-              :valid="!$v.previewText.$invalid",
-              @input="$v.previewText.$touch()",
               v-model="previewText",
               :maxlength="1000"
             )
@@ -76,6 +79,7 @@ export default {
       title: '',
       code: '',
       category: '',
+      previewPicture: '',
       previewText: '',
       detailText: '',
       submitted: false,
@@ -118,6 +122,7 @@ export default {
           code: this.code.toLowerCase(),
           category: this.category,
           previewText: this.previewText,
+          previewPicture: this.previewPicture,
           detailText: this.detailText,
         }).then((res) => {
           if (res.status === 200) {
@@ -128,6 +133,7 @@ export default {
               this.title = '';
               this.code = '';
               this.category = '';
+              this.previewPicture = '';
               this.previewText = '';
               this.detailText = '';
             }
@@ -157,7 +163,6 @@ export default {
       title: { checkTitle, required },
       category: { checkTitle, required },
       code: { checkCode, required },
-      previewText: { required },
       detailText: { required },
     };
   },
