@@ -40,15 +40,21 @@ export default {
     fetchList(category) {
       this.$Progress.start();
 
-      let root = '/api/';
+      let api = '/api/';
 
       if (category) {
-        root = `/api/category/${category}/`;
+        api = `/api/category/${category}/`;
       }
 
-      axios.get(root).then((response) => {
+      axios.get(api).then((response) => {
         this.list = response.data.data;
-        this.$Progress.finish();
+        if (category && this.$route.path !== '/blog/') {
+          this.$router.push({ path: '/blog/' }, () => {
+            this.$Progress.finish();
+          });
+        } else {
+          this.$Progress.finish();
+        }
       });
     },
     fetchCategories() {
@@ -81,7 +87,8 @@ export default {
       max-width 100%
 
     &__sidebar
-      flex-basis 295px
+      flex-basis 270px
+      min-width 270px
       margin-left 40px
       max-width 100%
 

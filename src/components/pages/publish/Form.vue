@@ -55,7 +55,9 @@
               :maxlength="5000"
             )
           .publish-form__row._tar
-            Button Отправить
+            Button(
+              :view="'fz16'"
+            ) Отправить
 </template>
 
 <script>

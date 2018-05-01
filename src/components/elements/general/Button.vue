@@ -70,4 +70,8 @@ export default {
     &._more:active use
       fill #0
       stroke #0
+
+    &._categories
+      font-size 14px
+      padding 7px 12px
 </style>

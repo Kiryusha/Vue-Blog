@@ -5,7 +5,7 @@
         Button(
           :class="{'_active':activeCategory === item}"
           :type="'a'",
-          :view="'link'"
+          :view="'categories'"
           @click="selectCategory(item)"
         ) {{ item }}
 </template>
@@ -48,7 +48,7 @@ export default {
     &__container
       display flex
       flex-wrap wrap
-      margin-bottom -5px
+      margin 0 -5px -5px 0
 
     &__item
       margin 0 5px 5px 0
