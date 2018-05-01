@@ -1,5 +1,5 @@
 <template lang="pug">
-  section.publish-form
+  section.publish-form(:class="{'_loaded': loaded}")
       .publish-form__title: h1 Отправить новость
       .publish-form__content
         form.publish-form__form(
@@ -11,7 +11,8 @@
               :error="getErrorMessage($v.title)",
               :valid="!$v.title.$invalid",
               @input="$v.title.$touch()",
-              v-model="title"
+              v-model="title",
+              :maxlength="200"
             )
           .publish-form__row
             .publish-form__row-title Символьный код
@@ -19,7 +20,8 @@
               :error="getErrorMessage($v.code)",
               :valid="!$v.code.$invalid",
               @input="$v.code.$touch()",
-              v-model="code"
+              v-model="code",
+              :maxlength="50"
             )
           .publish-form__row
             .publish-form__row-title Категория
@@ -27,7 +29,8 @@
               :error="getErrorMessage($v.category)",
               :valid="!$v.category.$invalid",
               @input="$v.category.$touch()",
-              v-model="category"
+              v-model="category",
+              :maxlength="50"
             )
           .publish-form__row
             .publish-form__row-title Описание для анонса,
@@ -37,7 +40,8 @@
               :error="getErrorMessage($v.previewText)",
               :valid="!$v.previewText.$invalid",
               @input="$v.previewText.$touch()",
-              v-model="previewText"
+              v-model="previewText",
+              :maxlength="1000"
             )
           .publish-form__row
             .publish-form__row-title Детальное описание,
@@ -47,7 +51,8 @@
               :error="getErrorMessage($v.detailText)",
               :valid="!$v.detailText.$invalid",
               @input="$v.detailText.$touch()",
-              v-model="detailText"
+              v-model="detailText",
+              :maxlength="5000"
             )
           .publish-form__row._tar
             Button Отправить
@@ -72,9 +77,11 @@ export default {
       previewText: '',
       detailText: '',
       submitted: false,
+      loaded: false,
     };
   },
   mounted() {
+    this.loaded = true;
     this.$Progress.finish();
   },
   methods: {
@@ -149,6 +156,11 @@ export default {
 <style lang="stylus">
   .publish-form
     card()
+    opacity 0
+    transition opacity .2s
+
+    &._loaded
+      opacity 1
 
     &__title
       margin-bottom 45px

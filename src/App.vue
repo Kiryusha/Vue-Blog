@@ -2,7 +2,8 @@
   .page
     #app
       Header
-      router-view
+      transition(name="fade")
+        router-view
 </template>
 
 <script>
@@ -17,6 +18,14 @@ export default {
 </script>
 
 <style lang="stylus">
+  .fade-enter-active,
+  .fade-leave-active
+    transition opacity .2s
+
+  .fade-enter,
+  .fade-leave-to
+    opacity 0
+
   *
     box-sizing border-box
 

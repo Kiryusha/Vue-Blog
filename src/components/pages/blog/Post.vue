@@ -1,9 +1,9 @@
 <template lang="pug">
-  section.post
+  section.post(:class="{'_loaded': post.title}")
     .post__content
       .post__title-block
         h1.post__title {{ post.title }}
-        .post__info {{ post.date }}
+        .post__info {{ date }}
       .post__text-block(
         v-html="post.detailText"
       )
@@ -12,6 +12,7 @@
 
 <script>
 import axios from 'axios';
+import formatDate from '../../../helpers/formatDate';
 
 export default {
   data() {
@@ -28,14 +29,16 @@ export default {
     next();
   },
   computed: {
-
+    date() {
+      return formatDate(this.post.date);
+    },
   },
   methods: {
     fetchData(code) {
       this.$Progress.start();
 
       axios.get(`/api/${code}`).then((response) => {
-        this.post = response.data.data[0];
+        [this.post] = response.data.data;
         this.$Progress.finish();
       });
     },
@@ -46,6 +49,15 @@ export default {
 <style lang="stylus">
   .post
     card()
+    opacity 0
+    transition opacity .2s
+
+    &._loaded
+      opacity 1
+
+    *
+      overflow hidden
+      text-overflow ellipsis
 
     &__title-block
       margin-bottom 70px

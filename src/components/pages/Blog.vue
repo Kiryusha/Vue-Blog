@@ -3,15 +3,13 @@
     .container
       .blog__content
         section.blog__inner
-          transition(name="fade")
-            router-view(
-              :list="list"
-            )
+          router-view(
+            :list="list"
+          )
         section.blog__sidebar
-          transition(name="fade")
-            SidebarBlock(v-if="categories.length")
-              span(slot="title") Категории
-              Categories(:categories="categories")
+          SidebarBlock(v-if="categories.length")
+            span(slot="title") Категории
+            Categories(:categories="categories")
 </template>
 
 <script>
@@ -32,15 +30,15 @@ export default {
   },
   mounted() {
     this.$Progress.finish();
-    this.fetchData('list', '/api/');
-    //this.fetchData('categories', '/static/data/categories.json');
+    this.fetchList();
+    // this.fetchData('categories', '/static/data/categories.json');
   },
   methods: {
-    fetchData(name, path) {
+    fetchList() {
       this.$Progress.start();
 
-      axios.get(path).then((response) => {
-        this[name] = response.data.data;
+      axios.get('/api/').then((response) => {
+        this.list = response.data.data;
         this.$Progress.finish();
       });
     },
@@ -49,14 +47,6 @@ export default {
 </script>
 
 <style lang="stylus">
-  .fade-enter-active,
-  .fade-leave-active
-    transition opacity .2s
-
-  .fade-enter,
-  .fade-leave-to
-    opacity 0
-
   .blog
     min-height 100%
     padding-top 60px
@@ -67,13 +57,16 @@ export default {
     &__content
       display flex
       justify-content space-between
+      align-items flex-start
 
     &__inner
       flex-grow 1
+      max-width 100%
 
     &__sidebar
       flex-basis 295px
       margin-left 40px
+      max-width 100%
 
     +mobile()
       padding-top 40px

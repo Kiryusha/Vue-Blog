@@ -8,6 +8,7 @@
       :placeholder="placeholder",
       :name="name",
       :disabled="disabled",
+      :maxlength="maxlength",
       v-model="innerValue",
       class="textarea__control",
       @input="inputHandler",
@@ -23,6 +24,10 @@ export default {
     rows: {
       type: Number,
       default: 1,
+    },
+    maxlength: {
+      type: Number,
+      default: 200,
     },
     placeholder: {
       type: String,

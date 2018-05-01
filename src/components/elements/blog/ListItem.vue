@@ -2,7 +2,7 @@
   .blog-list-item
     .blog-list-item__heading
       .blog-list-item__title {{ data.title }}
-      .blog-list-item__info {{ data.date }}
+      .blog-list-item__info {{ date }}
     .blog-list-item__text(
       v-html="data.previewText"
     )
@@ -19,6 +19,7 @@
 
 <script>
 import Button from '../general/Button';
+import formatDate from '../../../helpers/formatDate';
 
 export default {
   components: {
@@ -30,11 +31,20 @@ export default {
       default: () => ({}),
     },
   },
+  computed: {
+    date() {
+      return formatDate(this.data.date);
+    },
+  },
 };
 </script>
 
 <style lang="stylus">
   .blog-list-item
+
+    *
+      overflow hidden
+      text-overflow ellipsis
 
     &__title
       font-family 'Roboto Slab', sans-serif

@@ -1,17 +1,12 @@
 <template lang="pug">
-  section.blog-list
-    .blog-list__content(v-if="list.length")
+  section.blog-list(:class="{'_loaded': list.length}")
+    .blog-list__content
       .blog-list__item(
         v-for="item in list"
       )
         ListItem(
           :data="item"
         )
-    .blog-list__content(v-else)
-      .blog-list__title На данный момент публикаций нет.
-      router-link.blog-list__link(
-        :to="'/publish/'"
-      ) Опубликовать что-нить
 </template>
 
 <script>
@@ -38,6 +33,11 @@ export default {
 <style lang="stylus">
   .blog-list
     card()
+    opacity 0
+    transition opacity .2s
+
+    &._loaded
+      opacity 1
 
     &__item
 

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Post = mongoose.model('Post');
 
 exports.list = async (ctx) => {
-  const posts = await Post.find({});
+  const posts = await Post.find({}).sort([['date', -1]]);
 
   if (!posts) {
     throw new Error("There was an error retrieving your posts.");
