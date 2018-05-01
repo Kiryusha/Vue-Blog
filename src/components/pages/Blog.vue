@@ -9,7 +9,10 @@
         section.blog__sidebar
           SidebarBlock(v-if="categories.length")
             span(slot="title") Категории
-            Categories(:categories="categories")
+            Categories(
+              :categories="categories",
+              @fetch="fetchList"
+            )
 </template>
 
 <script>
@@ -31,14 +34,28 @@ export default {
   mounted() {
     this.$Progress.finish();
     this.fetchList();
-    // this.fetchData('categories', '/static/data/categories.json');
+    this.fetchCategories();
   },
   methods: {
-    fetchList() {
+    fetchList(category) {
       this.$Progress.start();
 
-      axios.get('/api/').then((response) => {
+      let root = '/api/';
+
+      if (category) {
+        root = `/api/${category}/`;
+      }
+
+      axios.get(root).then((response) => {
         this.list = response.data.data;
+        this.$Progress.finish();
+      });
+    },
+    fetchCategories() {
+      this.$Progress.start();
+
+      axios.get('/api/categories/').then((response) => {
+        this.categories = response.data.data;
         this.$Progress.finish();
       });
     },

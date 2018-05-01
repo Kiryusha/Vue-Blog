@@ -1,10 +1,10 @@
 'use strict';
-const compress = require('koa-compress');
 const logger = require('koa-logger');
 const serve = require('koa-static');
 const koaRes = require('koa-res');
 const convert = require('koa-convert');
 const bodyParser = require('koa-bodyparser');
+const history = require('koa-connect-history-api-fallback');
 const koa = require('koa');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -17,10 +17,9 @@ mongoose.connect('mongodb://kosk-blog:ZXC510YUPp!@ds163119.mlab.com:63119/kosk-b
 
 app.use(logger());
 app.use(bodyParser());
+app.use(history());
 app.use(serve(path.join(__dirname, '/dist')));
 app.use(convert(koaRes()));
-// Хер знает, как сочетать с этим
-// app.use(compress());
 
 routes(app);
 

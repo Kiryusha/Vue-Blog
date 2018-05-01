@@ -113,7 +113,7 @@ export default {
 
         axios.post('/api/', {
           title: this.title,
-          code: this.category,
+          code: this.code,
           category: this.category,
           previewText: this.previewText,
           detailText: this.detailText,

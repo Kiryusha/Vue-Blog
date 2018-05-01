@@ -1,11 +1,13 @@
 <template lang="pug">
   .categories
     .categories__container
-      .categories__item(v-for="tag in categories")
+      .categories__item(v-for="item in categories")
         Button(
+          :class="{'_active':activeCategory === item.category}"
           :type="'a'",
           :view="'link'"
-        ) {{ tag.title }}
+          @click="selectCategory(item.category)"
+        ) {{ item.category }}
 </template>
 
 <script>
@@ -19,6 +21,22 @@ export default {
     categories: {
       type: Array,
       default: () => ([]),
+    },
+  },
+  data() {
+    return {
+      activeCategory: null,
+    };
+  },
+  methods: {
+    selectCategory(category) {
+      if (category !== this.activeCategory) {
+        this.activeCategory = category;
+        this.$emit('fetch', category);
+      } else {
+        this.activeCategory = null;
+        this.$emit('fetch');
+      }
     },
   },
 };

@@ -13,6 +13,27 @@ exports.list = async (ctx) => {
   }
 };
 
+exports.listCategories = async (ctx) => {
+  const categories = await Post.find({}, 'category');
+
+  if (!categories) {
+    throw new Error("There was an error retrieving your posts.");
+  } else {
+    ctx.body = categories;
+  }
+};
+
+exports.listByCategory = async (ctx) => {
+  const posts = await Post.find({'category': ctx.params.category}).sort([['date', -1]]);
+
+  if (!posts) {
+    throw new Error("There was an error retrieving your posts.");
+  } else {
+    ctx.body = posts;
+  }
+};
+
+
 exports.create = async (ctx) => {
   const post = Post.create(ctx.request.body);
 
