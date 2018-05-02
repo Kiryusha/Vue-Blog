@@ -40,10 +40,10 @@ export default {
     fetchList(category) {
       this.$Progress.start();
 
-      let api = '/api/';
+      let api = '/api/posts/';
 
       if (category) {
-        api = `/api/category/${category}/`;
+        api = `/api/categories/${category}/`;
       }
 
       axios.get(api).then((response) => {
@@ -97,6 +97,7 @@ export default {
 
       &__content
         flex-direction column-reverse
+        align-items inherit
 
       &__inner
         max-width none

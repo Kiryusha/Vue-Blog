@@ -59,7 +59,7 @@ exports.create = async (ctx) => {
 };
 
 exports.read = async (ctx) => {
-  const post = await Post.find({'code': ctx.params.postCode});
+  const post = await Post.find({'code': ctx.params.post});
 
   if (!post) {
     throw new Error("There was an error retrieving your post.");

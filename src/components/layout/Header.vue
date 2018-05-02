@@ -57,6 +57,7 @@ export default {
     .__cov-progress
       top 94px !important
       opacity 1 !important
+      position absolute !important
 
     &__content
       padding 30px 0

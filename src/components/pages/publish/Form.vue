@@ -117,7 +117,7 @@ export default {
       if (!this.$v.$invalid) {
         this.$Progress.start();
 
-        axios.post('/api/', {
+        axios.post('/api/posts/', {
           title: this.title,
           code: this.code.toLowerCase(),
           category: this.category,

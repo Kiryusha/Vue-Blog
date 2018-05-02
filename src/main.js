@@ -7,6 +7,7 @@ import Vuelidate from 'vuelidate';
 import VModal from 'vue-js-modal';
 import App from './App';
 import router from './router';
+import store from './store';
 
 const requireAll = r => r.keys().forEach(r);
 requireAll(require.context('./assets/ico/', true, /\.svg$/));
@@ -35,6 +36,7 @@ Vue.use(VModal);
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
 });

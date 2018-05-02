@@ -4,11 +4,11 @@ module.exports = function(app) {
   const Controller = require('../Controller');
   const router = new Router();
 
-  router.get('/api/', Controller.list)
+  router.get('/api/posts/', Controller.list)
         .get('/api/categories/', Controller.listCategories)
-        .get('/api/category/:category/', Controller.listByCategory)
-        .get('/api/:postCode/', Controller.read)
-        .post('/api/', Controller.create);
+        .get('/api/categories/:category/', Controller.listByCategory)
+        .get('/api/posts/:post/', Controller.read)
+        .post('/api/posts/', Controller.create);
 
   app.use(router.routes());
 };
