@@ -1,0 +1,37 @@
+{
+  "mongoUri": "mongodb://kosk-blog:ZXC510YUPp!@ds163119.mlab.com:63119/kosk-blog",
+  "auth": {
+    "google": {
+      "clientId": "",
+      "clientSecret": ""
+    },
+    "facebook": {
+      "clientId": "",
+      "clientSecret": ""
+    },
+    "github": {
+      "clientId": "3396cb8c1d4881671456",
+      "clientSecret": "31e034c9a7b4c1340150a946abb7194314fcdb2f"
+    },
+    "twitter": {
+      "clientId": "",
+      "clientSecret": ""
+    },
+    "instagram": {
+      "clientId": "",
+      "clientSecret": ""
+    },
+    "bitbucket": {
+      "clientId": "",
+      "clientSecret": ""
+    },
+    "linkedin": {
+      "clientId": "",
+      "clientSecret": ""
+    },
+    "live": {
+      "clientId": "",
+      "clientSecret": ""
+    }
+  }
+}

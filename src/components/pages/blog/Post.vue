@@ -38,7 +38,7 @@ export default {
       this.$Progress.start();
 
       axios.get(`/api/posts/${code}/`).then((response) => {
-        [this.post] = response.data.data;
+        [this.post] = response.data;
         this.$Progress.finish();
       });
     },

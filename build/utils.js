@@ -64,7 +64,10 @@ exports.cssLoaders = function (options) {
     stylus: generateLoaders('stylus').concat({
       loader: 'sass-resources-loader',
       options: {
-        resources: path.resolve(__dirname, '../src/styles/*.styl')
+        resources: [
+          path.resolve(__dirname, '../src/styles/mixins.styl'),
+          path.resolve(__dirname, '../src/styles/variables.styl')
+        ]
       }
     }),
     styl: generateLoaders('stylus')

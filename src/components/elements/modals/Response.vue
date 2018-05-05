@@ -2,14 +2,16 @@
   modal(
     name="response",
     width="100%",
+    height="auto",
     @before-open="beforeOpen"
   )
     .modal
       .modal__content
         .modal__title {{title}}
-        Button(
-          @click="$modal.hide('response')"
-        ) Закрыть
+        .modal__close
+          Button(
+            @click="$modal.hide('response')"
+          ) Закрыть
 </template>
 
 <script>
@@ -33,34 +35,5 @@ export default {
 </script>
 
 <style lang="stylus">
-  .modal
-    height 100%
-
-    &__content
-      height 100%
-      display flex
-      align-items center
-      justify-content center
-      flex-wrap wrap
-      flex-direction column
-
-    &__title
-      font-family 'Roboto Slab', sans-serif
-      margin 0
-      font-size 34px
-      font-weight normal
-      margin-bottom 20px
-      text-align center
-
-    +phone()
-
-      &__title
-        font-size 24px
-
-  .v--modal
-    max-width 600px
-    margin auto
-
-    +phone()
-      max-width 300px
+  @import '../../../styles/modal';
 </style>

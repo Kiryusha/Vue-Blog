@@ -1,8 +1,8 @@
 'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var PostSchema = new Schema({
+const PostSchema = new Schema({
   title: String,
   code: String,
   date: {
@@ -13,6 +13,8 @@ var PostSchema = new Schema({
   previewPicture: String,
   previewText: String,
   detailText: String,
+  username: String,
+  userId: String,
 });
 
 module.exports = mongoose.model('Post', PostSchema);

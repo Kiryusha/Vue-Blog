@@ -5,6 +5,7 @@ import List from '@/components/pages/blog/List';
 import Post from '@/components/pages/blog/Post';
 import Publish from '@/components/pages/Publish';
 import NotFound from '@/components/pages/NotFound';
+import store from '../store';
 
 Vue.use(Router);
 
@@ -30,6 +31,13 @@ export default new Router({
     }, {
       path: '/publish/',
       component: Publish,
+      beforeEnter: (to, from, next) => {
+        if (!store.state.isAuthenticated) {
+          next('/blog/');
+        } else {
+          next();
+        }
+      },
     },
   ],
   scrollBehavior(to, from, savedPosition) {

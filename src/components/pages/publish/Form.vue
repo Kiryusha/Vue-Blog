@@ -124,11 +124,13 @@ export default {
           previewText: this.previewText,
           previewPicture: this.previewPicture,
           detailText: this.detailText,
+          username: this.$store.state.username,
+          userId: this.$store.state.userId,
         }).then((res) => {
           if (res.status === 200) {
-            this.$modal.show('response', { message: res.data.data.message });
+            this.$modal.show('response', { message: res.data.message });
 
-            if (res.data.data.unique) {
+            if (res.data.unique) {
               this.submitted = false;
               this.title = '';
               this.code = '';

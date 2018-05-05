@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import SidebarBlock from '../elements/blog/SidebarBlock';
 import Categories from '../elements/blog/Categories';
 
@@ -25,11 +24,17 @@ export default {
     SidebarBlock,
     Categories,
   },
-  data() {
-    return {
-      list: [],
-      categories: [],
-    };
+  computed: {
+    list() {
+      this.$Progress.finish();
+
+      return this.$store.state.postList;
+    },
+    categories() {
+      this.$Progress.finish();
+
+      return this.$store.state.categories;
+    },
   },
   mounted() {
     this.$Progress.finish();
@@ -39,31 +44,11 @@ export default {
   methods: {
     fetchList(category) {
       this.$Progress.start();
-
-      let api = '/api/posts/';
-
-      if (category) {
-        api = `/api/categories/${category}/`;
-      }
-
-      axios.get(api).then((response) => {
-        this.list = response.data.data;
-        if (category && this.$route.path !== '/blog/') {
-          this.$router.push({ path: '/blog/' }, () => {
-            this.$Progress.finish();
-          });
-        } else {
-          this.$Progress.finish();
-        }
-      });
+      this.$store.dispatch('getPosts', { category });
     },
     fetchCategories() {
       this.$Progress.start();
-
-      axios.get('/api/categories/').then((response) => {
-        this.categories = response.data.data;
-        this.$Progress.finish();
-      });
+      this.$store.dispatch('getCategories');
     },
   },
 };

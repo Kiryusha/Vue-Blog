@@ -9,9 +9,15 @@
           :style="`background-image:url(${data.previewPicture});`"
         )
       .blog-list-item__title {{ data.title }}
-      .blog-list-item__info {{ date }}
+      .blog-list-item__info {{ date }}, {{ author }}
     .blog-list-item__text {{ data.previewText }}
     .blog-list-item__controls
+      Button(
+        v-if="isAuthor",
+        :view="'delete'",
+        :type="'a'"
+        @click="$modal.show('delete', { code: data.code })"
+      )
       router-link(
         :to="`${data.code}/`",
         tag="span"
@@ -36,12 +42,15 @@ export default {
       default: () => ({}),
     },
   },
-  mounted() {
-    // console.log(this.$store.state.logged);
-  },
   computed: {
     date() {
       return formatDate(this.data.date);
+    },
+    author() {
+      return this.data.username ? this.data.username : 'без автора';
+    },
+    isAuthor() {
+      return this.data.userId === this.$store.state.userId;
     },
   },
 };
@@ -73,6 +82,9 @@ export default {
       padding-top 20px
       display flex
       justify-content flex-end
+
+      a + span
+        margin-left 10px
 
     &__image-wrapper
       display block
