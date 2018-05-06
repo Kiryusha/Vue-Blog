@@ -8,16 +8,19 @@ Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 
 const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
-  baseUrl: 'http://localhost:5000', // Your API domain
+  baseUrl: process.env.NODE_ENV === 'production' ?
+    'http://kosk-blog.herokuapp.com' : 'http://localhost:5000',
   tokenName: 'access_token',
   providers: {
     github: {
       clientId: '3396cb8c1d4881671456',
-      redirectUri: 'http://localhost:8080', // Your client app URL
+      redirectUri: process.env.NODE_ENV === 'production' ?
+        'http://kosk-blog.herokuapp.com' : 'http://localhost:8080',
     },
     google: {
       clientId: '116668393631-ctvnag7amgnp2rqqb2vm79arcrjcm3sr.apps.googleusercontent.com',
-      redirectUri: 'http://localhost:8080', // Your client app URL
+      redirectUri: process.env.NODE_ENV === 'production' ?
+        'http://kosk-blog.herokuapp.com' : 'http://localhost:8080',
     },
   },
 });
