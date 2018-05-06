@@ -1,5 +1,5 @@
 const Axios = require('axios');
-const Request = require('request');
+const req = require('request-promise');
 const config = require('./config.json');
 const OAuth = require('oauth');
 const timestamp = require('unix-timestamp');
@@ -27,6 +27,51 @@ exports.githubAuth = async (ctx) => {
       ctx.body = responseJson;
     }
   }
+}
+
+exports.googleAuth = async (ctx) => {
+  const request = req({
+    method: 'post',
+    url: 'https://accounts.google.com/o/oauth2/token',
+    form: {
+      code: ctx.request.body.code,
+      client_id: config.auth.google.clientId,
+      client_secret: config.auth.google.clientSecret,
+      redirect_uri: ctx.request.body.redirectUri,
+      grant_type: 'authorization_code'
+    },
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    }
+  });
+  const response = await request;
+
+  if (!response) {
+    throw new Error('Something went wrong with github');
+  } else {
+    const responseJson = JSON.parse(response);
+
+    if (responseJson.error) {
+      ctx.body = { error: responseJson.error };
+    } else {
+      ctx.body = responseJson;
+    }
+  }
+
+  //  function (err, response, body) {
+  //   try {
+  //     if (!err && response.statusCode === 200) {
+  //       var responseJson = JSON.parse(body)
+  //
+  //       console.log(responseJson)
+  //       ctx.body = responseJson;
+  //     } else {
+  //       ctx.body = err;
+  //     }
+  //   } catch (e) {
+  //     ctx.body = err || e;
+  //   }
+  // })
 }
 
 function parseQueryString(str) {

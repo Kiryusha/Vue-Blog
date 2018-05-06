@@ -3,9 +3,7 @@
     :class="{'_fixed': isHeaderFixed}",
     ref="header"
   )
-    Response
     Auth
-    Delete
     .container
       .header__content
         .header__left
@@ -24,16 +22,12 @@
 
 <script>
 import Menu from '../elements/header/Menu';
-import Response from '../elements/modals/Response';
 import Auth from '../elements/modals/Auth';
-import Delete from '../elements/modals/Delete';
 
 export default {
   components: {
     Menu,
-    Response,
     Auth,
-    Delete,
   },
   data() {
     return {

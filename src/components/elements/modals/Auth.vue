@@ -12,6 +12,10 @@
             :view="'github-auth'"
             @click="authenticate('github')"
           ) Я у мамы программист
+          Button(
+            :view="'google-auth'"
+            @click="authenticate('google')"
+          ) google
         .modal__close
           Button(
             @click="$modal.hide('auth')"

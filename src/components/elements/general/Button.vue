@@ -7,7 +7,7 @@
     .button__caption
       slot
     .button__icon(
-        v-if="view === 'more'"
+      v-if="view === 'more'"
     )
       Icon(
         :name="'arrow'",
@@ -15,7 +15,7 @@
         height=14
       )
     .button__icon(
-        v-if="view === 'github-auth'"
+      v-if="view === 'github-auth'"
     )
       Icon(
         :name="'github'",
@@ -23,7 +23,15 @@
         height=20
       )
     .button__icon(
-        v-if="view === 'delete'"
+      v-if="view === 'google-auth'"
+    )
+      Icon(
+        :name="'google'",
+        width=20,
+        height=20
+      )
+    .button__icon(
+      v-if="view === 'delete'"
     )
       Icon(
         :name="'delete'",
@@ -72,11 +80,13 @@ export default {
       color #0
 
     &._more,
-    &._github-auth
+    &._github-auth,
+    &._google-auth
       display flex
       align-items center
 
-    &._github-auth
+    &._github-auth,
+    &._google-auth
       flex-direction row-reverse
       width 100%
       text-align left
@@ -107,6 +117,7 @@ export default {
 
     &._more use,
     &._github-auth use,
+    &._google-auth use,
     &._delete use
       fill #F
       stroke #F
@@ -115,12 +126,18 @@ export default {
       padding-top 4px
       margin-left 8px
 
-    &._github-auth &__icon
+    &._github-auth &__icon,
+    &._google-auth &__icon
       padding 0
       margin 0
       position absolute
       top 6px
       left 8px
+
+    &._github-auth &__caption,
+    &._google-auth &__caption
+      width 100%
+      text-align center
 
     &._delete
       width 36px

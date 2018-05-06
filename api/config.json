@@ -2,12 +2,12 @@
   "mongoUri": "mongodb://kosk-blog:ZXC510YUPp!@ds163119.mlab.com:63119/kosk-blog",
   "auth": {
     "google": {
-      "clientId": "",
-      "clientSecret": ""
+      "clientId": "116668393631-ctvnag7amgnp2rqqb2vm79arcrjcm3sr.apps.googleusercontent.com",
+      "clientSecret": "E-8bCaQSXmhnWCqWsDW2pvnO"
     },
     "facebook": {
-      "clientId": "",
-      "clientSecret": ""
+      "clientId": "2110324172514436",
+      "clientSecret": "489e5ae0cd6f06a445ca02c87574ff60"
     },
     "github": {
       "clientId": "3396cb8c1d4881671456",

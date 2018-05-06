@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import VueAxios from 'vue-axios';
 import { VueAuthenticate } from 'vue-authenticate';
 import axios from 'axios';
-import router from '../router';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -16,6 +15,10 @@ const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
       clientId: '3396cb8c1d4881671456',
       redirectUri: 'http://localhost:8080', // Your client app URL
     },
+    google: {
+      clientId: '116668393631-ctvnag7amgnp2rqqb2vm79arcrjcm3sr.apps.googleusercontent.com',
+      redirectUri: 'http://localhost:8080', // Your client app URL
+    },
   },
 });
 
@@ -24,8 +27,6 @@ export default new Vuex.Store({
     isAuthenticated: vueAuth.isAuthenticated(),
     username: localStorage.getItem('username'),
     userId: localStorage.getItem('userId'),
-    postList: [],
-    categories: [],
   },
 
   getters: {
@@ -44,16 +45,26 @@ export default new Vuex.Store({
     userId(state, payload) {
       state.userId = payload.userId;
     },
-    postList(state, payload) {
-      state.postList = payload.postList;
-    },
-    categories(state, payload) {
-      state.categories = payload.categories;
-    },
   },
 
   actions: {
     authenticate(context, payload) {
+      function createUser(res) {
+        context.commit('isAuthenticated', {
+          isAuthenticated: vueAuth.isAuthenticated(),
+        });
+
+        localStorage.setItem('username', res.data.name);
+        context.commit('username', {
+          username: res.data.name,
+        });
+
+        localStorage.setItem('userId', res.data._id);
+        context.commit('userId', {
+          userId: res.data._id,
+        });
+      }
+
       vueAuth.authenticate(payload.provider).then(() => {
         if (payload.provider === 'github') {
           Vue.axios.get('https://api.github.com/user').then((response) => {
@@ -63,19 +74,18 @@ export default new Vuex.Store({
               email: response.data.email,
               isAdmin: false,
             }).then((res) => {
-              context.commit('isAuthenticated', {
-                isAuthenticated: vueAuth.isAuthenticated(),
-              });
-
-              localStorage.setItem('username', res.data.name);
-              context.commit('username', {
-                username: res.data.name,
-              });
-
-              localStorage.setItem('userId', res.data._id);
-              context.commit('userId', {
-                userId: res.data._id,
-              });
+              createUser(res);
+            });
+          });
+        } else if (payload.provider === 'google') {
+          Vue.axios.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect').then((response) => {
+            Vue.axios.post('/api/users/', {
+              name: response.data.name,
+              provider: payload.provider,
+              email: response.data.email,
+              isAdmin: false,
+            }).then((res) => {
+              createUser(res);
             });
           });
         }
@@ -99,32 +109,6 @@ export default new Vuex.Store({
             userId: null,
           });
         }
-      });
-    },
-
-    getPosts(context, payload) {
-      let api = '/api/posts/';
-
-      if (payload && payload.category) {
-        api = `/api/categories/${payload.category}/`;
-      }
-
-      Vue.axios.get(api).then((response) => {
-        context.commit('postList', {
-          postList: response.data,
-        });
-
-        if (payload.category && router.path !== '/blog/') {
-          router.push({ path: '/blog/' });
-        }
-      });
-    },
-
-    getCategories(context) {
-      Vue.axios.get('/api/categories/').then((response) => {
-        context.commit('categories', {
-          categories: response.data,
-        });
       });
     },
   },

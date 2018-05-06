@@ -39,8 +39,8 @@ export default {
 
       axios.delete(`/api/posts/${this.code}/`).then(() => {
         this.$modal.hide('delete');
-        this.$store.dispatch('getPosts');
-        this.$store.dispatch('getCategories');
+        this.$emit('fetchList');
+        this.$emit('fetchCategories');
       });
     },
   },

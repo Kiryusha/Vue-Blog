@@ -1,5 +1,9 @@
 <template lang="pug">
   .blog
+    Delete(
+      @fetchList="fetchList",
+      @fetchCategories="fetchCategories"
+    )
     .container
       .blog__content
         section.blog__inner
@@ -16,25 +20,22 @@
 </template>
 
 <script>
+import axios from 'axios';
 import SidebarBlock from '../elements/blog/SidebarBlock';
 import Categories from '../elements/blog/Categories';
+import Delete from '../elements/modals/Delete';
 
 export default {
   components: {
     SidebarBlock,
     Categories,
+    Delete,
   },
-  computed: {
-    list() {
-      this.$Progress.finish();
-
-      return this.$store.state.postList;
-    },
-    categories() {
-      this.$Progress.finish();
-
-      return this.$store.state.categories;
-    },
+  data() {
+    return {
+      list: [],
+      categories: [],
+    };
   },
   mounted() {
     this.$Progress.finish();
@@ -44,11 +45,31 @@ export default {
   methods: {
     fetchList(category) {
       this.$Progress.start();
-      this.$store.dispatch('getPosts', { category });
+
+      let api = '/api/posts/';
+
+      if (category) {
+        api = `/api/categories/${category}/`;
+      }
+
+      axios.get(api).then((response) => {
+        this.list = response.data;
+        if (category && this.$route.path !== '/blog/') {
+          this.$router.push({ path: '/blog/' }, () => {
+            this.$Progress.finish();
+          });
+        } else {
+          this.$Progress.finish();
+        }
+      });
     },
     fetchCategories() {
       this.$Progress.start();
-      this.$store.dispatch('getCategories');
+
+      axios.get('/api/categories/').then((response) => {
+        this.categories = response.data;
+        this.$Progress.finish();
+      });
     },
   },
 };

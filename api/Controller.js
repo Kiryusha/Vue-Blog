@@ -104,6 +104,9 @@ exports.auth = async (ctx) => {
     case 'github':
       await Provider.githubAuth(ctx);
       break;
+    case 'google':
+      await Provider.googleAuth(ctx);
+      break;
   }
 };
 
