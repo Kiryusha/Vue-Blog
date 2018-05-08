@@ -1,5 +1,6 @@
 'use strict';
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
@@ -16,5 +17,7 @@ const PostSchema = new Schema({
   username: String,
   userId: String,
 });
+
+PostSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Post', PostSchema);

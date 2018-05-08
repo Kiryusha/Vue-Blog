@@ -57,21 +57,6 @@ exports.googleAuth = async (ctx) => {
       ctx.body = responseJson;
     }
   }
-
-  //  function (err, response, body) {
-  //   try {
-  //     if (!err && response.statusCode === 200) {
-  //       var responseJson = JSON.parse(body)
-  //
-  //       console.log(responseJson)
-  //       ctx.body = responseJson;
-  //     } else {
-  //       ctx.body = err;
-  //     }
-  //   } catch (e) {
-  //     ctx.body = err || e;
-  //   }
-  // })
 }
 
 function parseQueryString(str) {

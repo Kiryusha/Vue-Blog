@@ -5,22 +5,35 @@ const Post = mongoose.model('Post');
 const User = mongoose.model('User');
 const Provider = require('./Provider');
 
-exports.list = async (ctx) => {
-  const posts = await Post.find({}, [
-    'title',
-    'code',
-    'date',
-    'category',
-    'previewPicture',
-    'previewText',
-    'username',
-    'userId'
-  ]).sort([['date', -1]]);
+exports.listPosts = async (ctx) => {
+  const posts = await Post.paginate({}, {
+    select: 'title code date category previewPicture previewText username userId',
+    sort: '-date',
+    page: parseInt(ctx.params.page),
+    limit: 5,
+  });
 
   if (!posts) {
     throw new Error("There was an error retrieving your posts.");
   } else {
-    ctx.body = posts;
+    ctx.body = posts.docs;
+  }
+};
+
+exports.listPostsByCategory = async (ctx) => {
+  const posts = await Post.paginate({
+    'category': ctx.params.category
+  }, {
+    select: 'title code date category previewPicture previewText username userId',
+    sort: '-date',
+    page: parseInt(ctx.params.page),
+    limit: 5,
+  });
+
+  if (!posts) {
+    throw new Error("There was an error retrieving your posts.");
+  } else {
+    ctx.body = posts.docs;
   }
 };
 
@@ -35,18 +48,8 @@ exports.listCategories = async (ctx) => {
   }
 };
 
-exports.listByCategory = async (ctx) => {
-  const posts = await Post.find({'category': ctx.params.category}).sort([['date', -1]]);
 
-  if (!posts) {
-    throw new Error("There was an error retrieving your posts.");
-  } else {
-    ctx.body = posts;
-  }
-};
-
-
-exports.create = async (ctx) => {
+exports.createPost = async (ctx) => {
   const codesRaw = await Post.find({}, 'code');
   const codes = [...new Set(Object.values(codesRaw).map(item => item.code))];
 
@@ -81,7 +84,7 @@ exports.deletePost = async (ctx) => {
   }
 };
 
-exports.read = async (ctx) => {
+exports.getPost = async (ctx) => {
   const post = await Post.find({'code': ctx.params.post},[
     'title',
     'code',

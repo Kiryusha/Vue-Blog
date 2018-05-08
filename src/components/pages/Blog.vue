@@ -1,5 +1,5 @@
 <template lang="pug">
-  .blog
+  .blog(ref="blog")
     Delete(
       @fetchList="fetchList",
       @fetchCategories="fetchCategories"
@@ -35,25 +35,42 @@ export default {
     return {
       list: [],
       categories: [],
+      page: 1,
+      activeCategory: null,
     };
   },
   mounted() {
-    this.$Progress.finish();
-    this.fetchList();
-    this.fetchCategories();
+    this.initBlog();
   },
   methods: {
-    fetchList(category) {
+    async initBlog() {
+      this.fetchCategories();
+      await this.fetchList();
+      window.addEventListener('scroll', this.endlessScroll);
+    },
+    fetchList(category, page = 1, add) {
       this.$Progress.start();
 
-      let api = '/api/posts/';
+      if (page === 1) {
+        this.page = 1;
+      }
+
+      let api = `/api/posts/${page}/`;
 
       if (category) {
-        api = `/api/categories/${category}/`;
+        api = `/api/categories/${category}/${page}/`;
+        this.activeCategory = category;
+      } else {
+        this.activeCategory = null;
       }
 
       axios.get(api).then((response) => {
-        this.list = response.data;
+        if (add) {
+          this.list = [...new Set([...this.list, ...response.data])];
+        } else {
+          this.list = response.data;
+        }
+
         if (category && this.$route.path !== '/blog/') {
           this.$router.push({ path: '/blog/' }, () => {
             this.$Progress.finish();
@@ -70,6 +87,18 @@ export default {
         this.categories = response.data;
         this.$Progress.finish();
       });
+    },
+    endlessScroll() {
+      const el = this.$refs.blog;
+      const rect = el.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollBottom = scrollTop + window.innerHeight;
+      const bottom = rect.top + scrollTop + el.clientHeight;
+
+      if (this.$route.path === '/blog/' && bottom <= scrollBottom) {
+        this.page += 1;
+        this.fetchList(this.activeCategory, this.page, true);
+      }
     },
   },
 };

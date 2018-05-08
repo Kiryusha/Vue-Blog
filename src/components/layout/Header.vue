@@ -52,8 +52,8 @@ export default {
   },
   methods: {
     updateHeader() {
-      this.scrollPosition = window.scrollY;
-      this.isHeaderFixed = this.scrollPosition > this.height + 20;
+      this.scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      this.isHeaderFixed = this.scrollTop > this.height + 20;
     },
   },
 };
@@ -68,6 +68,7 @@ export default {
     background $yellow
     transition .2s
     box-shadow 0 0 20px rgba(0, 0, 0, .2)
+    z-index 100
 
     .__cov-progress
       top 94px !important

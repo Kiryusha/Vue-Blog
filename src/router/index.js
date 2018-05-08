@@ -16,6 +16,9 @@ export default new Router({
       path: '*',
       component: NotFound,
     }, {
+      path: '/',
+      redirect: '/blog/',
+    }, {
       path: '/blog/',
       component: Blog,
       children: [{

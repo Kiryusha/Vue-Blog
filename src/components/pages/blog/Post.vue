@@ -37,7 +37,7 @@ export default {
     fetchData(code) {
       this.$Progress.start();
 
-      axios.get(`/api/posts/${code}/`).then((response) => {
+      axios.get(`/api/posts/post/${code}/`).then((response) => {
         [this.post] = response.data;
         this.$Progress.finish();
       });
