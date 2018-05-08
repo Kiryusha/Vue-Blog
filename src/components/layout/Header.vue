@@ -50,6 +50,9 @@ export default {
     this.height = this.$refs.header.clientHeight;
     window.addEventListener('scroll', this.updateHeader);
   },
+  destroyed() {
+    window.removeEventListener('scroll', this.updateHeader);
+  },
   methods: {
     updateHeader() {
       this.scrollTop = window.pageYOffset || document.documentElement.scrollTop;
