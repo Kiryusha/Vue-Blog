@@ -15,12 +15,12 @@ const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
     github: {
       clientId: '3396cb8c1d4881671456',
       redirectUri: process.env.NODE_ENV === 'production' ?
-        'http://kosk-blog.herokuapp.com' : 'http://localhost:8080/blog/',
+        'http://kosk-blog.herokuapp.com/blog/' : 'http://localhost:8080/blog/',
     },
     google: {
       clientId: '116668393631-ctvnag7amgnp2rqqb2vm79arcrjcm3sr.apps.googleusercontent.com',
       redirectUri: process.env.NODE_ENV === 'production' ?
-        'http://kosk-blog.herokuapp.com' : 'http://localhost:8080/blog/',
+        'http://kosk-blog.herokuapp.com/blog/' : 'http://localhost:8080/blog/',
     },
   },
 });
