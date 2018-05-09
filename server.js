@@ -10,8 +10,17 @@ const cors = require('koa2-cors');
 const Post = require('./api/models/Post');
 const User = require('./api/models/User');
 const routes = require('./api/routes');
-const config = require('./api/config.json');
 const app = module.exports = new koa();
+
+let config;
+
+if (process.env.mongodb_uri) {
+  config = {
+    mongoUri: process.env.mongodb_uri,
+  }
+} else {
+  config = require('./api/secrets.json');
+}
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoUri);

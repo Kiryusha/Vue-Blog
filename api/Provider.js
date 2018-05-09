@@ -1,16 +1,26 @@
 const Axios = require('axios');
 const req = require('request-promise');
-const config = require('./config.json');
 const OAuth = require('oauth');
 const timestamp = require('unix-timestamp');
 const oauthSignature = require('oauth-signature');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
+let config;
+
+if (process.env.github_secret && process.env.google_secret) {
+  config = {
+    githubSecret: process.env.github_secret,
+    googleSecret: process.env.google_secret,
+  }
+} else {
+  config = require('./secrets.json');
+}
+
 exports.githubAuth = async (ctx) => {
   const request = Axios.post('https://github.com/login/oauth/access_token', {
-    client_id: config.auth.github.clientId,
-    client_secret: config.auth.github.clientSecret,
+    client_id: '3396cb8c1d4881671456',
+    client_secret: config.githubSecret,
     code: ctx.request.body.code,
     redirect_uri: ctx.request.redirectUri,
     state: ctx.request.state,
@@ -37,8 +47,8 @@ exports.googleAuth = async (ctx) => {
     url: 'https://accounts.google.com/o/oauth2/token',
     form: {
       code: ctx.request.body.code,
-      client_id: config.auth.google.clientId,
-      client_secret: config.auth.google.clientSecret,
+      client_id: '116668393631-ctvnag7amgnp2rqqb2vm79arcrjcm3sr.apps.googleusercontent.com',
+      client_secret: config.googleSecret,
       redirect_uri: ctx.request.body.redirectUri,
       grant_type: 'authorization_code',
     },

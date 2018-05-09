@@ -9,7 +9,7 @@
           router-link(
             class="header__logo",
             :to="'/'"
-          ) Kiryusha
+          ) Kosk
           .header__menu
             Menu
         .header__user(v-if="isAuthenticated")

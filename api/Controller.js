@@ -4,7 +4,17 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Post = mongoose.model('Post');
 const Provider = require('./Provider');
-const config = require('./config.json');
+
+let config;
+
+if (process.env.admin_id) {
+  config = {
+    adminId: process.env.admin_id,
+  }
+} else {
+  config = require('./secrets.json');
+}
+
 
 exports.listPosts = async (ctx) => {
   const posts = await Post.paginate({}, {

@@ -1,21 +1,35 @@
-# blog
+# kosk-blog
 
-> vue A Vue.js training project,js
+> Blog written on Vue.js, Koa.js and MongoDB.
+> Boilerplate used as base: https://github.com/vuejs-templates/webpack
+
 
 ## Build Setup
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
-# serve with hot reload at localhost:8080
-npm run dev
+# server and webpack
+yarn full
+
+# only server
+yarn start
+
+# only webpack
+yarn dev
 
 # build for production with minification
-npm run build
+yarn build
 
-# build for production and view the bundle analyzer report
-npm run build --report
+# it also requires ./api/secrets.json file with:
+# mongoDB uri (mongoUri)
+# admin user mongodb _id (adminId)
+# github app secret (githubSecret)
+# google app secret (googleSecret)
+# if you don't have original one, you should also change client id's of
+# github and google apps in:
+# ./api/Provider.js
+# ./src/store/index.js
+
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
