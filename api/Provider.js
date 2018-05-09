@@ -4,6 +4,8 @@ const config = require('./config.json');
 const OAuth = require('oauth');
 const timestamp = require('unix-timestamp');
 const oauthSignature = require('oauth-signature');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
 exports.githubAuth = async (ctx) => {
   const request = Axios.post('https://github.com/login/oauth/access_token', {
@@ -38,7 +40,7 @@ exports.googleAuth = async (ctx) => {
       client_id: config.auth.google.clientId,
       client_secret: config.auth.google.clientSecret,
       redirect_uri: ctx.request.body.redirectUri,
-      grant_type: 'authorization_code'
+      grant_type: 'authorization_code',
     },
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
@@ -57,7 +59,51 @@ exports.googleAuth = async (ctx) => {
       ctx.body = responseJson;
     }
   }
-}
+};
+
+exports.loginAuth = async (ctx) => {
+  const existingUser = await User.findOne(ctx.request.body);
+
+  if (!existingUser) {
+    ctx.body = {
+      success: false,
+      message: 'Неправильный e-mail или пароль.',
+    };
+  } else {
+    ctx.body = {
+      success: true,
+      user: existingUser,
+      access_token: 'super_reliable_token',
+    };
+  }
+};
+
+exports.registerAuth = async (ctx) => {
+  const existingUser = await User.findOne({
+    provider: 'native',
+    email: ctx.request.body.email,
+  });
+
+  if (!existingUser) {
+    const user = await User.create({
+      provider: 'native',
+      name: ctx.request.body.name,
+      email: ctx.request.body.email,
+      password: ctx.request.body.password,
+    });
+    ctx.body = {
+      success: true,
+      message: 'Пользователь успешно зарегистрирован.',
+      user,
+      access_token: 'super_reliable_token',
+    };
+  } else {
+    ctx.body = {
+      success: false,
+      message: 'Пользователь с таким e-mail уже зарегистрирован',
+    };
+  }
+};
 
 function parseQueryString(str) {
   let obj = {};

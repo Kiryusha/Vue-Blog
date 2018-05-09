@@ -1,8 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Post = mongoose.model('Post');
 const User = mongoose.model('User');
+const Post = mongoose.model('Post');
 const Provider = require('./Provider');
 
 exports.listPosts = async (ctx) => {
@@ -110,11 +110,17 @@ exports.auth = async (ctx) => {
     case 'google':
       await Provider.googleAuth(ctx);
       break;
+    case 'login':
+      await Provider.loginAuth(ctx);
+      break;
+    case 'register':
+      await Provider.registerAuth(ctx);
+      break;
   }
 };
 
 exports.createUser = async (ctx) => {
-  const existingUser = await User.findOne(ctx.request.body)
+  const existingUser = await User.findOne(ctx.request.body);
 
   if (!existingUser) {
     const newUser = await User.create(ctx.request.body);

@@ -7,13 +7,15 @@
     .modal._auth
       .modal__content
         .modal__title Авторизация
+        .modal__login
+          Login
         .modal__socials
           Button(
-            :view="'github-auth'"
+            :view="'github-auth'",
             @click="authenticate('github')"
           ) Я у мамы программист
           Button(
-            :view="'google-auth'"
+            :view="'google-auth'",
             @click="authenticate('google')"
           ) google
         .modal__close
@@ -24,14 +26,17 @@
 
 <script>
 import Button from '../general/Button';
+import Login from '../auth/Login';
 
 export default {
   components: {
     Button,
+    Login,
   },
   data() {
     return {
       title: '',
+      response: '',
     };
   },
   methods: {

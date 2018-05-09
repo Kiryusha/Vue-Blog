@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Form from '../pages/publish/Form';
+import Form from '../elements/publish/Form';
 import Response from '../elements/modals/Response';
 
 export default {

@@ -38,6 +38,22 @@
         width=20,
         height=20
       )
+    .button__icon(
+      v-if="view === 'login'"
+    )
+      Icon(
+        :name="'login'",
+        width=20,
+        height=18
+      )
+    .button__icon(
+      v-if="view === 'register'"
+    )
+      Icon(
+        :name="'plus'",
+        width=22,
+        height=22
+      )
 </template>
 
 <script>
@@ -85,6 +101,19 @@ export default {
       display flex
       align-items center
 
+    &._login,
+    &._register
+      height 32px
+      min-width 123px
+      width calc(50% - 5px)
+      padding 0
+      display flex
+      align-items center
+      justify-content center
+
+    &._w100
+      width 100%
+
     &._github-auth,
     &._google-auth
       flex-direction row-reverse
@@ -95,7 +124,7 @@ export default {
       text-overflow ellipsis
       padding 6px 12px 6px 48px
       margin-bottom 0
-      font-size 14px
+      font-size 16px
       font-weight normal
       line-height 1.42857143
       position relative
@@ -118,7 +147,9 @@ export default {
     &._more use,
     &._github-auth use,
     &._google-auth use,
-    &._delete use
+    &._delete use,
+    &._login use,
+    &._register use
       fill #F
       stroke #F
 
@@ -133,6 +164,10 @@ export default {
       position absolute
       top 6px
       left 8px
+
+    &._login &__icon,
+    &._register &__icon
+      margin 0
 
     &._github-auth &__caption,
     &._google-auth &__caption
@@ -157,7 +192,11 @@ export default {
       margin auto
 
     &._more:active use,
-    &._delete:active use
+    &._delete:active use,
+    &._login:active use,
+    &._register:active use,
+    &._login._active use,
+    &._register._active use
       stroke #0
       fill #0
 

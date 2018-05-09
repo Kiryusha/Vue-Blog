@@ -102,7 +102,6 @@ export default {
         this.page += 1;
         this.fetchList(this.activeCategory, this.page, true);
       }
-      this.eventsAreAttached = true;
     },
     deletePost(code) {
       this.list = this.list.filter(item => item.code !== code);

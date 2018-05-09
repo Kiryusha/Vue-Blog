@@ -9,6 +9,8 @@ module.exports = function(app) {
         .get('/api/posts/post/:post/', Controller.getPost)
         .get('/api/posts/:page/', Controller.listPosts)
         .post('/auth/:provider/', Controller.auth)
+        .post('/auth/login/', Controller.auth)
+        .post('/auth/register/', Controller.auth)
         .post('/api/posts/', Controller.createPost)
         .post('/api/users/', Controller.createUser)
         .delete('/api/posts/:code/', Controller.deletePost);

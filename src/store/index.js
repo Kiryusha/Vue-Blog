@@ -25,6 +25,35 @@ const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
   },
 });
 
+const activateUser = (context, res) => {
+  context.commit('isAuthenticated', {
+    isAuthenticated: vueAuth.isAuthenticated(),
+  });
+
+  localStorage.setItem('username', res.data.name);
+  context.commit('username', {
+    username: res.data.name,
+  });
+
+  localStorage.setItem('userId', res.data._id);
+  context.commit('userId', {
+    userId: res.data._id,
+  });
+};
+
+const nativeResponse = (context, res) => {
+  if (res.data.success) {
+    activateUser(context, {
+      data: {
+        name: res.data.user.name,
+        _id: res.data.user._id,
+      },
+    });
+  }
+
+  return res.data;
+};
+
 export default new Vuex.Store({
   state: {
     isAuthenticated: vueAuth.isAuthenticated(),
@@ -48,26 +77,13 @@ export default new Vuex.Store({
     userId(state, payload) {
       state.userId = payload.userId;
     },
+    response(state, payload) {
+      state.response = payload.response;
+    },
   },
 
   actions: {
     authenticate(context, payload) {
-      function createUser(res) {
-        context.commit('isAuthenticated', {
-          isAuthenticated: vueAuth.isAuthenticated(),
-        });
-
-        localStorage.setItem('username', res.data.name);
-        context.commit('username', {
-          username: res.data.name,
-        });
-
-        localStorage.setItem('userId', res.data._id);
-        context.commit('userId', {
-          userId: res.data._id,
-        });
-      }
-
       vueAuth.authenticate(payload.provider).then(() => {
         if (payload.provider === 'github') {
           Vue.axios.get('https://api.github.com/user').then((response) => {
@@ -77,7 +93,7 @@ export default new Vuex.Store({
               email: response.data.email,
               isAdmin: false,
             }).then((res) => {
-              createUser(res);
+              activateUser(context, res);
             });
           });
         } else if (payload.provider === 'google') {
@@ -88,11 +104,21 @@ export default new Vuex.Store({
               email: response.data.email,
               isAdmin: false,
             }).then((res) => {
-              createUser(res);
+              activateUser(context, res);
             });
           });
         }
       });
+    },
+
+    register(context, payload) {
+      return vueAuth.register(payload).then(response =>
+        nativeResponse(context, response));
+    },
+
+    login(context, payload) {
+      return vueAuth.login(payload).then(response =>
+        nativeResponse(context, response));
     },
 
     authLogout(context) {
