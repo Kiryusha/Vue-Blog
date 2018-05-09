@@ -37,10 +37,17 @@ export default {
     deletePost() {
       this.$Progress.start();
 
-      axios.delete(`/api/posts/${this.code}/`).then(() => {
+      axios.post(`/api/posts/${this.code}/delete/`, {
+        userId: this.$store.state.userId,
+      }).then((response) => {
         this.$modal.hide('delete');
-        this.$emit('deletePost', this.code);
-        this.$emit('fetchCategories');
+        if (response.data.success) {
+          this.$emit('deletePost', this.code);
+          this.$emit('fetchCategories');
+        } else {
+          this.$Progress.finish();
+          this.$modal.show('response', { message: response.data.message });
+        }
       });
     },
   },

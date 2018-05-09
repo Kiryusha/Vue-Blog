@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Post = mongoose.model('Post');
 const Provider = require('./Provider');
+const config = require('./config.json');
 
 exports.listPosts = async (ctx) => {
   const posts = await Post.paginate({}, {
@@ -73,14 +74,24 @@ exports.createPost = async (ctx) => {
 };
 
 exports.deletePost = async (ctx) => {
-  const post = await Post.find({'code': ctx.params.code}).remove();
+  const post = await Post.find({'code': ctx.params.code});
 
   if (!post) {
     throw new Error("There was an error retrieving your posts.");
   } else {
-    ctx.body = {
-      message: 'Новость успешно удалена.'
-    };
+    if (post.userId === ctx.request.body.userId ||
+        ctx.request.body.userId === config.adminId) {
+      await Post.find({'code': ctx.params.code}).remove();
+      ctx.body = {
+        success: true,
+        message: 'Новость успешно удалена.'
+      };
+    } else {
+      ctx.body = {
+        success: false,
+        message: 'Удалять посты может только автор или админ.'
+      };
+    }
   }
 };
 

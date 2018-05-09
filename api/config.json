@@ -1,4 +1,5 @@
 {
+  "adminId": "5af2e735a15e484db892b991",
   "mongoUri": "mongodb://kosk-blog:ZXC510YUPp!@ds163119.mlab.com:63119/kosk-blog",
   "auth": {
     "google": {

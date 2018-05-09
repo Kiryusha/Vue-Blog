@@ -50,7 +50,7 @@ export default {
       return this.data.username ? this.data.username : 'без автора';
     },
     isAuthor() {
-      return this.data.userId === this.$store.state.userId;
+      return this.$store.state.isAdmin || this.data.userId === this.$store.state.userId;
     },
   },
 };

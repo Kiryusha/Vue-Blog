@@ -1,6 +1,8 @@
 <template lang="pug">
   .page
     #app
+      Auth
+      Response
       Header
       transition(name="fade")
         router-view
@@ -8,11 +10,15 @@
 
 <script>
 import Header from '@/components/layout/Header';
+import Auth from '@/components/elements/modals/Auth';
+import Response from '@/components/elements/modals/Response';
 
 export default {
   name: 'App',
   components: {
     Header,
+    Auth,
+    Response,
   },
 };
 </script>

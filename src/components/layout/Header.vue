@@ -3,7 +3,6 @@
     :class="{'_fixed': isHeaderFixed}",
     ref="header"
   )
-    Auth
     .container
       .header__content
         .header__left
@@ -22,12 +21,10 @@
 
 <script>
 import Menu from '../elements/header/Menu';
-import Auth from '../elements/modals/Auth';
 
 export default {
   components: {
     Menu,
-    Auth,
   },
   data() {
     return {

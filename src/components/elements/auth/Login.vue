@@ -20,7 +20,7 @@
       form.login__block(v-if="state === 'login'")
         .login__row
           Input.login__input(
-            type="email",
+            :type="'email'",
             placeholder="E-mail",
             :error="getErrorMessage($v.email)",
             :valid="!$v.email.$invalid",
@@ -29,7 +29,7 @@
           )
         .login__row
           Input.login__input(
-            type="password",
+            :type="'password'",
             placeholder="Пароль",
             :error="getErrorMessage($v.password)",
             :valid="!$v.password.$invalid",
@@ -41,7 +41,7 @@
       form.login__block(v-if="state === 'register'")
         .login__row
           Input.login__input(
-            type="text",
+            :type="'text'",
             placeholder="Имя"
             :error="getErrorMessage($v.name)",
             :valid="!$v.name.$invalid",
@@ -50,7 +50,7 @@
           )
         .login__row
           Input.login__input(
-            type="email",
+            :type="'email'",
             placeholder="E-mail",
             :error="getErrorMessage($v.email)",
             :valid="!$v.email.$invalid",
@@ -59,7 +59,7 @@
           )
         .login__row
           Input.login__input(
-            type="text"
+            :type="'text'"
             placeholder="Пароль",
             :error="getErrorMessage($v.password)",
             :valid="!$v.password.$invalid",

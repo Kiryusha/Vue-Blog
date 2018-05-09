@@ -6,6 +6,7 @@
       class="input__control",
       :placeholder="placeholder",
       :name="name",
+      :type="type",
       :disabled="disabled",
       v-model="innerValue",
       @input="inputHandler",
@@ -18,6 +19,10 @@
 <script>
 export default {
   props: {
+    type: {
+      type: String,
+      default: 'text',
+    },
     placeholder: {
       type: String,
       default: '',

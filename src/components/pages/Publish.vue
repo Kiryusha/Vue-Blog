@@ -3,12 +3,10 @@
     .container
       .publish__content
         Form
-        Response
 </template>
 
 <script>
 import Form from '../elements/publish/Form';
-import Response from '../elements/modals/Response';
 
 export default {
   components: {

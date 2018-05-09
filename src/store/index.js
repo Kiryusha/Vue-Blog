@@ -39,6 +39,10 @@ const activateUser = (context, res) => {
   context.commit('userId', {
     userId: res.data._id,
   });
+
+  context.commit('isAdmin', {
+    isAdmin: res.data.isAdmin,
+  });
 };
 
 const nativeResponse = (context, res) => {
@@ -47,6 +51,7 @@ const nativeResponse = (context, res) => {
       data: {
         name: res.data.user.name,
         _id: res.data.user._id,
+        isAdmin: res.data.user.isAdmin,
       },
     });
   }
@@ -59,6 +64,7 @@ export default new Vuex.Store({
     isAuthenticated: vueAuth.isAuthenticated(),
     username: localStorage.getItem('username'),
     userId: localStorage.getItem('userId'),
+    isAdmin: false,
   },
 
   getters: {
@@ -77,14 +83,18 @@ export default new Vuex.Store({
     userId(state, payload) {
       state.userId = payload.userId;
     },
-    response(state, payload) {
-      state.response = payload.response;
+    isAdmin(state, payload) {
+      state.isAdmin = payload.isAdmin;
     },
   },
 
   actions: {
     authenticate(context, payload) {
       vueAuth.authenticate(payload.provider).then(() => {
+        context.commit('isAdmin', {
+          isAdmin: false,
+        });
+
         if (payload.provider === 'github') {
           Vue.axios.get('https://api.github.com/user').then((response) => {
             Vue.axios.post('/api/users/', {
@@ -136,6 +146,10 @@ export default new Vuex.Store({
           localStorage.removeItem('userId');
           context.commit('userId', {
             userId: null,
+          });
+
+          context.commit('isAdmin', {
+            isAdmin: false,
           });
         }
       });
