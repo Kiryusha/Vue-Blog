@@ -2,7 +2,9 @@
   section.publish
     .container
       .publish__content
-        Form
+        Form(
+          :postCode="code"
+        )
 </template>
 
 <script>
@@ -12,6 +14,18 @@ export default {
   components: {
     Form,
     Response,
+  },
+  data() {
+    return {
+      code: null,
+    };
+  },
+  mounted() {
+    const { code } = this.$route.params;
+
+    if (code) {
+      this.code = code;
+    }
   },
 };
 </script>

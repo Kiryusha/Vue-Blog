@@ -39,6 +39,14 @@
         height=20
       )
     .button__icon(
+      v-if="view === 'edit'"
+    )
+      Icon(
+        :name="'edit'",
+        width=20,
+        height=20
+      )
+    .button__icon(
       v-if="view === 'login'"
     )
       Icon(
@@ -148,6 +156,7 @@ export default {
     &._github-auth use,
     &._google-auth use,
     &._delete use,
+    &._edit use,
     &._login use,
     &._register use
       fill #F
@@ -174,12 +183,14 @@ export default {
       width 100%
       text-align center
 
-    &._delete
+    &._delete,
+    &._edit
       width 36px
       height 36px
       position relative
 
-    &._delete &__icon
+    &._delete &__icon,
+    &._edit &__icon
       padding 0
       margin 0
       position: absolute
@@ -193,6 +204,7 @@ export default {
 
     &._more:active use,
     &._delete:active use,
+    &._edit:active use,
     &._login:active use,
     &._register:active use,
     &._login._active use,

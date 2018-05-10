@@ -34,6 +34,13 @@ export default new Router({
     }, {
       path: '/publish/',
       component: Publish,
+      children: [
+        {
+          path: ':code',
+          component: Publish,
+          name: 'Publish',
+        },
+      ],
       beforeEnter: (to, from, next) => {
         if (!store.state.isAuthenticated) {
           next('/blog/');

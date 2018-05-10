@@ -3,6 +3,12 @@
 > Blog written on Vue.js, Koa.js and MongoDB.
 > Boilerplate used as base: https://github.com/vuejs-templates/webpack
 
+## Features
+* Vue.js frontend with vue-router and vuex (used for user management)
+* Koa.js driven REST api
+* Role-based authentication (admin and users)
+* Social services authentication
+* Remote mongo database at https://mlab.com/
 
 ## Build Setup
 

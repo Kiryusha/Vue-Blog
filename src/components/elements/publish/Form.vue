@@ -3,7 +3,7 @@
     .publish-form__title: h1 Отправить новость
     .publish-form__content
       form.publish-form__form(
-        @submit.prevent="onSubmit"
+        @submit.prevent=""
       )
         .publish-form__row
           .publish-form__row-title Название
@@ -57,10 +57,16 @@
             v-model="detailText",
             :maxlength="5000"
           )
-        .publish-form__row._tar
+        .publish-form__row._controls
           Button(
             :view="'fz16'"
+            @click="submit"
           ) Отправить
+          Button(
+            v-if="this.state === 'edit'"
+            :view="'fz16'"
+            @click="$router.push({ path: '/blog/' })"
+          ) Отмена
 </template>
 
 <script>
@@ -74,8 +80,15 @@ export default {
     Textarea,
     Button,
   },
+  props: {
+    postCode: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
+      id: '',
       title: '',
       code: '',
       category: '',
@@ -84,11 +97,27 @@ export default {
       detailText: '',
       submitted: false,
       loaded: false,
+      sadfsd: 'asdfasd',
     };
+  },
+  computed: {
+    state() {
+      return this.postCode && this.postCode.length ? 'edit' : 'post';
+    },
   },
   mounted() {
     this.loaded = true;
     this.$Progress.finish();
+    if (this.state === 'edit') {
+      this.fetchData(this.postCode);
+    }
+  },
+  watch: {
+    state(type) {
+      if (type === 'edit') {
+        this.fetchData(this.postCode);
+      }
+    },
   },
   methods: {
     getErrorMessage(field) {
@@ -110,15 +139,22 @@ export default {
 
       return message;
     },
-    onSubmit() {
+    submit() {
       this.$v.$touch();
       this.submitted = true;
 
       if (!this.$v.$invalid) {
         this.$Progress.start();
 
-        axios.post('/api/posts/', {
+        let method = 'post';
+
+        if (this.state === 'edit') {
+          method = 'put';
+        }
+
+        axios[method]('/api/posts/', {
           title: this.title,
+          id: this.id,
           code: this.code.toLowerCase(),
           category: this.category,
           previewText: this.previewText,
@@ -139,11 +175,32 @@ export default {
               this.previewText = '';
               this.detailText = '';
             }
+
+            if (res.data.unique ||
+                res.data.success) {
+              this.$router.push('/blog');
+            }
           }
 
           this.$Progress.finish();
         });
       }
+    },
+    fetchData(code) {
+      this.$Progress.start();
+
+      axios.get(`/api/posts/post/${code}/`).then((response) => {
+        if (response.data) {
+          this.id = response.data._id;
+          this.title = response.data.title;
+          this.code = response.data.code;
+          this.category = response.data.category;
+          this.previewPicture = response.data.previewPicture;
+          this.previewText = response.data.previewText;
+          this.detailText = response.data.detailText;
+        }
+        this.$Progress.finish();
+      });
     },
   },
   validations() {
@@ -191,8 +248,11 @@ export default {
 
     &__row
 
-      &._tar
+      &._controls
         text-align right
+
+        button + button
+          margin-left 10px
 
       & + &
         margin-top 25px

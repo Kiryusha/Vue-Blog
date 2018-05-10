@@ -18,14 +18,17 @@
         :type="'a'"
         @click="$modal.show('delete', { code: data.code })"
       )
-      router-link(
-        :to="`${data.code}/`",
-        tag="span"
+      Button(
+        v-if="isAuthor",
+        :view="'edit'",
+        :type="'a'"
+        @click="$router.push({ path: `/publish/${data.code}/` })"
       )
-        Button(
-          :view="'more'",
-          :type="'a'"
-        ) Подробнее
+      Button(
+        :view="'more'",
+        :type="'a'"
+        @click="$router.push({ path: `/blog/${data.code}/` })"
+      ) Подробнее
 </template>
 
 <script>
@@ -66,6 +69,7 @@ export default {
     &__title
       font-family 'Roboto Slab', sans-serif
       font-size 30px
+      max-width 630px
 
     &__info
       font-family 'Roboto Slab', sans-serif
@@ -83,7 +87,8 @@ export default {
       display flex
       justify-content flex-end
 
-      a + span
+      a + span,
+      a + a
         margin-left 10px
 
     &__image-wrapper

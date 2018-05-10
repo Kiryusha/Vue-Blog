@@ -3,7 +3,7 @@
     .post__content
       .post__title-block
         h1.post__title {{ post.title }}
-        .post__info {{ date }}
+        .post__info {{ date }}, {{ author }}
       .post__text-block(
         v-html="post.detailText"
       )
@@ -21,6 +21,14 @@ export default {
       post: {},
     };
   },
+  computed: {
+    date() {
+      return formatDate(this.post.date);
+    },
+    author() {
+      return this.post.username ? this.post.username : 'без автора';
+    },
+  },
   mounted() {
     this.fetchData(this.$route.params.code);
   },
@@ -28,17 +36,12 @@ export default {
     this.fetchData(to.params.code);
     next();
   },
-  computed: {
-    date() {
-      return formatDate(this.post.date);
-    },
-  },
   methods: {
     fetchData(code) {
       this.$Progress.start();
 
       axios.get(`/api/posts/post/${code}/`).then((response) => {
-        [this.post] = response.data;
+        this.post = response.data;
         this.$Progress.finish();
       });
     },

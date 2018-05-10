@@ -61,10 +61,9 @@ exports.listCategories = async (ctx) => {
 
 
 exports.createPost = async (ctx) => {
-  const codesRaw = await Post.find({}, 'code');
-  const codes = [...new Set(Object.values(codesRaw).map(item => item.code))];
+  const samePost = await Post.find({'code': ctx.request.body.code});
 
-  if (codes.includes(ctx.request.body.code)) {
+  if (samePost.length) {
     ctx.body = {
       message: 'Новость с этим символьным кодом уже существует.'
     };
@@ -83,8 +82,49 @@ exports.createPost = async (ctx) => {
   }
 };
 
+exports.updatePost = async (ctx) => {
+  const samePost = await Post.findById(ctx.request.body.id);
+
+  if (samePost) {
+    if (samePost.userId === ctx.request.body.userId ||
+        ctx.request.body.userId === config.adminId) {
+      const update = await Post.findByIdAndUpdate(
+        ctx.request.body.id,
+        {
+          title: ctx.request.body.title,
+          code: ctx.request.body.code,
+          category: ctx.request.body.category,
+          previewText: ctx.request.body.previewText,
+          previewPicture: ctx.request.body.previewPicture,
+          detailText: ctx.request.body.detailText,
+        }
+      );
+
+      if (!update) {
+          throw new Error('Post failed to be created.');
+      } else {
+        ctx.body = {
+          success: true,
+          message: 'Новость успешно отредактирована.'
+        };
+      }
+    } else {
+      ctx.body = {
+        message: 'Новость может редактировать только автор или админ.'
+      };
+    }
+  } else {
+    ctx.body = {
+      success: false,
+      message: 'Невозможно редактировать новость, которой нет.'
+    };
+  }
+};
+
+
+
 exports.deletePost = async (ctx) => {
-  const post = await Post.find({'code': ctx.params.code});
+  const [post] = await Post.find({'code': ctx.params.code});
 
   if (!post) {
     throw new Error("There was an error retrieving your posts.");
@@ -106,15 +146,7 @@ exports.deletePost = async (ctx) => {
 };
 
 exports.getPost = async (ctx) => {
-  const post = await Post.find({'code': ctx.params.post},[
-    'title',
-    'code',
-    'date',
-    'previewPicture',
-    'detailText',
-    'username',
-    'userId'
-  ]);
+  const [post] = await Post.find({'code': ctx.params.post});
 
   if (!post) {
     throw new Error("There was an error retrieving your post.");

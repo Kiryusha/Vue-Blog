@@ -13,7 +13,8 @@ module.exports = function(app) {
         .post('/auth/register/', Controller.auth)
         .post('/api/posts/', Controller.createPost)
         .post('/api/users/', Controller.createUser)
-        .post('/api/posts/:code/delete/', Controller.deletePost);
+        .post('/api/posts/:code/delete/', Controller.deletePost)
+        .put('/api/posts/', Controller.updatePost);
 
   app.use(router.routes());
 };
