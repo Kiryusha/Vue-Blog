@@ -97,8 +97,9 @@ export default {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const scrollBottom = scrollTop + window.innerHeight;
       const bottom = rect.top + scrollTop + el.clientHeight;
+      const isBlog = this.$route.path === '/blog/' || this.$route.path === '/blog';
 
-      if (this.$route.path === '/blog/' && bottom <= scrollBottom) {
+      if (isBlog && bottom <= scrollBottom) {
         this.page += 1;
         this.fetchList(this.activeCategory, this.page, true);
       }

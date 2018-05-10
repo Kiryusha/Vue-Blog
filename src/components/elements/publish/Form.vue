@@ -178,7 +178,7 @@ export default {
 
             if (res.data.unique ||
                 res.data.success) {
-              this.$router.push('/blog');
+              this.$router.push('/blog/');
             }
           }
 
