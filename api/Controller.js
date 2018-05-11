@@ -88,25 +88,34 @@ exports.updatePost = async (ctx) => {
   if (samePost) {
     if (samePost.userId === ctx.request.body.userId ||
         ctx.request.body.userId === config.adminId) {
-      const update = await Post.findByIdAndUpdate(
-        ctx.request.body.id,
-        {
-          title: ctx.request.body.title,
-          code: ctx.request.body.code,
-          category: ctx.request.body.category,
-          previewText: ctx.request.body.previewText,
-          previewPicture: ctx.request.body.previewPicture,
-          detailText: ctx.request.body.detailText,
-        }
-      );
 
-      if (!update) {
-          throw new Error('Post failed to be created.');
-      } else {
+      const sameCode = await Post.find({'code': ctx.request.body.code});
+
+      if (sameCode.length) {
         ctx.body = {
-          success: true,
-          message: 'Новость успешно отредактирована.'
+          message: 'Новость с этим символьным кодом уже существует.'
         };
+      } else {
+        const update = await Post.findByIdAndUpdate(
+          ctx.request.body.id,
+          {
+            title: ctx.request.body.title,
+            code: ctx.request.body.code,
+            category: ctx.request.body.category,
+            previewText: ctx.request.body.previewText,
+            previewPicture: ctx.request.body.previewPicture,
+            detailText: ctx.request.body.detailText,
+          }
+        );
+
+        if (!update) {
+            throw new Error('Post failed to be created.');
+        } else {
+          ctx.body = {
+            success: true,
+            message: 'Новость успешно отредактирована.'
+          };
+        }
       }
     } else {
       ctx.body = {
