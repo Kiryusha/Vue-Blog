@@ -89,9 +89,9 @@ exports.updatePost = async (ctx) => {
     if (samePost.userId === ctx.request.body.userId ||
         ctx.request.body.userId === config.adminId) {
 
-      const sameCode = await Post.find({'code': ctx.request.body.code});
+      const [sameCode] = await Post.find({'code': ctx.request.body.code});
 
-      if (sameCode.length) {
+      if (sameCode && `${sameCode._id}` != `${samePost._id}`) {
         ctx.body = {
           message: 'Новость с этим символьным кодом уже существует.'
         };
