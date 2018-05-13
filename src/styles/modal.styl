@@ -8,6 +8,9 @@
   position relative
   border 2px solid gray
 
+  &._delete
+    width 400px
+
   &._auth
     width 300px
 
@@ -44,6 +47,10 @@
     button + button
       margin-left 10px
 
+  +phone()
+    max-width 300px
+    width auto
+
 div.v--modal
   max-width 600px
   background transparent
@@ -52,3 +59,4 @@ div.v--modal
 
   +phone()
     max-width 300px
+    width auto

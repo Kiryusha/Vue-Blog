@@ -81,6 +81,8 @@ export default {
         } else {
           this.$Progress.finish();
         }
+      }).catch((error) => {
+        this.$modal.show('response', { message: error.message });
       });
     },
     fetchCategories() {
@@ -89,6 +91,8 @@ export default {
       axios.get('/api/categories/').then((response) => {
         this.categories = response.data;
         this.$Progress.finish();
+      }).catch((error) => {
+        this.$modal.show('response', { message: error.message });
       });
     },
     endlessScroll() {
@@ -135,7 +139,6 @@ export default {
       max-width 100%
 
     +mobile()
-      padding-top 40px
 
       &__content
         flex-direction column-reverse
@@ -153,4 +156,5 @@ export default {
 
       &__sidebar
         margin 0 0 20px
+
 </style>

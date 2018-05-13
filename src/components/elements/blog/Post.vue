@@ -7,7 +7,6 @@
       .post__text-block(
         v-html="post.detailText"
       )
-      .post__author
 </template>
 
 <script>
@@ -41,8 +40,15 @@ export default {
       this.$Progress.start();
 
       axios.get(`/api/posts/post/${code}/`).then((response) => {
-        this.post = response.data;
+        if (response.data.success) {
+          this.post = response.data.post;
+        } else {
+          this.$modal.show('response', { message: response.data.message });
+          this.$router.push({ path: '/blog/' });
+        }
         this.$Progress.finish();
+      }).catch((error) => {
+        this.$modal.show('response', { message: error.message });
       });
     },
   },
@@ -63,7 +69,7 @@ export default {
       text-overflow ellipsis
 
     &__title-block
-      margin-bottom 70px
+      margin-bottom 30px
 
     &__title
       font-family 'Roboto Slab', sans-serif
@@ -102,5 +108,21 @@ export default {
 
       img
         width 100%
+
+    +phone()
+      padding-top 20px
+
+      &__title
+        font-size 24px
+
+      &__info
+        font-size 16px
+
+      &__title-block
+        margin-bottom 10px
+
+      &__text-block
+        font-size 16px
+        line-height 1.5
 
 </style>

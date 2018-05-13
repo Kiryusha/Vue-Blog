@@ -7,13 +7,13 @@
       Button.login__tab-head(
         :class="{'_active': state === 'login'}"
         :view="'login'",
-        :type="'span'"
+        :type="'span'",
         @click="changeState('login')"
       )
       Button.login__tab-head(
         :class="{'_active': state === 'register'}"
         :view="'register'",
-        :type="'span'"
+        :type="'span'",
         @click="changeState('register')"
       )
     .login__content
@@ -21,6 +21,8 @@
         .login__row
           Input.login__input(
             :type="'email'",
+            key="loginEmail",
+            :name="'loginEmail'",
             placeholder="E-mail",
             :error="getErrorMessage($v.email)",
             :valid="!$v.email.$invalid",
@@ -30,6 +32,8 @@
         .login__row
           Input.login__input(
             :type="'password'",
+            key="loginPassword",
+            :name="'loginPassword'",
             placeholder="Пароль",
             :error="getErrorMessage($v.password)",
             :valid="!$v.password.$invalid",
@@ -42,6 +46,8 @@
         .login__row
           Input.login__input(
             :type="'text'",
+            key="regName",
+            :name="'regName'",
             placeholder="Имя"
             :error="getErrorMessage($v.name)",
             :valid="!$v.name.$invalid",
@@ -51,6 +57,8 @@
         .login__row
           Input.login__input(
             :type="'email'",
+            key="regEmail",
+            :name="'regEmail'",
             placeholder="E-mail",
             :error="getErrorMessage($v.email)",
             :valid="!$v.email.$invalid",
@@ -59,7 +67,9 @@
           )
         .login__row
           Input.login__input(
-            :type="'text'"
+            :type="'password'"
+            key="regPassword",
+            :name="'regPassword'",
             placeholder="Пароль",
             :error="getErrorMessage($v.password)",
             :valid="!$v.password.$invalid",
@@ -110,38 +120,29 @@ export default {
 
       return message;
     },
-    async onSubmit() {
+    onSubmit() {
       this.$v.$touch();
       this.submitted = true;
-      let response;
 
       if (!this.$v.$invalid) {
         this.$Progress.start();
         this.submitted = false;
 
-        switch (this.state) {
-          case 'login':
-            response = await this.$store.dispatch('login', {
-              email: this.email,
-              password: this.password,
-            });
-            break;
-          case 'register':
-            response = await this.$store.dispatch('register', {
-              name: this.name,
-              email: this.email,
-              password: this.password,
-            });
-            break;
-          default:
-        }
+        this.$store.dispatch(this.state, {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        }).then((response) => {
+          if (response.success) {
+            this.$modal.hide('auth');
+          } else {
+            this.response = response.message;
+          }
+        }).catch((error) => {
+          this.$modal.show('response', { message: error.message });
+        });
 
-        if (response.success) {
-          this.$modal.hide('auth');
-        } else {
-          this.response = response.message;
-          this.$Progress.finish();
-        }
+        this.$Progress.finish();
       }
     },
     changeState(state) {

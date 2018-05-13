@@ -71,30 +71,31 @@ export default {
 </script>
 
 <style lang="stylus">
-.input
-  box-sizing border-box
-  -webkit-tap-highlight-color rgba(0, 0, 0, 0)
+  .input
+    box-sizing border-box
+    -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
-  &__control
-    width 100%
-    font-size 16px
-    line-height 1.5
-    border 1px solid rgba(#000, .15)
-    border-radius 4px
-    padding 6px 10px
-    -webkit-appearance none
-    display block
-    font-family inherit
-    outline none
-    resize none
-    overflow hidden
-    word-wrap break-word
+    &__control
+      width 100%
+      font-size 16px
+      line-height 1.5
+      border 1px solid rgba(#000, .15)
+      border-radius 4px
+      padding 6px 10px
+      -webkit-appearance none
+      display block
+      font-family inherit
+      outline none
+      resize none
+      overflow hidden
+      word-wrap break-word
 
-  &._error &__control
-    border-color red
+    &._error &__control
+      border-color red
 
-  &__error
-    font-size 14px
-    color red
-    padding-top 10px
+    &__error
+      font-size 14px
+      color red
+      padding-top 10px
+
 </style>

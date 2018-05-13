@@ -21,12 +21,12 @@
       Button(
         v-if="isAuthor",
         :view="'edit'",
-        :type="'a'"
+        :type="'a'",
         @click="$router.push({ path: `/publish/${data.code}/` })"
       )
       Button(
         :view="'more'",
-        :type="'a'"
+        :type="'a'",
         @click="$router.push({ path: `/blog/${data.code}/` })"
       ) Подробнее
 </template>
@@ -103,4 +103,16 @@ export default {
       background-size cover
       background-position center
       border 2px solid gray
+
+    +phone()
+
+      &__image-wrapper
+        margin-bottom 15px
+
+      &__title
+        font-size 24px
+
+      &__image
+        height 175px
+
 </style>

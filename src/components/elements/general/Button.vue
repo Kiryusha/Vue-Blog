@@ -97,6 +97,7 @@ export default {
     outline none
     border-radius 3px
     transition .2s
+    user-select none
 
     &:active,
     &._active
@@ -215,4 +216,5 @@ export default {
     &._categories
       font-size 14px
       padding 7px 12px
+
 </style>

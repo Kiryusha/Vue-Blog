@@ -25,7 +25,7 @@ exports.listPosts = async (ctx) => {
   });
 
   if (!posts) {
-    throw new Error("There was an error retrieving your posts.");
+    throw new Error('Ошибка получения новостей.');
   } else {
     ctx.body = posts.docs;
   }
@@ -42,7 +42,7 @@ exports.listPostsByCategory = async (ctx) => {
   });
 
   if (!posts) {
-    throw new Error("There was an error retrieving your posts.");
+    throw new Error('Ошибка получения новостей по категории.');
   } else {
     ctx.body = posts.docs;
   }
@@ -53,7 +53,7 @@ exports.listCategories = async (ctx) => {
   const result = [...new Set(Object.values(categories).map(item => item.category))];
 
   if (!categories) {
-    throw new Error("There was an error retrieving your posts.");
+    throw new Error('Ошибка получения категорий.');
   } else {
     ctx.body = result;
   }
@@ -65,35 +65,43 @@ exports.createPost = async (ctx) => {
 
   if (samePost.length) {
     ctx.body = {
-      message: 'Новость с этим символьным кодом уже существует.'
+      message: 'Новость с этим символьным кодом уже существует.',
     };
   } else {
     const post = Post.create(ctx.request.body);
     const response = await post;
 
     if (!response) {
-        throw new Error('Post failed to be created.');
+      ctx.body = {
+        success: false,
+        message: 'Ошибка отправления новости.',
+      };
     } else {
       ctx.body = {
         unique: true,
-        message: 'Новость успешно отправлена.'
+        message: 'Новость успешно отправлена.',
       };
     }
   }
 };
 
+// post update
 exports.updatePost = async (ctx) => {
   const samePost = await Post.findById(ctx.request.body.id);
 
+  // checking if post exists
   if (samePost) {
+    // security checking: only author or admin
     if (samePost.userId === ctx.request.body.userId ||
         ctx.request.body.userId === config.adminId) {
 
       const [sameCode] = await Post.find({'code': ctx.request.body.code});
 
+      // preventing setting same code as existing posts have, but
+      // allowing to change itself
       if (sameCode && `${sameCode._id}` != `${samePost._id}`) {
         ctx.body = {
-          message: 'Новость с этим символьным кодом уже существует.'
+          message: 'Новость с этим символьным кодом уже существует.',
         };
       } else {
         const update = await Post.findByIdAndUpdate(
@@ -109,23 +117,24 @@ exports.updatePost = async (ctx) => {
         );
 
         if (!update) {
-            throw new Error('Post failed to be created.');
+            throw new Error('Ошибка создания новости.');
         } else {
           ctx.body = {
             success: true,
-            message: 'Новость успешно отредактирована.'
+            message: 'Новость успешно отредактирована.',
           };
         }
       }
     } else {
       ctx.body = {
-        message: 'Новость может редактировать только автор или админ.'
+        success: false,
+        message: 'Новость может редактировать только автор или админ.',
       };
     }
   } else {
     ctx.body = {
       success: false,
-      message: 'Невозможно редактировать новость, которой нет.'
+      message: 'Невозможно редактировать новость, которой нет.',
     };
   }
 };
@@ -136,19 +145,22 @@ exports.deletePost = async (ctx) => {
   const [post] = await Post.find({'code': ctx.params.code});
 
   if (!post) {
-    throw new Error("There was an error retrieving your posts.");
+    ctx.body = {
+      success: false,
+      message: 'Невозможно удалить новость, которой нет.',
+    };
   } else {
     if (post.userId === ctx.request.body.userId ||
         ctx.request.body.userId === config.adminId) {
       await Post.find({'code': ctx.params.code}).remove();
       ctx.body = {
         success: true,
-        message: 'Новость успешно удалена.'
+        message: 'Новость успешно удалена.',
       };
     } else {
       ctx.body = {
         success: false,
-        message: 'Удалять посты может только автор или админ.'
+        message: 'Удалять новости может только автор или админ.',
       };
     }
   }
@@ -158,9 +170,15 @@ exports.getPost = async (ctx) => {
   const [post] = await Post.find({'code': ctx.params.post});
 
   if (!post) {
-    throw new Error("There was an error retrieving your post.");
+    ctx.body = {
+      success: false,
+      message: 'Такой новости не существует.'
+    };
   } else {
-    ctx.body = post;
+    ctx.body = {
+      success: true,
+      post,
+    };
   }
 };
 

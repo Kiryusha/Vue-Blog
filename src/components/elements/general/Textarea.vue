@@ -83,30 +83,37 @@ export default {
 </script>
 
 <style lang="stylus">
-.textarea
-  box-sizing border-box
-  -webkit-tap-highlight-color rgba(0, 0, 0, 0)
+  .textarea
+    box-sizing border-box
+    -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
-  &__control
-    font-size 18px
-    line-height 1.5
-    border 1px solid rgba(#000, .15)
-    border-radius 4px
-    padding 10px 15px
-    -webkit-appearance none
-    display block
-    width 100%
-    font-family inherit
-    outline none
-    resize none
-    overflow hidden
-    word-wrap break-word
+    &__control
+      font-size 18px
+      line-height 1.5
+      border 1px solid rgba(#000, .15)
+      border-radius 4px
+      padding 10px 15px
+      -webkit-appearance none
+      display block
+      width 100%
+      font-family inherit
+      outline none
+      resize none
+      overflow hidden
+      word-wrap break-word
 
-  &._error &__control
-    border-color red
+    &._error &__control
+      border-color red
 
-  &__error
-    font-size 16px
-    color red
-    padding-top 10px
+    &__error
+      font-size 16px
+      color red
+      padding-top 10px
+
+    +phone()
+
+      &__control
+        font-size 16px
+        padding 10px 10px
+
 </style>

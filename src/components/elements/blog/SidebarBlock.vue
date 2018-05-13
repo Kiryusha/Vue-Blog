@@ -14,7 +14,6 @@ export default {
 <style lang="stylus">
   .sidebar-block
     background #f
-    // border 2px solid gray
     box-shadow 0 0 20px rgba(0, 0, 0, .2)
     border-radius 3px
 
@@ -33,6 +32,7 @@ export default {
         text-align left
 
     +phone()
+
       &__title
         padding 10px 10px 10px
 

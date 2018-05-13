@@ -10,7 +10,17 @@
             class="header__logo",
             :to="'/'"
           ) Kosk
-          .header__menu
+          a.header__menu-btn(
+            :class="{'_active': isMenuActive}"
+            href="#",
+            @click.prevent="toggleMenu()"
+          )
+            span
+            span
+            span
+          .header__menu(
+            :class="{'_active': isMenuActive}"
+          )
             Menu
         .header__user(v-if="isAuthenticated")
           span Привет,
@@ -31,6 +41,7 @@ export default {
       scrollPosition: 0,
       isHeaderFixed: false,
       height: 0,
+      isMenuActive: false,
     };
   },
   computed: {
@@ -54,6 +65,9 @@ export default {
     updateHeader() {
       this.scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       this.isHeaderFixed = this.scrollTop > this.height + 20;
+    },
+    toggleMenu() {
+      this.isMenuActive = !this.isMenuActive;
     },
   },
 };
@@ -99,24 +113,90 @@ export default {
         top 54px !important
 
     &._fixed &__content
-      padding 9px 0 11px
+      padding 9px 10px 11px
 
     &__user
       font-family 'Roboto Slab', sans-serif
 
-    +mobile()
+    &__menu-btn
+      display none
+
+    +phone()
+      position fixed
+
+      &._fixed
+        animation none
 
       .__cov-progress
-        top 123px !important
+        top 54px !important
 
-      &__logo
-        margin 0 0 8px 0
+      &__content
+        padding 9px 10px 11px
 
-      &__content,
-      &__left
-        align-items flex-start
-        flex-direction column
+      &__menu-btn
+        display block
+        width 54px
+        height 54px
+        position absolute
+        top 0
+        left 100px
+        cursor pointer
+        background $yellow
+
+        &:active
+          background $yellowDark
+
+        span
+          position absolute
+          top 0
+          left 0
+          right 0
+          bottom 0
+          height 3px
+          width 24px
+          margin auto
+          background #3
+          transition .2s
+
+        span:first-child
+          top 19px
+          bottom auto
+
+        span:last-child
+          top auto
+          bottom 18px
+
+      &__menu-btn._active
+
+        span
+          opacity 0
+
+        span:first-child
+          opacity 1
+          top 26px
+          transform rotate(45deg)
+
+        span:last-child
+          opacity 1
+          bottom 25px
+          transform rotate(-45deg)
+
+      &__menu
+        position fixed
+        top 54px
+        left 0
+        bottom 0
+        width 100%
+        background rgba(#000, .65)
+        transform translateX(-100%)
+        transition .2s
+
+        &._active
+          transform translateX(0)
 
       &__user
-        display none
+        max-width 145px
+        overflow hidden
+        text-overflow ellipsis
+
 </style>

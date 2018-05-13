@@ -97,7 +97,6 @@ export default {
       detailText: '',
       submitted: false,
       loaded: false,
-      sadfsd: 'asdfasd',
     };
   },
   computed: {
@@ -183,6 +182,8 @@ export default {
           }
 
           this.$Progress.finish();
+        }).catch((error) => {
+          this.$modal.show('response', { message: error.message });
         });
       }
     },
@@ -190,16 +191,21 @@ export default {
       this.$Progress.start();
 
       axios.get(`/api/posts/post/${code}/`).then((response) => {
-        if (response.data) {
-          this.id = response.data._id;
-          this.title = response.data.title;
-          this.code = response.data.code;
-          this.category = response.data.category;
-          this.previewPicture = response.data.previewPicture;
-          this.previewText = response.data.previewText;
-          this.detailText = response.data.detailText;
+        if (response.data.success) {
+          this.id = response.data.post._id;
+          this.title = response.data.post.title;
+          this.code = response.data.post.code;
+          this.category = response.data.post.category;
+          this.previewPicture = response.data.post.previewPicture;
+          this.previewText = response.data.post.previewText;
+          this.detailText = response.data.post.detailText;
+        } else {
+          this.$modal.show('response', { message: response.data.message });
+          this.$router.push({ path: '/publish/' });
         }
         this.$Progress.finish();
+      }).catch((error) => {
+        this.$modal.show('response', { message: error.message });
       });
     },
   },
@@ -261,5 +267,27 @@ export default {
       font-family 'Roboto Slab', sans-serif
       font-size 18px
       margin-bottom 15px
+
+    +phone()
+      padding-top 20px
+
+      &__title
+        margin-bottom 25px
+        text-align center
+
+        h1
+          font-size 24px
+
+      &__row-title
+        font-size 16px
+        margin-bottom 10px
+
+      &__row
+
+        & + &
+          margin-top 15px
+
+        &._controls
+          margin-top 20px
 
 </style>

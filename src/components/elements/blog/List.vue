@@ -22,11 +22,6 @@ export default {
       default: () => ([]),
     },
   },
-  mounted() {
-    if (this.list.length) {
-      this.$Progress.finish();
-    }
-  },
 };
 </script>
 

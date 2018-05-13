@@ -42,7 +42,10 @@ export default {
   methods: {
     authenticate(provider) {
       this.$Progress.start();
-      this.$store.dispatch('authenticate', { provider });
+      this.$store.dispatch('authenticate', { provider }).catch((error) => {
+        this.$modal.show('response', { message: error.message });
+        this.$Progress.finish();
+      });
       this.$modal.hide('auth');
     },
   },

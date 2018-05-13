@@ -24,12 +24,12 @@ exports.githubAuth = async (ctx) => {
     code: ctx.request.body.code,
     redirect_uri: ctx.request.redirectUri,
     state: ctx.request.state,
-    grant_type: 'authorization_code'
+    grant_type: 'authorization_code',
   }, { 'Content-Type': 'application/json' });
   const response = await request;
 
   if (!response) {
-    throw new Error('Something went wrong with github');
+    throw new Error('Что-то не так с гитхабом.');
   } else {
     const responseJson = parseQueryString(response.data);
 
@@ -59,7 +59,7 @@ exports.googleAuth = async (ctx) => {
   const response = await request;
 
   if (!response) {
-    throw new Error('Something went wrong with github');
+    throw new Error('Что-то не так с гуглом.');
   } else {
     const responseJson = JSON.parse(response);
 
@@ -72,7 +72,10 @@ exports.googleAuth = async (ctx) => {
 };
 
 exports.loginAuth = async (ctx) => {
-  const existingUser = await User.findOne(ctx.request.body);
+  const existingUser = await User.findOne({
+    email: ctx.request.body.email,
+    password: ctx.request.body.password,
+  });
 
   if (!existingUser) {
     ctx.body = {

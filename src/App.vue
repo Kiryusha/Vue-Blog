@@ -46,8 +46,8 @@ export default {
     color #3
     padding-top 94px
 
-    +mobile()
-      padding-top 123px
+    +phone()
+      padding-top 54px
 
   .container
     max-width 980px

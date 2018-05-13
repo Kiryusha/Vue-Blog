@@ -90,34 +90,39 @@ export default new Vuex.Store({
 
   actions: {
     authenticate(context, payload) {
-      vueAuth.authenticate(payload.provider).then(() => {
+      return vueAuth.authenticate(payload.provider).then(() => {
         context.commit('isAdmin', {
           isAdmin: false,
         });
 
         if (payload.provider === 'github') {
-          Vue.axios.get('https://api.github.com/user').then((response) => {
-            Vue.axios.post('/api/users/', {
+          return Vue.axios.get('https://api.github.com/user')
+            .then(response => Vue.axios.post('/api/users/', {
               name: response.data.login,
               provider: payload.provider,
               email: response.data.email,
               isAdmin: false,
-            }).then((res) => {
+            })).then((res) => {
               activateUser(context, res);
+            }).catch((error) => {
+              vueAuth.logout();
+              throw error;
             });
-          });
         } else if (payload.provider === 'google') {
-          Vue.axios.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect').then((response) => {
-            Vue.axios.post('/api/users/', {
+          return Vue.axios.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+            .then(response => Vue.axios.post('/api/users/', {
               name: response.data.name,
               provider: payload.provider,
               email: response.data.email,
               isAdmin: false,
-            }).then((res) => {
+            })).then((res) => {
               activateUser(context, res);
+            }).catch((error) => {
+              vueAuth.logout();
+              throw error;
             });
-          });
         }
+        throw new Error('Нет такого способа авторизации.');
       });
     },
 
@@ -132,7 +137,7 @@ export default new Vuex.Store({
     },
 
     authLogout(context) {
-      vueAuth.logout().then(() => {
+      return vueAuth.logout().then(() => {
         if (!vueAuth.isAuthenticated()) {
           context.commit('isAuthenticated', {
             isAuthenticated: vueAuth.isAuthenticated(),

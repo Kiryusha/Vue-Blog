@@ -5,9 +5,9 @@
     height="auto",
     @before-open="beforeOpen"
   )
-    .modal._auth
+    .modal._delete
       .modal__content
-        .modal__title Вы уверены, что хотите удалить?
+        .modal__title Вы уверены, что хотите удалить новость?
         .modal__close
           Button(
             @click="deletePost()"
@@ -48,6 +48,8 @@ export default {
           this.$Progress.finish();
           this.$modal.show('response', { message: response.data.message });
         }
+      }).catch((error) => {
+        this.$modal.show('response', { message: error.message });
       });
     },
   },
