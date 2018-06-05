@@ -130,7 +130,7 @@ export default {
 
     &__inner
       flex-grow 1
-      max-width 100%
+      max-width 670px
 
     &__sidebar
       flex-basis 270px

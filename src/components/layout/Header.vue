@@ -142,6 +142,7 @@ export default {
         left 100px
         cursor pointer
         background $yellow
+        outline none
 
         &:active
           background $yellowDark

@@ -65,6 +65,7 @@ export default {
     *
       overflow hidden
       text-overflow ellipsis
+      word-wrap break-word
 
     &__title
       font-family 'Roboto Slab', sans-serif
