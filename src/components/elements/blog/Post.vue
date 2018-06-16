@@ -28,7 +28,7 @@ export default {
       return this.post.username ? this.post.username : 'без автора';
     },
   },
-  mounted() {
+  created() {
     this.fetchData(this.$route.params.code);
   },
   beforeRouteUpdate(to, from, next) {
@@ -67,6 +67,7 @@ export default {
     *
       overflow hidden
       text-overflow ellipsis
+      word-wrap break-word
 
     &__title-block
       margin-bottom 30px

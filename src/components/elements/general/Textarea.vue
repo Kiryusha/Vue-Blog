@@ -63,6 +63,9 @@ export default {
       innerValue: this.value,
     };
   },
+  updated() {
+    this.inputHandler();
+  },
   watch: {
     value(value) {
       this.innerValue = value;

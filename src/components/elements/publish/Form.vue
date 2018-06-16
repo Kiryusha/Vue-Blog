@@ -104,7 +104,7 @@ export default {
       return this.postCode && this.postCode.length ? 'edit' : 'post';
     },
   },
-  mounted() {
+  created() {
     this.loaded = true;
     this.$Progress.finish();
     if (this.state === 'edit') {

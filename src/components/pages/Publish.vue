@@ -19,7 +19,7 @@ export default {
       code: null,
     };
   },
-  mounted() {
+  created() {
     const { code } = this.$route.params;
 
     if (code) {

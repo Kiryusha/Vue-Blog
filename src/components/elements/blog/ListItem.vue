@@ -5,9 +5,9 @@
         v-if="data.previewPicture",
         :to="`${data.code}/`"
       )
-        .blog-list-item__image(
-          :style="`background-image:url(${data.previewPicture});`"
-        )
+        //- .blog-list-item__image(
+        //-   :style="`background-image:url(${data.previewPicture});`"
+        //- )
       .blog-list-item__title {{ data.title }}
       .blog-list-item__info {{ date }}, {{ author }}
     .blog-list-item__text {{ data.previewText }}
@@ -61,6 +61,7 @@ export default {
 
 <style lang="stylus">
   .blog-list-item
+    card()
 
     *
       overflow hidden

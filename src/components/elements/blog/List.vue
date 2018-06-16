@@ -27,7 +27,6 @@ export default {
 
 <style lang="stylus">
   .blog-list
-    card()
     opacity 0
     transition opacity .2s
 
@@ -37,7 +36,7 @@ export default {
     &__item
 
       & + &
-        margin-top 75px
+        margin-top 40px
 
     &__title
       font-family 'Roboto Slab', sans-serif
@@ -53,5 +52,12 @@ export default {
       &:hover
         color $yellow
         border-color $yellow
+
+    +phone()
+
+      &__item
+
+        & + &
+          margin-top 20px
 
 </style>

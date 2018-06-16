@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "dotenv": "^6.0.0",
     "es6-promise": "^4.2.4",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.0",

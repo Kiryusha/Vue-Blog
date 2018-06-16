@@ -10,14 +10,22 @@ import App from './App';
 import router from './router';
 import store from './store';
 
+// importing all svgs
 const requireAll = r => r.keys().forEach(r);
 requireAll(require.context('./assets/ico/', true, /\.svg$/));
 
+
+// fixing IE11 "Object doesn't support property or method 'blur'" error
+if (typeof SVGElement.prototype.blur === 'undefined') {
+  SVGElement.prototype.blur = () => {};
+}
+
 Vue.config.productionTip = false;
 
+// todo: adjust loader's color
 const options = {
   color: '#BB9500',
-  failedColor: '#874b4b',
+  failedColor: '#BD4932',
   thickness: '5px',
   transition: {
     speed: '0.2s',
