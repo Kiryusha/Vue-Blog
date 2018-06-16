@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import axios from 'axios';
-import SidebarBlock from '../elements/blog/SidebarBlock';
-import Categories from '../elements/blog/Categories';
-import Delete from '../elements/modals/Delete';
+import SidebarBlock from 'Components/elements/blog/SidebarBlock';
+import Categories from 'Components/elements/blog/Categories';
+import Delete from 'Components/elements/modals/Delete';
+import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -67,7 +67,7 @@ export default {
         this.activeCategory = null;
       }
 
-      axios.get(api).then((response) => {
+      this.axios.get(api).then((response) => {
         if (add) {
           this.list = [...new Set([...this.list, ...response.data])];
         } else {
@@ -82,17 +82,17 @@ export default {
           this.$Progress.finish();
         }
       }).catch((error) => {
-        this.$modal.show('response', { message: error.message });
+        callErrorModal(this, error);
       });
     },
     fetchCategories() {
       this.$Progress.start();
 
-      axios.get('/api/categories/').then((response) => {
+      this.axios.get('/api/categories/').then((response) => {
         this.categories = response.data;
         this.$Progress.finish();
       }).catch((error) => {
-        this.$modal.show('response', { message: error.message });
+        callErrorModal(this, error);
       });
     },
     endlessScroll() {

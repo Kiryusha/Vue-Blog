@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import Button from '../general/Button';
-import formatDate from '../../../helpers/formatDate';
+import Button from 'Components/elements/general/Button';
+import formatDate from '@/helpers/formatDate';
 
 export default {
   components: {

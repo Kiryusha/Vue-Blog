@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ListItem from '../../elements/blog/ListItem';
+import ListItem from 'Components/elements/blog/ListItem';
 
 export default {
   components: {

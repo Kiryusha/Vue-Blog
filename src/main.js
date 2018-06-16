@@ -6,6 +6,8 @@ import Vue from 'vue';
 import VueProgressBar from 'vue-progressbar';
 import Vuelidate from 'vuelidate';
 import VModal from 'vue-js-modal';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 import App from './App';
 import router from './router';
 import store from './store';
@@ -25,7 +27,7 @@ Vue.config.productionTip = false;
 // todo: adjust loader's color
 const options = {
   color: '#BB9500',
-  failedColor: '#BD4932',
+  failedColor: '#FF0000',
   thickness: '5px',
   transition: {
     speed: '0.2s',
@@ -40,6 +42,7 @@ const options = {
 Vue.use(VueProgressBar, options);
 Vue.use(Vuelidate);
 Vue.use(VModal);
+Vue.use(VueAxios, axios);
 
 /* eslint-disable no-new */
 new Vue({

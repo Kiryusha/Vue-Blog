@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import formatDate from '../../../helpers/formatDate';
+import formatDate from '@/helpers/formatDate';
+import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   data() {
@@ -39,16 +39,13 @@ export default {
     fetchData(code) {
       this.$Progress.start();
 
-      axios.get(`/api/posts/post/${code}/`).then((response) => {
-        if (response.data.success) {
-          this.post = response.data.post;
-        } else {
-          this.$modal.show('response', { message: response.data.message });
-          this.$router.push({ path: '/blog/' });
-        }
+      this.axios.get(`/api/posts/post/${code}/`).then((response) => {
+        this.post = response.data.post;
+
         this.$Progress.finish();
       }).catch((error) => {
-        this.$modal.show('response', { message: error.message });
+        this.$router.push('/blog/');
+        callErrorModal(this, error);
       });
     },
   },

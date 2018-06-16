@@ -82,8 +82,9 @@
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
-import Button from '../general/Button';
-import Input from '../general/Input';
+import Button from 'Components/elements/general/Button';
+import Input from 'Components/elements/general/Input';
+import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -132,17 +133,18 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
-        }).then((response) => {
-          if (response.success) {
-            this.$modal.hide('auth');
-          } else {
-            this.response = response.message;
-          }
-        }).catch((error) => {
-          this.$modal.show('response', { message: error.message });
-        });
+        }).then(() => {
+          this.$modal.hide('auth');
 
-        this.$Progress.finish();
+          this.$Progress.finish();
+        }).catch((error) => {
+          if (error.response && error.response.status === 400) {
+            this.response = error.response.data.message;
+            this.$Progress.fail();
+          } else {
+            callErrorModal(this, error);
+          }
+        });
       }
     },
     changeState(state) {

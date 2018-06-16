@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Form from '../elements/publish/Form';
+import Form from 'Components/elements/publish/Form';
 
 export default {
   components: {

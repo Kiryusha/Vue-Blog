@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import Icon from '../general/Icon';
+import Icon from 'Components/elements/general/Icon';
 
 export default {
   components: {

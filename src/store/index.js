@@ -46,15 +46,13 @@ const activateUser = (context, res) => {
 };
 
 const nativeResponse = (context, res) => {
-  if (res.data.success) {
-    activateUser(context, {
-      data: {
-        name: res.data.user.name,
-        _id: res.data.user._id,
-        isAdmin: res.data.user.isAdmin,
-      },
-    });
-  }
+  activateUser(context, {
+    data: {
+      name: res.data.user.name,
+      _id: res.data.user._id,
+      isAdmin: res.data.user.isAdmin,
+    },
+  });
 
   return res.data;
 };
@@ -127,13 +125,21 @@ export default new Vuex.Store({
     },
 
     register(context, payload) {
-      return vueAuth.register(payload).then(response =>
-        nativeResponse(context, response));
+      return vueAuth.register(payload)
+        .then(response =>
+          nativeResponse(context, response))
+        .catch((error) => {
+          throw error;
+        });
     },
 
     login(context, payload) {
-      return vueAuth.login(payload).then(response =>
-        nativeResponse(context, response));
+      return vueAuth.login(payload)
+        .then(response =>
+          nativeResponse(context, response))
+        .catch((error) => {
+          throw error;
+        });
     },
 
     authLogout(context) {

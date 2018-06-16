@@ -24,6 +24,8 @@ export default {
 </script>
 
 <style lang="stylus">
+  @import 'styles/vue-modal';
+
   .fade-enter-active,
   .fade-leave-active
     transition opacity .2s

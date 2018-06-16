@@ -18,7 +18,10 @@ exports.githubAuth = async (ctx) => {
   const response = await request;
 
   if (!response) {
-    throw new Error('Что-то не так с гитхабом.');
+    ctx.status = 500;
+    ctx.body = {
+      message: 'Что-то не так с гитхабом.',
+    };
   } else {
     const responseJson = parseQueryString(response.data);
 
@@ -48,7 +51,10 @@ exports.googleAuth = async (ctx) => {
   const response = await request;
 
   if (!response) {
-    throw new Error('Что-то не так с гуглом.');
+    ctx.status = 500;
+    ctx.body = {
+      message: 'Что-то не так с гуглом.',
+    };
   } else {
     const responseJson = JSON.parse(response);
 
@@ -67,13 +73,12 @@ exports.loginAuth = async (ctx) => {
   });
 
   if (!existingUser) {
+    ctx.status = 400;
     ctx.body = {
-      success: false,
       message: 'Неправильный e-mail или пароль.',
     };
   } else {
     ctx.body = {
-      success: true,
       user: existingUser,
       access_token: 'super_reliable_token',
     };
@@ -94,14 +99,13 @@ exports.registerAuth = async (ctx) => {
       password: ctx.request.body.password,
     });
     ctx.body = {
-      success: true,
       message: 'Пользователь успешно зарегистрирован.',
       user,
       access_token: 'super_reliable_token',
     };
   } else {
+    ctx.status = 400;
     ctx.body = {
-      success: false,
       message: 'Пользователь с таким e-mail уже зарегистрирован',
     };
   }

@@ -70,10 +70,10 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { required } from 'vuelidate/lib/validators';
-import Textarea from '../../elements/general/Textarea';
-import Button from '../../elements/general/Button';
+import Textarea from 'Components/elements/general/Textarea';
+import Button from 'Components/elements/general/Button';
+import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -151,7 +151,7 @@ export default {
           method = 'put';
         }
 
-        axios[method]('/api/posts/', {
+        this.axios[method]('/api/posts/', {
           title: this.title,
           id: this.id,
           code: this.code.toLowerCase(),
@@ -161,51 +161,41 @@ export default {
           detailText: this.detailText,
           username: this.$store.state.username,
           userId: this.$store.state.userId,
-        }).then((res) => {
-          if (res.status === 200) {
-            this.$modal.show('response', { message: res.data.message });
+        }).then((response) => {
+          this.$modal.show('response', { message: response.data.message });
 
-            if (res.data.unique) {
-              this.submitted = false;
-              this.title = '';
-              this.code = '';
-              this.category = '';
-              this.previewPicture = '';
-              this.previewText = '';
-              this.detailText = '';
-            }
+          this.submitted = false;
+          this.title = '';
+          this.code = '';
+          this.category = '';
+          this.previewPicture = '';
+          this.previewText = '';
+          this.detailText = '';
 
-            if (res.data.unique ||
-                res.data.success) {
-              this.$router.push('/blog/');
-            }
-          }
+          this.$router.push('/blog/');
 
           this.$Progress.finish();
         }).catch((error) => {
-          this.$modal.show('response', { message: error.message });
+          callErrorModal(this, error);
         });
       }
     },
     fetchData(code) {
       this.$Progress.start();
 
-      axios.get(`/api/posts/post/${code}/`).then((response) => {
-        if (response.data.success) {
-          this.id = response.data.post._id;
-          this.title = response.data.post.title;
-          this.code = response.data.post.code;
-          this.category = response.data.post.category;
-          this.previewPicture = response.data.post.previewPicture;
-          this.previewText = response.data.post.previewText;
-          this.detailText = response.data.post.detailText;
-        } else {
-          this.$modal.show('response', { message: response.data.message });
-          this.$router.push({ path: '/publish/' });
-        }
+      this.axios.get(`/api/posts/post/${code}/`).then((response) => {
+        this.id = response.data.post._id;
+        this.title = response.data.post.title;
+        this.code = response.data.post.code;
+        this.category = response.data.post.category;
+        this.previewPicture = response.data.post.previewPicture;
+        this.previewText = response.data.post.previewText;
+        this.detailText = response.data.post.detailText;
+
         this.$Progress.finish();
       }).catch((error) => {
-        this.$modal.show('response', { message: error.message });
+        this.$router.push('/publish/');
+        callErrorModal(this, error);
       });
     },
   },

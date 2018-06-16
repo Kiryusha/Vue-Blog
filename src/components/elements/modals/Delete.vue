@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Button from '../general/Button';
+import Button from 'Components/elements/general/Button';
+import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -37,25 +37,21 @@ export default {
     deletePost() {
       this.$Progress.start();
 
-      axios.post(`/api/posts/${this.code}/delete/`, {
+      this.axios.post(`/api/posts/${this.code}/delete/`, {
         userId: this.$store.state.userId,
-      }).then((response) => {
+      }).then(() => {
         this.$modal.hide('delete');
-        if (response.data.success) {
-          this.$emit('deletePost', this.code);
-          this.$emit('fetchCategories');
-        } else {
-          this.$Progress.finish();
-          this.$modal.show('response', { message: response.data.message });
-        }
+        this.$emit('deletePost', this.code);
+        this.$emit('fetchCategories');
       }).catch((error) => {
-        this.$modal.show('response', { message: error.message });
+        this.$modal.hide('delete');
+        callErrorModal(this, error);
       });
     },
   },
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   @import '../../../styles/modal';
 </style>

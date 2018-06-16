@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import callErrorModal from '@/helpers/callErrorModal';
+
 export default {
   data() {
     return {
@@ -34,7 +36,7 @@ export default {
     logout() {
       this.$Progress.start();
       this.$store.dispatch('authLogout').catch((error) => {
-        this.$modal.show('response', { message: error.message });
+        callErrorModal(this, error);
       });
       if (this.$route.path === '/publish/') {
         this.$router.push({ path: '/blog/' });

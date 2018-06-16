@@ -14,7 +14,10 @@ exports.listPosts = async (ctx) => {
   });
 
   if (!posts) {
-    throw new Error('Ошибка получения новостей.');
+    ctx.status = 500;
+    ctx.body = {
+      message: 'Ошибка получения новостей.',
+    };
   } else {
     ctx.body = posts.docs;
   }
@@ -31,7 +34,10 @@ exports.listPostsByCategory = async (ctx) => {
   });
 
   if (!posts) {
-    throw new Error('Ошибка получения новостей по категории.');
+    ctx.status = 500;
+    ctx.body = {
+      message: 'Ошибка получения новостей по категории.',
+    };
   } else {
     ctx.body = posts.docs;
   }
@@ -42,7 +48,10 @@ exports.listCategories = async (ctx) => {
   const result = [...new Set(Object.values(categories).map(item => item.category))];
 
   if (!categories) {
-    throw new Error('Ошибка получения категорий.');
+    ctx.status = 500;
+    ctx.body = {
+      message: 'Ошибка получения категорий.',
+    };
   } else {
     ctx.body = result;
   }
@@ -53,6 +62,7 @@ exports.createPost = async (ctx) => {
   const samePost = await Post.find({'code': ctx.request.body.code});
 
   if (samePost.length) {
+    ctx.status = 400;
     ctx.body = {
       message: 'Новость с этим символьным кодом уже существует.',
     };
@@ -61,13 +71,12 @@ exports.createPost = async (ctx) => {
     const response = await post;
 
     if (!response) {
+      ctx.status = 500;
       ctx.body = {
-        success: false,
         message: 'Ошибка отправления новости.',
       };
     } else {
       ctx.body = {
-        unique: true,
         message: 'Новость успешно отправлена.',
       };
     }
@@ -89,6 +98,7 @@ exports.updatePost = async (ctx) => {
       // preventing setting same code as existing posts have, but
       // allowing to change itself
       if (sameCode && `${sameCode._id}` != `${samePost._id}`) {
+        ctx.status = 400;
         ctx.body = {
           message: 'Новость с этим символьным кодом уже существует.',
         };
@@ -106,23 +116,25 @@ exports.updatePost = async (ctx) => {
         );
 
         if (!update) {
-            throw new Error('Ошибка создания новости.');
+          ctx.status = 500;
+          ctx.body = {
+            message: 'Ошибка создания новости.',
+          };
         } else {
           ctx.body = {
-            success: true,
             message: 'Новость успешно отредактирована.',
           };
         }
       }
     } else {
+      ctx.status = 400;
       ctx.body = {
-        success: false,
         message: 'Новость может редактировать только автор или админ.',
       };
     }
   } else {
+    ctx.status = 400;
     ctx.body = {
-      success: false,
       message: 'Невозможно редактировать новость, которой нет.',
     };
   }
@@ -134,8 +146,8 @@ exports.deletePost = async (ctx) => {
   const [post] = await Post.find({'code': ctx.params.code});
 
   if (!post) {
+    ctx.status = 400;
     ctx.body = {
-      success: false,
       message: 'Невозможно удалить новость, которой нет.',
     };
   } else {
@@ -143,12 +155,11 @@ exports.deletePost = async (ctx) => {
         ctx.request.body.userId === process.env.admin_id) {
       await Post.find({'code': ctx.params.code}).remove();
       ctx.body = {
-        success: true,
         message: 'Новость успешно удалена.',
       };
     } else {
+      ctx.status = 403;
       ctx.body = {
-        success: false,
         message: 'Удалять новости может только автор или админ.',
       };
     }
@@ -159,13 +170,12 @@ exports.getPost = async (ctx) => {
   const [post] = await Post.find({'code': ctx.params.post});
 
   if (!post) {
+    ctx.status = 400;
     ctx.body = {
-      success: false,
-      message: 'Такой новости не существует.'
+      message: 'Такой новости не существует.',
     };
   } else {
     ctx.body = {
-      success: true,
       post,
     };
   }

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Button from '../general/Button';
+import Button from 'Components/elements/general/Button';
 
 export default {
   components: {
@@ -34,6 +34,6 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   @import '../../../styles/modal';
 </style>

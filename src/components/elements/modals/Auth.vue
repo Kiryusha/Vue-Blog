@@ -25,8 +25,9 @@
 </template>
 
 <script>
-import Button from '../general/Button';
-import Login from '../auth/Login';
+import Button from 'Components/elements/general/Button';
+import Login from 'Components/elements/auth/Login';
+import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -43,8 +44,7 @@ export default {
     authenticate(provider) {
       this.$Progress.start();
       this.$store.dispatch('authenticate', { provider }).catch((error) => {
-        this.$modal.show('response', { message: error.message });
-        this.$Progress.finish();
+        callErrorModal(this, error);
       });
       this.$modal.hide('auth');
     },
@@ -52,6 +52,6 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   @import '../../../styles/modal';
 </style>

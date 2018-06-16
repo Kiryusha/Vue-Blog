@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Menu from '../elements/header/Menu';
+import Menu from 'Components/elements/header/Menu';
 
 export default {
   components: {
