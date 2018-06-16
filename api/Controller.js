@@ -5,17 +5,6 @@ const User = mongoose.model('User');
 const Post = mongoose.model('Post');
 const Provider = require('./Provider');
 
-let config;
-
-if (process.env.admin_id) {
-  config = {
-    adminId: process.env.admin_id,
-  }
-} else {
-  config = require('./secrets.json');
-}
-
-
 exports.listPosts = async (ctx) => {
   const posts = await Post.paginate({}, {
     select: 'title code date category previewPicture previewText username userId',
@@ -93,7 +82,7 @@ exports.updatePost = async (ctx) => {
   if (samePost) {
     // security checking: only author or admin
     if (samePost.userId === ctx.request.body.userId ||
-        ctx.request.body.userId === config.adminId) {
+        ctx.request.body.userId === process.env.admin_id) {
 
       const [sameCode] = await Post.find({'code': ctx.request.body.code});
 
@@ -151,7 +140,7 @@ exports.deletePost = async (ctx) => {
     };
   } else {
     if (post.userId === ctx.request.body.userId ||
-        ctx.request.body.userId === config.adminId) {
+        ctx.request.body.userId === process.env.admin_id) {
       await Post.find({'code': ctx.params.code}).remove();
       ctx.body = {
         success: true,

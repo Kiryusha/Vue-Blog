@@ -5,8 +5,9 @@
   "author": "Kir Kostin <GiMun0@gmail.com>",
   "private": true,
   "scripts": {
-    "full": "node server.js | webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "full": "node -r dotenv/config server.js | webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "server": "node -r dotenv/config server.js",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
     "start": "node server.js",

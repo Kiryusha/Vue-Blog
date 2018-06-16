@@ -12,18 +12,8 @@ const User = require('./api/models/User');
 const routes = require('./api/routes');
 const app = module.exports = new koa();
 
-let config;
-
-if (process.env.mongodb_uri) {
-  config = {
-    mongoUri: process.env.mongodb_uri,
-  }
-} else {
-  config = require('./api/secrets.json');
-}
-
 mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoUri);
+mongoose.connect(process.env.mongodb_uri);
 
 app.use(logger());
 app.use(bodyParser());
