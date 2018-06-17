@@ -6,178 +6,198 @@ const Post = mongoose.model('Post');
 const Provider = require('./Provider');
 
 exports.listPosts = async (ctx) => {
-  const posts = await Post.paginate({}, {
-    select: 'title code date category previewPicture previewText username userId',
-    sort: '-date',
-    page: parseInt(ctx.params.page),
-    limit: 5,
-  });
+  try {
+    const posts = await Post.paginate({}, {
+      select: 'title code date category previewPicture previewText username userId',
+      sort: '-date',
+      page: parseInt(ctx.params.page),
+      limit: 5,
+    });
 
-  if (!posts) {
-    ctx.status = 500;
+    if (!posts) {
+      ctx.throw(500, 'Ошибка получения новостей.');
+    } else {
+      ctx.body = posts.docs;
+    }
+  } catch(error) {
+    ctx.status = error.status || 500;
     ctx.body = {
-      message: 'Ошибка получения новостей.',
+      message: error.message,
     };
-  } else {
-    ctx.body = posts.docs;
+    ctx.app.emit('error', error, ctx);
   }
 };
 
 exports.listPostsByCategory = async (ctx) => {
-  const posts = await Post.paginate({
-    'category': ctx.params.category
-  }, {
-    select: 'title code date category previewPicture previewText username userId',
-    sort: '-date',
-    page: parseInt(ctx.params.page),
-    limit: 5,
-  });
+  try {
+    const posts = await Post.paginate({
+      'category': ctx.params.category
+    }, {
+      select: 'title code date category previewPicture previewText username userId',
+      sort: '-date',
+      page: parseInt(ctx.params.page),
+      limit: 5,
+    });
 
-  if (!posts) {
-    ctx.status = 500;
+    if (!posts) {
+      ctx.throw(500, 'Ошибка получения новостей по категории.');
+    } else {
+      ctx.body = posts.docs;
+    }
+  } catch(error) {
+    ctx.status = error.status || 500;
     ctx.body = {
-      message: 'Ошибка получения новостей по категории.',
+      message: error.message,
     };
-  } else {
-    ctx.body = posts.docs;
+    ctx.app.emit('error', error, ctx);
   }
 };
 
 exports.listCategories = async (ctx) => {
-  const categories = await Post.find({}, 'category');
-  const result = [...new Set(Object.values(categories).map(item => item.category))];
+  try {
+    const categories = await Post.find({}, 'category');
+    const result = [...new Set(Object.values(categories).map(item => item.category))];
 
-  if (!categories) {
-    ctx.status = 500;
+    if (!categories) {
+      ctx.throw(500, 'Ошибка получения категорий.');
+    } else {
+      ctx.body = result;
+    }
+  } catch(error) {
+    ctx.status = error.status || 500;
     ctx.body = {
-      message: 'Ошибка получения категорий.',
+      message: error.message,
     };
-  } else {
-    ctx.body = result;
+    ctx.app.emit('error', error, ctx);
   }
 };
 
 
 exports.createPost = async (ctx) => {
-  const samePost = await Post.find({'code': ctx.request.body.code});
+  try {
+    const samePost = await Post.find({'code': ctx.request.body.code});
 
-  if (samePost.length) {
-    ctx.status = 400;
-    ctx.body = {
-      message: 'Новость с этим символьным кодом уже существует.',
-    };
-  } else {
-    const post = Post.create(ctx.request.body);
-    const response = await post;
-
-    if (!response) {
-      ctx.status = 500;
-      ctx.body = {
-        message: 'Ошибка отправления новости.',
-      };
+    if (samePost.length) {
+      ctx.throw(400, 'Новость с этим символьным кодом уже существует.');
     } else {
-      ctx.body = {
-        message: 'Новость успешно отправлена.',
-      };
+      const post = Post.create(ctx.request.body);
+      const response = await post;
+
+      if (!response) {
+        ctx.throw(500, 'Ошибка отправления новости.');
+      } else {
+        ctx.body = {
+          message: 'Новость успешно отправлена.',
+        };
+      }
     }
+  } catch(error) {
+    ctx.status = error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+    ctx.app.emit('error', error, ctx);
   }
 };
 
 // post update
 exports.updatePost = async (ctx) => {
-  const samePost = await Post.findById(ctx.request.body.id);
+  try {
+    const samePost = await Post.findById(ctx.request.body.id);
 
-  // checking if post exists
-  if (samePost) {
-    // security checking: only author or admin
-    if (samePost.userId === ctx.request.body.userId ||
-        ctx.request.body.userId === process.env.admin_id) {
+    // checking if post exists
+    if (samePost) {
+      // security checking: only author or admin
+      if (samePost.userId === ctx.request.body.userId ||
+          ctx.request.body.userId === process.env.admin_id) {
 
-      const [sameCode] = await Post.find({'code': ctx.request.body.code});
+        const [sameCode] = await Post.find({'code': ctx.request.body.code});
 
-      // preventing setting same code as existing posts have, but
-      // allowing to change itself
-      if (sameCode && `${sameCode._id}` != `${samePost._id}`) {
-        ctx.status = 400;
-        ctx.body = {
-          message: 'Новость с этим символьным кодом уже существует.',
-        };
-      } else {
-        const update = await Post.findByIdAndUpdate(
-          ctx.request.body.id,
-          {
-            title: ctx.request.body.title,
-            code: ctx.request.body.code,
-            category: ctx.request.body.category,
-            previewText: ctx.request.body.previewText,
-            previewPicture: ctx.request.body.previewPicture,
-            detailText: ctx.request.body.detailText,
-          }
-        );
-
-        if (!update) {
-          ctx.status = 500;
-          ctx.body = {
-            message: 'Ошибка создания новости.',
-          };
+        // preventing setting same code as existing posts have, but
+        // allowing to change itself
+        if (sameCode && `${sameCode._id}` != `${samePost._id}`) {
+          ctx.throw(400, 'Новость с этим символьным кодом уже существует.');
         } else {
-          ctx.body = {
-            message: 'Новость успешно отредактирована.',
-          };
+          const update = await Post.findByIdAndUpdate(
+            ctx.request.body.id,
+            {
+              title: ctx.request.body.title,
+              code: ctx.request.body.code,
+              category: ctx.request.body.category,
+              previewText: ctx.request.body.previewText,
+              previewPicture: ctx.request.body.previewPicture,
+              detailText: ctx.request.body.detailText,
+            }
+          );
+
+          if (!update) {
+            ctx.throw(500, 'Ошибка создания новости.');
+          } else {
+            ctx.body = {
+              message: 'Новость успешно отредактирована.',
+            };
+          }
         }
+      } else {
+        ctx.throw(403, 'Новость может редактировать только автор или админ.');
       }
     } else {
-      ctx.status = 400;
-      ctx.body = {
-        message: 'Новость может редактировать только автор или админ.',
-      };
+      ctx.throw(400, 'Невозможно редактировать новость, которой нет.');
     }
-  } else {
-    ctx.status = 400;
+  } catch(error) {
+    ctx.status = error.status || 500;
     ctx.body = {
-      message: 'Невозможно редактировать новость, которой нет.',
+      message: error.message,
     };
+    ctx.app.emit('error', error, ctx);
   }
 };
 
 
 
 exports.deletePost = async (ctx) => {
-  const [post] = await Post.find({'code': ctx.params.code});
+  try {
+    const [post] = await Post.find({'code': ctx.params.code});
 
-  if (!post) {
-    ctx.status = 400;
-    ctx.body = {
-      message: 'Невозможно удалить новость, которой нет.',
-    };
-  } else {
-    if (post.userId === ctx.request.body.userId ||
-        ctx.request.body.userId === process.env.admin_id) {
-      await Post.find({'code': ctx.params.code}).remove();
-      ctx.body = {
-        message: 'Новость успешно удалена.',
-      };
+    if (!post) {
+      ctx.throw(400, 'Невозможно удалить новость, которой нет.');
     } else {
-      ctx.status = 403;
-      ctx.body = {
-        message: 'Удалять новости может только автор или админ.',
-      };
+      if (post.userId === ctx.request.body.userId ||
+          ctx.request.body.userId === process.env.admin_id) {
+        await Post.find({'code': ctx.params.code}).remove();
+        ctx.body = {
+          message: 'Новость успешно удалена.',
+        };
+      } else {
+        ctx.throw(403, 'Удалять новости может только автор или админ.');
+      }
     }
+  } catch(error) {
+    ctx.status = error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+    ctx.app.emit('error', error, ctx);
   }
 };
 
 exports.getPost = async (ctx) => {
-  const [post] = await Post.find({'code': ctx.params.post});
+  try {
+    const [post] = await Post.find({'code': ctx.params.post});
 
-  if (!post) {
-    ctx.status = 400;
+    if (!post) {
+      ctx.throw(400, 'Такой новости не существует.');
+    } else {
+      ctx.body = {
+        post,
+      };
+    }
+  } catch(error) {
+    ctx.status = error.status || 500;
     ctx.body = {
-      message: 'Такой новости не существует.',
+      message: error.message,
     };
-  } else {
-    ctx.body = {
-      post,
-    };
+    ctx.app.emit('error', error, ctx);
   }
 };
 
@@ -199,12 +219,20 @@ exports.auth = async (ctx) => {
 };
 
 exports.createUser = async (ctx) => {
-  const existingUser = await User.findOne(ctx.request.body);
+  try {
+    const existingUser = await User.findOne(ctx.request.body);
 
-  if (!existingUser) {
-    const newUser = await User.create(ctx.request.body);
-    ctx.body = newUser;
-  } else {
-    ctx.body = existingUser;
+    if (!existingUser) {
+      const newUser = await User.create(ctx.request.body);
+      ctx.body = newUser;
+    } else {
+      ctx.body = existingUser;
+    }
+  } catch(error) {
+    ctx.status = error.status || 500;
+    ctx.body = {
+      message: error.message,
+    };
+    ctx.app.emit('error', error, ctx);
   }
 };

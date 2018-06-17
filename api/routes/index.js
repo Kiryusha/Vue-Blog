@@ -13,7 +13,7 @@ module.exports = function(app) {
 
   const postLimiter = RateLimit.middleware({
     interval: { min: 15 },
-    max: 25,
+    max: 50,
     message: 'Превышено максимальное количество POST/PUT запросов по этому IP за 15 мин',
   });
 
