@@ -1,18 +1,18 @@
 <template lang="pug">
   header.header(
-    :class="{'_fixed': isHeaderFixed}",
+    :class="{'_fixed': isHeaderFixed}"
     ref="header"
   )
     .container
       .header__content
         .header__left
           router-link(
-            class="header__logo",
+            class="header__logo"
             :to="'/'"
           ) Kosk
           a.header__menu-btn(
             :class="{'_active': isMenuActive}"
-            href="#",
+            href="#"
             @click.prevent="toggleMenu()"
           )
             span

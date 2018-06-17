@@ -1,8 +1,8 @@
 <template lang="pug">
   modal(
-    name="delete",
-    width="100%",
-    height="auto",
+    name="delete"
+    width="100%"
+    height="auto"
     @before-open="beforeOpen"
   )
     .modal._delete

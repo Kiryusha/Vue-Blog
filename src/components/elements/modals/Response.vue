@@ -1,8 +1,8 @@
 <template lang="pug">
   modal(
-    name="response",
-    width="100%",
-    height="auto",
+    name="response"
+    width="100%"
+    height="auto"
     @before-open="beforeOpen"
   )
     .modal

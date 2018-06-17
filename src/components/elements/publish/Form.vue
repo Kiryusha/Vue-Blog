@@ -8,53 +8,53 @@
         .publish-form__row
           .publish-form__row-title Название
           Textarea(
-            :error="getErrorMessage($v.title)",
-            :valid="!$v.title.$invalid",
-            @input="$v.title.$touch()",
-            v-model="title",
-            :maxlength="200"
+            :error="getErrorMessage($v.title)"
+            :valid="!$v.title.$invalid"
+            @input="$v.title.$touch()"
+            v-model="title"
+            :maxlength="140"
           )
         .publish-form__row
           .publish-form__row-title Символьный код
           Textarea(
-            :error="getErrorMessage($v.code)",
-            :valid="!$v.code.$invalid",
-            @input="$v.code.$touch()",
-            v-model="code",
+            :error="getErrorMessage($v.code)"
+            :valid="!$v.code.$invalid"
+            @input="$v.code.$touch()"
+            v-model="code"
             :maxlength="50"
           )
         .publish-form__row
           .publish-form__row-title Категория
           Textarea(
-            :error="getErrorMessage($v.category)",
-            :valid="!$v.category.$invalid",
-            @input="$v.category.$touch()",
-            v-model="category",
+            :error="getErrorMessage($v.category)"
+            :valid="!$v.category.$invalid"
+            @input="$v.category.$touch()"
+            v-model="category"
             :maxlength="50"
           )
         .publish-form__row
           .publish-form__row-title Путь к картинке для анонса
           Textarea(
             :rows=1
-            v-model="previewPicture",
+            v-model="previewPicture"
             :maxlength="1000"
           )
         .publish-form__row
           .publish-form__row-title Описание для анонса
           Textarea(
             :rows=3
-            v-model="previewText",
-            :maxlength="1000"
+            v-model="previewText"
+            :maxlength="311"
           )
         .publish-form__row
           .publish-form__row-title Детальное описание,
             b  HTML
           Textarea(
             :rows=5
-            :error="getErrorMessage($v.detailText)",
-            :valid="!$v.detailText.$invalid",
-            @input="$v.detailText.$touch()",
-            v-model="detailText",
+            :error="getErrorMessage($v.detailText)"
+            :valid="!$v.detailText.$invalid"
+            @input="$v.detailText.$touch()"
+            v-model="detailText"
             :maxlength="5000"
           )
         .publish-form__row._controls
@@ -65,7 +65,7 @@
           Button(
             v-if="this.state === 'edit'"
             :view="'fz16'"
-            @click="$router.push({ path: '/blog/' })"
+            @click="$router.push('/blog/')"
           ) Отмена
 </template>
 

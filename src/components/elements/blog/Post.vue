@@ -71,7 +71,6 @@ export default {
 
     &__title
       font-family 'Roboto Slab', sans-serif
-      display inline-block
       margin 0
       font-size 34px
       font-weight normal

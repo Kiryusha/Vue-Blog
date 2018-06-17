@@ -5,14 +5,14 @@
     textarea(
       ref="textarea"
       :rows="rows"
-      :placeholder="placeholder",
-      :name="name",
-      :disabled="disabled",
-      :maxlength="maxlength",
-      v-model="innerValue",
-      class="textarea__control",
-      @input="inputHandler",
-      @blur="$emit('blur')",
+      :placeholder="placeholder"
+      :name="name"
+      :disabled="disabled"
+      :maxlength="maxlength"
+      v-model="innerValue"
+      class="textarea__control"
+      @input="inputHandler"
+      @blur="$emit('blur')"
       @focus="$emit('focus')"
     )
     .textarea__error(v-if="error") {{ error }}

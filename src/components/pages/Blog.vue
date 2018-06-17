@@ -1,7 +1,7 @@
 <template lang="pug">
   .blog(ref="blog")
     Delete(
-      @deletePost="deletePost",
+      @deletePost="deletePost"
       @fetchCategories="fetchCategories"
     )
     .container
@@ -14,7 +14,7 @@
           SidebarBlock(v-if="categories.length")
             span(slot="title") Категории
             Categories(
-              :categories="categories",
+              :categories="categories"
               @fetch="fetchList"
             )
 </template>

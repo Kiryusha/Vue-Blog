@@ -10,56 +10,56 @@
       v-if="view === 'more'"
     )
       Icon(
-        :name="'arrow'",
-        width=17,
+        :name="'arrow'"
+        width=17
         height=14
       )
     .button__icon(
       v-if="view === 'github-auth'"
     )
       Icon(
-        :name="'github'",
-        width=19,
+        :name="'github'"
+        width=19
         height=20
       )
     .button__icon(
       v-if="view === 'google-auth'"
     )
       Icon(
-        :name="'google'",
-        width=20,
+        :name="'google'"
+        width=20
         height=20
       )
     .button__icon(
       v-if="view === 'delete'"
     )
       Icon(
-        :name="'delete'",
-        width=20,
+        :name="'delete'"
+        width=20
         height=20
       )
     .button__icon(
       v-if="view === 'edit'"
     )
       Icon(
-        :name="'edit'",
-        width=20,
+        :name="'edit'"
+        width=20
         height=20
       )
     .button__icon(
       v-if="view === 'login'"
     )
       Icon(
-        :name="'login'",
-        width=20,
+        :name="'login'"
+        width=20
         height=18
       )
     .button__icon(
       v-if="view === 'register'"
     )
       Icon(
-        :name="'plus'",
-        width=22,
+        :name="'plus'"
+        width=22
         height=22
       )
 </template>
@@ -216,5 +216,7 @@ export default {
     &._categories
       font-size 14px
       padding 7px 12px
+      word-wrap break-word
+      max-width 100%
 
 </style>

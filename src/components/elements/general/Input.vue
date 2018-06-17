@@ -3,14 +3,15 @@
     :class="['input', {'_valid': valid && !error, '_error': error}, cssClass]"
   )
     input(
-      class="input__control",
-      :placeholder="placeholder",
-      :name="name",
-      :type="type",
-      :disabled="disabled",
-      v-model="innerValue",
-      @input="inputHandler",
-      @blur="$emit('blur')",
+      class="input__control"
+      :placeholder="placeholder"
+      :name="name"
+      :type="type"
+      :disabled="disabled"
+      :maxlength="maxlength"
+      v-model="innerValue"
+      @input="inputHandler"
+      @blur="$emit('blur')"
       @focus="$emit('focus')"
     )
     .input__error(v-if="error") {{ error }}
@@ -30,6 +31,10 @@ export default {
     name: {
       type: String,
       default: '',
+    },
+    maxlength: {
+      type: Number,
+      default: 200,
     },
     error: {
       type: String,

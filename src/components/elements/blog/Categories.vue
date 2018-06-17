@@ -4,7 +4,7 @@
       .categories__item(v-for="item in categories")
         Button(
           :class="{'_active':activeCategory === item}"
-          :type="'a'",
+          :type="'a'"
           :view="'categories'"
           @click="selectCategory(item)"
         ) {{ item }}
@@ -52,5 +52,6 @@ export default {
 
     &__item
       margin 0 5px 5px 0
+      min-width 47px
 
 </style>

@@ -2,7 +2,7 @@
   .blog-list-item
     .blog-list-item__heading
       router-link.blog-list-item__image-wrapper(
-        v-if="data.previewPicture",
+        v-if="data.previewPicture"
         :to="`${data.code}/`"
       )
         .blog-list-item__image(
@@ -13,21 +13,21 @@
     .blog-list-item__text {{ data.previewText }}
     .blog-list-item__controls
       Button(
-        v-if="isAuthor",
-        :view="'delete'",
+        v-if="isAuthor"
+        :view="'delete'"
         :type="'a'"
         @click="$modal.show('delete', { code: data.code })"
       )
       Button(
-        v-if="isAuthor",
-        :view="'edit'",
-        :type="'a'",
-        @click="$router.push({ path: `/publish/${data.code}/` })"
+        v-if="isAuthor"
+        :view="'edit'"
+        :type="'a'"
+        @click="$router.push(`/publish/${data.code}/`)"
       )
       Button(
-        :view="'more'",
-        :type="'a'",
-        @click="$router.push({ path: `/blog/${data.code}/` })"
+        :view="'more'"
+        :type="'a'"
+        @click="$router.push(`/blog/${data.code}/`)"
       ) Подробнее
 </template>
 

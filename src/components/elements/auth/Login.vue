@@ -6,38 +6,40 @@
     .login__tab-heads
       Button.login__tab-head(
         :class="{'_active': state === 'login'}"
-        :view="'login'",
-        :type="'span'",
+        :view="'login'"
+        :type="'span'"
         @click="changeState('login')"
       )
       Button.login__tab-head(
         :class="{'_active': state === 'register'}"
-        :view="'register'",
-        :type="'span'",
+        :view="'register'"
+        :type="'span'"
         @click="changeState('register')"
       )
     .login__content
       form.login__block(v-if="state === 'login'")
         .login__row
           Input.login__input(
-            :type="'email'",
-            key="loginEmail",
-            :name="'loginEmail'",
-            placeholder="E-mail",
-            :error="getErrorMessage($v.email)",
-            :valid="!$v.email.$invalid",
-            @input="$v.email.$touch()",
+            :type="'email'"
+            key="loginEmail"
+            :name="'loginEmail'"
+            placeholder="E-mail"
+            :maxlength="100"
+            :error="getErrorMessage($v.email)"
+            :valid="!$v.email.$invalid"
+            @input="$v.email.$touch()"
             v-model="email"
           )
         .login__row
           Input.login__input(
-            :type="'password'",
-            key="loginPassword",
-            :name="'loginPassword'",
-            placeholder="Пароль",
-            :error="getErrorMessage($v.password)",
-            :valid="!$v.password.$invalid",
-            @input="$v.password.$touch()",
+            :type="'password'"
+            key="loginPassword"
+            :name="'loginPassword'"
+            placeholder="Пароль"
+            :maxlength="100"
+            :error="getErrorMessage($v.password)"
+            :valid="!$v.password.$invalid"
+            @input="$v.password.$touch()"
             v-model="password"
           )
         .login__row
@@ -45,35 +47,38 @@
       form.login__block(v-if="state === 'register'")
         .login__row
           Input.login__input(
-            :type="'text'",
-            key="regName",
-            :name="'regName'",
+            :type="'text'"
+            key="regName"
+            :name="'regName'"
             placeholder="Имя"
-            :error="getErrorMessage($v.name)",
-            :valid="!$v.name.$invalid",
-            @input="$v.name.$touch()",
+            :maxlength="50"
+            :error="getErrorMessage($v.name)"
+            :valid="!$v.name.$invalid"
+            @input="$v.name.$touch()"
             v-model="name"
           )
         .login__row
           Input.login__input(
-            :type="'email'",
-            key="regEmail",
-            :name="'regEmail'",
-            placeholder="E-mail",
-            :error="getErrorMessage($v.email)",
-            :valid="!$v.email.$invalid",
-            @input="$v.email.$touch()",
+            :type="'email'"
+            key="regEmail"
+            :name="'regEmail'"
+            placeholder="E-mail"
+            :maxlength="100"
+            :error="getErrorMessage($v.email)"
+            :valid="!$v.email.$invalid"
+            @input="$v.email.$touch()"
             v-model="email"
           )
         .login__row
           Input.login__input(
             :type="'password'"
-            key="regPassword",
-            :name="'regPassword'",
-            placeholder="Пароль",
-            :error="getErrorMessage($v.password)",
-            :valid="!$v.password.$invalid",
-            @input="$v.password.$touch()",
+            key="regPassword"
+            :name="'regPassword'"
+            placeholder="Пароль"
+            :maxlength="100"
+            :error="getErrorMessage($v.password)"
+            :valid="!$v.password.$invalid"
+            @input="$v.password.$touch()"
             v-model="password"
           )
         .login__row
