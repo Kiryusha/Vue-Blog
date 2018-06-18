@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import Textarea from 'Components/elements/general/Textarea';
 import Button from 'Components/elements/general/Button';
@@ -100,6 +101,10 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      userId: state => state.auth.userId,
+      username: state => state.auth.username,
+    }),
     state() {
       return this.postCode && this.postCode.length ? 'edit' : 'post';
     },
@@ -159,8 +164,8 @@ export default {
           previewText: this.previewText,
           previewPicture: this.previewPicture,
           detailText: this.detailText,
-          username: this.$store.state.username,
-          userId: this.$store.state.userId,
+          username: this.username,
+          userId: this.userId,
         }).then((response) => {
           this.$modal.show('response', { message: response.data.message });
 

@@ -48,10 +48,10 @@ export default {
     isAuthenticated() {
       this.$Progress.finish();
 
-      return this.$store.state.isAuthenticated;
+      return this.$store.state.auth.isAuthenticated;
     },
     username() {
-      return this.$store.state.username;
+      return this.$store.state.auth.username;
     },
   },
   mounted() {

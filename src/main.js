@@ -44,6 +44,9 @@ Vue.use(Vuelidate);
 Vue.use(VModal);
 Vue.use(VueAxios, axios);
 
+// Loading store from localStorage
+store.commit('initialiseStore');
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

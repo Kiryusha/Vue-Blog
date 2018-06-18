@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Button from 'Components/elements/general/Button';
 import formatDate from '@/helpers/formatDate';
 
@@ -46,6 +47,10 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      isAdmin: state => state.auth.isAdmin,
+      userId: state => state.auth.userId,
+    }),
     date() {
       return formatDate(this.data.date);
     },
@@ -53,7 +58,7 @@ export default {
       return this.data.username ? this.data.username : 'без автора';
     },
     isAuthor() {
-      return this.$store.state.isAdmin || this.data.userId === this.$store.state.userId;
+      return this.isAdmin || this.data.userId === this.userId;
     },
   },
 };

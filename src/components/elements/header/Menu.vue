@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
@@ -28,9 +29,9 @@ export default {
     };
   },
   computed: {
-    isAuthenticated() {
-      return this.$store.state.isAuthenticated;
-    },
+    ...mapState({
+      isAuthenticated: state => state.auth.isAuthenticated,
+    }),
   },
   methods: {
     logout() {

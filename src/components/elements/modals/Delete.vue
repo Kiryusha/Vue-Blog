@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Button from 'Components/elements/general/Button';
 import callErrorModal from '@/helpers/callErrorModal';
 
@@ -30,6 +31,11 @@ export default {
       code: null,
     };
   },
+  computed: {
+    ...mapState({
+      userId: state => state.auth.userId,
+    }),
+  },
   methods: {
     beforeOpen(event) {
       this.code = event.params.code;
@@ -38,7 +44,7 @@ export default {
       this.$Progress.start();
 
       this.axios.post(`/api/posts/${this.code}/delete/`, {
-        userId: this.$store.state.userId,
+        userId: this.userId,
       }).then(() => {
         this.$modal.hide('delete');
         this.$emit('deletePost', this.code);

@@ -5,7 +5,7 @@ import List from '@/components/elements/blog/List';
 import Post from '@/components/elements/blog/Post';
 import Publish from '@/components/pages/Publish';
 import NotFound from '@/components/pages/NotFound';
-import store from '../store';
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -42,7 +42,7 @@ export default new Router({
         },
       ],
       beforeEnter: (to, from, next) => {
-        if (!store.state.isAuthenticated) {
+        if (!store.state.auth.isAuthenticated) {
           next('/blog/');
         } else {
           next();
