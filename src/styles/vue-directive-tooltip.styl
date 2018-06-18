@@ -1,0 +1,33 @@
+.tooltip-custom
+  background #FFF
+  font-family 'Open Sans', sans-serif
+  font-size 14px
+  max-width 300px
+  padding 5px 7px
+  margin-bottom 5px
+  margin-left 1px
+  border 1px solid gray
+  text-align center
+
+  &:after,
+  &:before
+    content ''
+    position absolute
+    left 0
+    right 0
+    top 100%
+    margin auto
+    width 0
+    height 0
+    border-left 5px solid transparent
+    border-right 5px solid transparent
+    border-top 5px solid #FFF
+
+  &:before
+    border-left 6px solid transparent
+    border-right 6px solid transparent
+    border-top 6px solid black
+
+  +phone()
+    max-width 250px
+    font-size 12px

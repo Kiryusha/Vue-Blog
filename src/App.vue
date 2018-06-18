@@ -25,6 +25,7 @@ export default {
 
 <style lang="stylus">
   @import 'styles/vue-modal';
+  @import 'styles/vue-directive-tooltip';
 
   .fade-enter-active,
   .fade-leave-active

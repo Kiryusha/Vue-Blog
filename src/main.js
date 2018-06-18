@@ -8,6 +8,7 @@ import Vuelidate from 'vuelidate';
 import VModal from 'vue-js-modal';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import Tooltip from 'vue-directive-tooltip';
 import App from './App';
 import router from './router';
 import store from './store';
@@ -25,7 +26,7 @@ if (typeof SVGElement.prototype.blur === 'undefined') {
 Vue.config.productionTip = false;
 
 // todo: adjust loader's color
-const options = {
+const progressBarOptions = {
   color: '#BB9500',
   failedColor: '#FF0000',
   thickness: '5px',
@@ -39,10 +40,18 @@ const options = {
   inverse: false,
 };
 
-Vue.use(VueProgressBar, options);
+const tooltipOptions = {
+  placement: 'top',
+  class: 'tooltip-custom',
+  offset: 2,
+  delay: 100,
+};
+
+Vue.use(VueProgressBar, progressBarOptions);
 Vue.use(Vuelidate);
 Vue.use(VModal);
 Vue.use(VueAxios, axios);
+Vue.use(Tooltip, tooltipOptions);
 
 // Loading store from localStorage
 store.commit('initialiseStore');

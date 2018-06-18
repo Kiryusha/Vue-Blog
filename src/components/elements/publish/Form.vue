@@ -15,7 +15,17 @@
             :maxlength="140"
           )
         .publish-form__row
-          .publish-form__row-title Символьный код
+          .publish-form__row-title
+            span Символьный код
+            span.publish-form__question
+              Icon(
+                :name="'question'"
+                width=16
+                height=16
+                v-tooltip.click.top=`{
+                  content: 'Адрес, который будет выводиться в url. Должен быть уникальным.'
+                }`
+              )
           Textarea(
             :error="getErrorMessage($v.code)"
             :valid="!$v.code.$invalid"
@@ -47,8 +57,17 @@
             :maxlength="311"
           )
         .publish-form__row
-          .publish-form__row-title Детальное описание,
-            b  HTML
+          .publish-form__row-title
+            span Детальное описание
+            span.publish-form__question
+              Icon(
+                :name="'question'"
+                width=16
+                height=16
+                v-tooltip.click.top=`{
+                  content: 'Можно использовать HTML.'
+                }`
+              )
           Textarea(
             :rows=5
             :error="getErrorMessage($v.detailText)"
@@ -74,12 +93,14 @@ import { mapState } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import Textarea from 'Components/elements/general/Textarea';
 import Button from 'Components/elements/general/Button';
+import Icon from 'Components/elements/general/Icon';
 import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
     Textarea,
     Button,
+    Icon,
   },
   props: {
     postCode: {
@@ -160,7 +181,7 @@ export default {
           title: this.title,
           id: this.id,
           code: this.code.toLowerCase(),
-          category: this.category,
+          category: this.category ? this.category : 'Без категории',
           previewText: this.previewText,
           previewPicture: this.previewPicture,
           detailText: this.detailText,
@@ -221,7 +242,7 @@ export default {
 
     return {
       title: { checkTitle, required },
-      category: { checkTitle, required },
+      category: { checkTitle },
       code: { checkCode, required },
       detailText: { required },
     };
@@ -262,6 +283,12 @@ export default {
       font-family 'Roboto Slab', sans-serif
       font-size 18px
       margin-bottom 15px
+
+    &__question
+      position relative
+      top 2px
+      left 10px
+      cursor pointer
 
     +phone()
       padding-top 20px
