@@ -9,7 +9,7 @@ import store from '@/store';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -24,30 +24,25 @@ export default new Router({
       children: [{
         path: '',
         component: List,
-        name: 'BlogList',
-        props: true,
       }, {
         path: ':code',
         component: Post,
-        name: 'BlogPost',
       }],
     }, {
       path: '/publish/',
       component: Publish,
+      meta: {
+        requiresAuth: true,
+      },
       children: [
         {
           path: ':code',
           component: Publish,
-          name: 'Publish',
+          meta: {
+            requiresAuth: true,
+          },
         },
       ],
-      beforeEnter: (to, from, next) => {
-        if (!store.state.auth.isAuthenticated) {
-          next('/blog/');
-        } else {
-          next();
-        }
-      },
     },
   ],
   scrollBehavior(to, from, savedPosition) {
@@ -59,3 +54,17 @@ export default new Router({
   },
   linkActiveClass: '_active',
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    if (!store.state.auth.isAuthenticated) {
+      next('/blog/');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;
