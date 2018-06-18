@@ -90,13 +90,13 @@ export default {
 
       a
         text-decoration none
-        color $yellow
-        border-bottom 1px solid $yellow
+        color $yellowDark
+        border-bottom 1px solid $yellowDark
         transition .2s
 
         &:hover
-          color $yellowDark
-          border-color $yellowDark
+          color $clay
+          border-color $clay
 
       cite
         display inline-block
