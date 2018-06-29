@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import axios from 'axios';
+import axios from '@/helpers/axios-api';
 import VueAxios from 'vue-axios';
 import { VueAuthenticate } from 'vue-authenticate';
 import activateUser from '@/helpers/activateUser';

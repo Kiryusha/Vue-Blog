@@ -9,6 +9,7 @@
         section.blog__inner
           router-view(
             :list="list"
+            :key="$route.fullPath"
           )
         section.blog__sidebar
           SidebarBlock(v-if="categories.length")
@@ -43,17 +44,17 @@ export default {
     this.initBlog();
   },
   destroyed() {
-    window.removeEventListener('scroll', this.endlessScroll);
+    this.removeScroll();
   },
   methods: {
     async initBlog() {
-      this.fetchCategories();
-      await this.fetchList();
-      window.addEventListener('scroll', this.endlessScroll);
+      await Promise.all([
+        this.fetchCategories(),
+        this.fetchList(),
+      ]);
+      this.addScroll();
     },
     fetchList(category, page = 1, add) {
-      this.$Progress.start();
-
       if (page === 1) {
         this.page = 1;
       }
@@ -75,22 +76,15 @@ export default {
         }
 
         if (category && this.$route.path !== '/blog/') {
-          this.$router.push({ path: '/blog/' }, () => {
-            this.$Progress.finish();
-          });
-        } else {
-          this.$Progress.finish();
+          this.$router.push({ path: '/blog/' });
         }
       }).catch((error) => {
         callErrorModal(this, error);
       });
     },
     fetchCategories() {
-      this.$Progress.start();
-
       this.axios.get('/api/categories/').then((response) => {
         this.categories = response.data;
-        this.$Progress.finish();
       }).catch((error) => {
         callErrorModal(this, error);
       });
@@ -110,6 +104,12 @@ export default {
     },
     deletePost(code) {
       this.list = this.list.filter(item => item.code !== code);
+    },
+    addScroll() {
+      window.addEventListener('scroll', this.endlessScroll, true);
+    },
+    removeScroll() {
+      window.removeEventListener('scroll', this.endlessScroll, true);
     },
   },
 };

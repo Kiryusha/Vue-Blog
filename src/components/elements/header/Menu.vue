@@ -8,7 +8,7 @@
       router-link.header-menu__link(
         :to="'/publish/'"
       ) Опубликовать
-    .header-menu__item(v-if="!isAuthenticated")
+    .header-menu__item(v-else)
       span.header-menu__link(
         @click="$modal.show('auth')"
       ) Войти
@@ -36,7 +36,9 @@ export default {
   methods: {
     logout() {
       this.$Progress.start();
-      this.$store.dispatch('authLogout').catch((error) => {
+      this.$store.dispatch('authLogout').then(() => {
+        this.$Progress.finish();
+      }).catch((error) => {
         callErrorModal(this, error);
       });
       if (this.$route.path === '/publish/') {

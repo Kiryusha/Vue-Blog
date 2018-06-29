@@ -31,18 +31,10 @@ export default {
   created() {
     this.fetchData(this.$route.params.code);
   },
-  beforeRouteUpdate(to, from, next) {
-    this.fetchData(to.params.code);
-    next();
-  },
   methods: {
     fetchData(code) {
-      this.$Progress.start();
-
       this.axios.get(`/api/posts/post/${code}/`).then((response) => {
         this.post = response.data.post;
-
-        this.$Progress.finish();
       }).catch((error) => {
         this.$router.push('/blog/');
         callErrorModal(this, error);

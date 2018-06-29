@@ -6,7 +6,7 @@ import Vue from 'vue';
 import VueProgressBar from 'vue-progressbar';
 import Vuelidate from 'vuelidate';
 import VModal from 'vue-js-modal';
-import axios from 'axios';
+import axios from '@/helpers/axios-api';
 import VueAxios from 'vue-axios';
 import Tooltip from 'vue-directive-tooltip';
 import App from './App';
@@ -57,7 +57,7 @@ Vue.use(Tooltip, tooltipOptions);
 store.commit('initialiseStore');
 
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({
   el: '#app',
   router,
   store,

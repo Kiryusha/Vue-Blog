@@ -41,8 +41,6 @@ export default {
       this.code = event.params.code;
     },
     deletePost() {
-      this.$Progress.start();
-
       this.axios.post(`/api/posts/${this.code}/delete/`, {
         userId: this.userId,
       }).then(() => {

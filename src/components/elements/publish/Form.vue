@@ -132,10 +132,10 @@ export default {
   },
   created() {
     this.loaded = true;
-    this.$Progress.finish();
     if (this.state === 'edit') {
       this.fetchData(this.postCode);
     }
+    this.$Progress.finish();
   },
   watch: {
     state(type) {
@@ -169,8 +169,6 @@ export default {
       this.submitted = true;
 
       if (!this.$v.$invalid) {
-        this.$Progress.start();
-
         let method = 'post';
 
         if (this.state === 'edit') {
@@ -199,16 +197,12 @@ export default {
           this.detailText = '';
 
           this.$router.push('/blog/');
-
-          this.$Progress.finish();
         }).catch((error) => {
           callErrorModal(this, error);
         });
       }
     },
     fetchData(code) {
-      this.$Progress.start();
-
       this.axios.get(`/api/posts/post/${code}/`).then((response) => {
         this.id = response.data.post._id;
         this.title = response.data.post.title;
@@ -217,8 +211,6 @@ export default {
         this.previewPicture = response.data.post.previewPicture;
         this.previewText = response.data.post.previewText;
         this.detailText = response.data.post.detailText;
-
-        this.$Progress.finish();
       }).catch((error) => {
         this.$router.push('/publish/');
         callErrorModal(this, error);

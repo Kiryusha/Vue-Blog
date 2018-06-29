@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Menu from 'Components/elements/header/Menu';
 
 export default {
@@ -45,14 +46,10 @@ export default {
     };
   },
   computed: {
-    isAuthenticated() {
-      this.$Progress.finish();
-
-      return this.$store.state.auth.isAuthenticated;
-    },
-    username() {
-      return this.$store.state.auth.username;
-    },
+    ...mapState({
+      isAuthenticated: state => state.auth.isAuthenticated,
+      username: state => state.auth.username,
+    }),
   },
   mounted() {
     this.height = this.$refs.header.clientHeight;

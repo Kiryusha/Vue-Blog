@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     authenticate(provider) {
-      this.$Progress.start();
       this.$store.dispatch('authenticate', { provider }).catch((error) => {
         callErrorModal(this, error);
       });

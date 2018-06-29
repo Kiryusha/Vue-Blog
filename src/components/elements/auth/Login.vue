@@ -131,7 +131,6 @@ export default {
       this.submitted = true;
 
       if (!this.$v.$invalid) {
-        this.$Progress.start();
         this.submitted = false;
 
         this.$store.dispatch(this.state, {
@@ -140,8 +139,6 @@ export default {
           password: this.password,
         }).then(() => {
           this.$modal.hide('auth');
-
-          this.$Progress.finish();
         }).catch((error) => {
           if (error.response && error.response.status === 400) {
             this.response = error.response.data.message;
