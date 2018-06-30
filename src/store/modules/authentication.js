@@ -1,8 +1,8 @@
+/* eslint-disable no-shadow */
 import Vue from 'vue';
-import axios from '@/helpers/axios-api';
 import VueAxios from 'vue-axios';
+import axios from '@/helpers/axios-api';
 import { VueAuthenticate } from 'vue-authenticate';
-import activateUser from '@/helpers/activateUser';
 
 Vue.use(VueAxios, axios);
 
@@ -24,35 +24,23 @@ const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
   },
 });
 
+const state = {
+  userId: '',
+  username: '',
+  isAdmin: false,
+};
+
 const mutations = {
-  isAuthenticated(state, payload) {
-    state.isAuthenticated = payload.isAuthenticated;
-  },
-  username(state, payload) {
-    state.username = payload.username;
-  },
-  userId(state, payload) {
+  SET_USER(state, payload) {
     state.userId = payload.userId;
-  },
-  isAdmin(state, payload) {
+    state.username = payload.username;
     state.isAdmin = payload.isAdmin;
   },
 };
 
-const state = {
-  isAuthenticated: false,
-  username: '',
-  userId: '',
-  isAdmin: false,
-};
-
 const actions = {
-  authenticate(context, payload) {
+  authenticate({ commit }, payload) {
     return vueAuth.authenticate(payload.provider).then(() => {
-      context.commit('isAdmin', {
-        isAdmin: false,
-      });
-
       if (payload.provider === 'github') {
         return Vue.axios.get('https://api.github.com/user')
           .then(response => Vue.axios.post('/api/users/', {
@@ -60,8 +48,16 @@ const actions = {
             provider: payload.provider,
             email: response.data.email,
             isAdmin: false,
-          })).then((res) => {
-            activateUser(context, res, vueAuth);
+          })).then((response) => {
+            if (vueAuth.isAuthenticated()) {
+              commit('SET_USER', {
+                userId: response.data._id,
+                username: response.data.name,
+                isAdmin: response.data.isAdmin,
+              });
+            } else {
+              throw new Error('Проблема с плагином авторизации.');
+            }
           }).catch((error) => {
             vueAuth.logout();
             throw error;
@@ -73,8 +69,16 @@ const actions = {
             provider: payload.provider,
             email: response.data.email,
             isAdmin: false,
-          })).then((res) => {
-            activateUser(context, res, vueAuth);
+          })).then((response) => {
+            if (vueAuth.isAuthenticated()) {
+              commit('SET_USER', {
+                userId: response.data._id,
+                username: response.data.name,
+                isAdmin: response.data.isAdmin,
+              });
+            } else {
+              throw new Error('Проблема с плагином авторизации.');
+            }
           }).catch((error) => {
             vueAuth.logout();
             throw error;
@@ -84,55 +88,55 @@ const actions = {
     });
   },
 
-  register(context, payload) {
+  register({ commit }, payload) {
     return vueAuth.register(payload)
-      .then(response =>
-        activateUser(context, {
-          data: {
-            name: response.data.user.name,
-            _id: response.data.user._id,
+      .then((response) => {
+        if (vueAuth.isAuthenticated()) {
+          commit('SET_USER', {
+            userId: response.data.user._id,
+            username: response.data.user.name,
             isAdmin: response.data.user.isAdmin,
-          },
-        }, vueAuth))
+          });
+        } else {
+          throw new Error('Проблема с плагином авторизации.');
+        }
+      })
       .catch((error) => {
         throw error;
       });
   },
 
-  login(context, payload) {
+  login({ commit }, payload) {
     return vueAuth.login(payload)
-      .then(response =>
-        activateUser(context, {
-          data: {
-            name: response.data.user.name,
-            _id: response.data.user._id,
+      .then((response) => {
+        if (vueAuth.isAuthenticated()) {
+          commit('SET_USER', {
+            userId: response.data.user._id,
+            username: response.data.user.name,
             isAdmin: response.data.user.isAdmin,
-          },
-        }, vueAuth))
+          });
+        } else {
+          throw new Error('Проблема с плагином авторизации.');
+        }
+      })
       .catch((error) => {
         throw error;
       });
   },
 
-  authLogout(context) {
+  authLogout({ commit }) {
     return vueAuth.logout().then(() => {
       if (!vueAuth.isAuthenticated()) {
-        context.commit('isAuthenticated', {
-          isAuthenticated: vueAuth.isAuthenticated(),
-        });
-
-        context.commit('username', {
-          username: '',
-        });
-
-        context.commit('userId', {
+        commit('SET_USER', {
           userId: '',
+          username: '',
+          isAdmin: '',
         });
-
-        context.commit('isAdmin', {
-          isAdmin: false,
-        });
+      } else {
+        throw new Error('Проблема с плагином авторизации.');
       }
+    }).catch((error) => {
+      throw error;
     });
   },
 };

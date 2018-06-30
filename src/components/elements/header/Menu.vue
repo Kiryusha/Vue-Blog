@@ -4,7 +4,7 @@
       router-link.header-menu__link(
         :to="'/blog/'"
       ) Блог
-    .header-menu__item(v-if="isAuthenticated")
+    .header-menu__item(v-if="userId")
       router-link.header-menu__link(
         :to="'/publish/'"
       ) Опубликовать
@@ -12,7 +12,7 @@
       span.header-menu__link(
         @click="$modal.show('auth')"
       ) Войти
-    .header-menu__item(v-if="isAuthenticated")
+    .header-menu__item(v-if="userId")
       span.header-menu__link(
         @click="logout()"
       ) Выйти
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isAuthenticated: state => state.auth.isAuthenticated,
+      userId: state => state.auth.userId,
     }),
   },
   methods: {

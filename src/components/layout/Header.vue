@@ -22,7 +22,7 @@
             :class="{'_active': isMenuActive}"
           )
             Menu
-        .header__user(v-if="isAuthenticated")
+        .header__user(v-if="userId")
           span Привет,
           b  {{ username }}
           | !
@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isAuthenticated: state => state.auth.isAuthenticated,
+      userId: state => state.auth.userId,
       username: state => state.auth.username,
     }),
   },
