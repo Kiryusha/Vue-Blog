@@ -1,9 +1,6 @@
 <template lang="pug">
   .blog(ref="blog")
-    Delete(
-      @deletePost="deletePost"
-      @fetchCategories="fetchCategories"
-    )
+    Delete
     .container
       .blog__content
         section.blog__inner
@@ -12,20 +9,16 @@
             :key="$route.fullPath"
           )
         section.blog__sidebar
-          SidebarBlock(v-if="categories.length")
-            span(slot="title") Категории
-            Categories
+          Categories(v-if="categories.length")
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import SidebarBlock from 'Components/elements/blog/SidebarBlock';
 import Categories from 'Components/elements/blog/Categories';
 import Delete from 'Components/elements/modals/Delete';
 
 export default {
   components: {
-    SidebarBlock,
     Categories,
     Delete,
   },
@@ -37,10 +30,10 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state => state.list.list,
-      categories: state => state.list.categories,
-      currentPage: state => state.list.currentPage,
-      activeCategory: state => state.list.activeCategory,
+      list: state => state.post.list,
+      categories: state => state.post.categories,
+      currentPage: state => state.post.currentPage,
+      activeCategory: state => state.post.activeCategory,
     }),
   },
   methods: {
@@ -71,9 +64,6 @@ export default {
           shouldAdd: true,
         });
       }
-    },
-    deletePost(code) {
-      this.list = this.list.filter(item => item.code !== code);
     },
     addScroll() {
       window.addEventListener('scroll', this.endlessScroll, true);

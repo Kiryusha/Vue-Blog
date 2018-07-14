@@ -13,6 +13,7 @@ function processError(error) {
     errText = error.message;
   }
 
+  app.$Progress.fail();
   app.$modal.show('response', { message: errText });
 }
 
@@ -21,6 +22,7 @@ instance.interceptors.request.use((config) => {
   return config;
 }, (error) => {
   processError(error);
+
   return Promise.reject(error);
 });
 
@@ -28,7 +30,6 @@ instance.interceptors.response.use((response) => {
   app.$Progress.finish();
   return response;
 }, (error) => {
-  app.$Progress.fail();
   const altHandling =
     error.response &&
     error.response.status === 400 && (

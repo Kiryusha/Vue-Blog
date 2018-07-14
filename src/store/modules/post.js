@@ -24,6 +24,9 @@ const mutations = {
   SET_ACTIVE_CATEGORY(state, payload) {
     state.activeCategory = payload;
   },
+  DELETED_POST(state, payload) {
+    state.list = state.list.filter(item => item.code !== payload);
+  },
 };
 
 const actions = {
@@ -46,14 +49,19 @@ const actions = {
       } else {
         commit('FECHED_LIST', response.data);
       }
-    }).catch((error) => {
-      throw error;
-    });
+    }).catch(() => {});
   },
   fetchCategories({ commit }) {
     return axios.get('/api/categories/').then((response) => {
       this.categories = response.data;
       commit('FETCED_CATREGORIES', response.data);
+    }).catch(() => {});
+  },
+  deletePost({ commit }, { userId, code }) {
+    return axios.post(`/api/posts/${code}/delete/`, {
+      userId,
+    }).then(() => {
+      commit('DELETED_POST', code);
     }).catch(() => {});
   },
 };

@@ -94,7 +94,6 @@ import { required } from 'vuelidate/lib/validators';
 import Textarea from 'Components/elements/general/Textarea';
 import Button from 'Components/elements/general/Button';
 import Icon from 'Components/elements/general/Icon';
-import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -197,9 +196,7 @@ export default {
           this.detailText = '';
 
           this.$router.push('/blog/');
-        }).catch((error) => {
-          callErrorModal(this, error);
-        });
+        }).catch(() => {});
       }
     },
     fetchData(code) {
@@ -211,10 +208,7 @@ export default {
         this.previewPicture = response.data.post.previewPicture;
         this.previewText = response.data.post.previewText;
         this.detailText = response.data.post.detailText;
-      }).catch((error) => {
-        this.$router.push('/publish/');
-        callErrorModal(this, error);
-      });
+      }).catch(() => {});
     },
   },
   validations() {

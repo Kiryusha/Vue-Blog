@@ -10,7 +10,7 @@
         .modal__title Вы уверены, что хотите удалить новость?
         .modal__close
           Button(
-            @click="deletePost()"
+            @click="submitDeletion"
           ) Удалить
           Button(
             @click="$modal.hide('delete')"
@@ -18,9 +18,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import Button from 'Components/elements/general/Button';
-import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -37,20 +36,22 @@ export default {
     }),
   },
   methods: {
+    ...mapActions([
+      'fetchCategories',
+      'deletePost',
+    ]),
     beforeOpen(event) {
       this.code = event.params.code;
     },
-    deletePost() {
-      this.axios.post(`/api/posts/${this.code}/delete/`, {
+    async submitDeletion() {
+      this.$modal.hide('delete');
+
+      await this.deletePost({
+        code: this.code,
         userId: this.userId,
-      }).then(() => {
-        this.$modal.hide('delete');
-        this.$emit('deletePost', this.code);
-        this.$emit('fetchCategories');
-      }).catch((error) => {
-        this.$modal.hide('delete');
-        callErrorModal(this, error);
       });
+
+      this.fetchCategories();
     },
   },
 };
