@@ -5,7 +5,7 @@
     height="auto"
     @before-open="beforeOpen"
   )
-    .modal._delete
+    ModalWrapper._delete
       .modal__content
         .modal__title Вы уверены, что хотите удалить новость?
         .modal__close
@@ -19,10 +19,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import ModalWrapper from 'Components/elements/modals/Modal';
 import Button from 'Components/elements/general/Button';
 
 export default {
   components: {
+    ModalWrapper,
     Button,
   },
   data() {
@@ -56,7 +58,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus" scoped>
-  @import '../../../styles/modal';
-</style>

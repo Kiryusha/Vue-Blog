@@ -5,7 +5,7 @@
     height="auto"
     @before-open="beforeOpen"
   )
-    .modal
+    ModalWrapper
       .modal__content
         .modal__title {{title}}
         .modal__close
@@ -15,10 +15,12 @@
 </template>
 
 <script>
+import ModalWrapper from 'Components/elements/modals/Modal';
 import Button from 'Components/elements/general/Button';
 
 export default {
   components: {
+    ModalWrapper,
     Button,
   },
   data() {
@@ -33,7 +35,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus" scoped>
-  @import '../../../styles/modal';
-</style>

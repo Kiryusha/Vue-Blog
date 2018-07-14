@@ -4,7 +4,7 @@
     width="100%",
     height="auto"
   )
-    .modal._auth
+    ModalWrapper._auth
       .modal__content
         .modal__title Авторизация
         .modal__login
@@ -25,12 +25,14 @@
 </template>
 
 <script>
+import ModalWrapper from 'Components/elements/modals/Modal';
 import Button from 'Components/elements/general/Button';
 import Login from 'Components/elements/auth/Login';
 import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
+    ModalWrapper,
     Button,
     Login,
   },
@@ -50,7 +52,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus" scoped>
-  @import '../../../styles/modal';
-</style>
