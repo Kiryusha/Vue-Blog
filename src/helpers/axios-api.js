@@ -1,16 +1,46 @@
 import axios from 'axios';
-import app from '@/main'; // import the instance
+import app from '@/main';
 
 const instance = axios.create();
 
+function processError(error) {
+  let errText = 'Неизвестная ошибка.';
+
+  if (error.response) {
+    errText = error.response.data.message ? error.response.data.message :
+      error.response.data;
+  } else {
+    errText = error.message;
+  }
+
+  app.$modal.show('response', { message: errText });
+}
+
 instance.interceptors.request.use((config) => {
-  app.$Progress.start(); // for every request start the progress
+  app.$Progress.start();
   return config;
+}, (error) => {
+  processError(error);
+  return Promise.reject(error);
 });
 
 instance.interceptors.response.use((response) => {
-  app.$Progress.finish(); // finish when a response is received
+  app.$Progress.finish();
   return response;
+}, (error) => {
+  app.$Progress.fail();
+  const altHandling =
+    error.response &&
+    error.response.status === 400 && (
+      error.response.config.url.indexOf('/auth/login') !== -1 ||
+      error.response.config.url.indexOf('/auth/register') !== -1
+    );
+
+  if (!altHandling) {
+    processError(error);
+  }
+
+  return Promise.reject(error);
 });
 
-export default instance; // export axios instace to be imported in your app
+export default instance;

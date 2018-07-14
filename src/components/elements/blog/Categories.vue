@@ -11,31 +11,34 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import Button from 'Components/elements/general/Button';
 
 export default {
   components: {
     Button,
   },
-  props: {
-    categories: {
-      type: Array,
-      default: () => ([]),
-    },
-  },
-  data() {
-    return {
-      activeCategory: null,
-    };
+  computed: {
+    ...mapState({
+      categories: state => state.list.categories,
+      activeCategory: state => state.list.activeCategory,
+    }),
   },
   methods: {
-    selectCategory(category) {
+    ...mapActions([
+      'fetchList',
+    ]),
+    async selectCategory(category) {
       if (category !== this.activeCategory) {
-        this.activeCategory = category;
-        this.$emit('fetch', category);
+        await this.fetchList({
+          activeCategory: category,
+        });
       } else {
-        this.activeCategory = null;
-        this.$emit('fetch');
+        await this.fetchList({});
+      }
+
+      if (this.$route.path !== '/blog/') {
+        this.$router.push('/blog/');
       }
     },
   },

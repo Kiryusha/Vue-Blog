@@ -89,7 +89,6 @@
 import { required, email } from 'vuelidate/lib/validators';
 import Button from 'Components/elements/general/Button';
 import Input from 'Components/elements/general/Input';
-import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -140,12 +139,11 @@ export default {
         }).then(() => {
           this.$modal.hide('auth');
         }).catch((error) => {
-          if (error.response && error.response.status === 400) {
-            this.response = error.response.data.message;
-            this.$Progress.fail();
-          } else {
-            callErrorModal(this, error);
-          }
+          const errText = error.response && error.response.data.message ?
+            error.response.data.message : error.message;
+
+          this.response = errText;
+          throw error;
         });
       }
     },

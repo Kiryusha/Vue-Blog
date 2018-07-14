@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import Vue from 'vue';
-import VueAxios from 'vue-axios';
 import axios from '@/helpers/axios-api';
+import VueAxios from 'vue-axios';
 import { VueAuthenticate } from 'vue-authenticate';
 
 Vue.use(VueAxios, axios);

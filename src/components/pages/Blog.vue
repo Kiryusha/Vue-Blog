@@ -14,17 +14,14 @@
         section.blog__sidebar
           SidebarBlock(v-if="categories.length")
             span(slot="title") Категории
-            Categories(
-              :categories="categories"
-              @fetch="fetchList"
-            )
+            Categories
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import SidebarBlock from 'Components/elements/blog/SidebarBlock';
 import Categories from 'Components/elements/blog/Categories';
 import Delete from 'Components/elements/modals/Delete';
-import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -32,62 +29,31 @@ export default {
     Categories,
     Delete,
   },
-  data() {
-    return {
-      list: [],
-      categories: [],
-      page: 1,
-      activeCategory: null,
-    };
-  },
   created() {
     this.initBlog();
   },
   destroyed() {
     this.removeScroll();
   },
+  computed: {
+    ...mapState({
+      list: state => state.list.list,
+      categories: state => state.list.categories,
+      currentPage: state => state.list.currentPage,
+      activeCategory: state => state.list.activeCategory,
+    }),
+  },
   methods: {
+    ...mapActions([
+      'fetchList',
+      'fetchCategories',
+    ]),
     async initBlog() {
       await Promise.all([
         this.fetchCategories(),
-        this.fetchList(),
+        this.fetchList({}),
       ]);
       this.addScroll();
-    },
-    fetchList(category, page = 1, add) {
-      if (page === 1) {
-        this.page = 1;
-      }
-
-      let api = `/api/posts/${page}/`;
-
-      if (category) {
-        api = `/api/categories/${category}/${page}/`;
-        this.activeCategory = category;
-      } else {
-        this.activeCategory = null;
-      }
-
-      this.axios.get(api).then((response) => {
-        if (add) {
-          this.list = [...new Set([...this.list, ...response.data])];
-        } else {
-          this.list = response.data;
-        }
-
-        if (category && this.$route.path !== '/blog/') {
-          this.$router.push({ path: '/blog/' });
-        }
-      }).catch((error) => {
-        callErrorModal(this, error);
-      });
-    },
-    fetchCategories() {
-      this.axios.get('/api/categories/').then((response) => {
-        this.categories = response.data;
-      }).catch((error) => {
-        callErrorModal(this, error);
-      });
     },
     endlessScroll() {
       const el = this.$refs.blog;
@@ -96,10 +62,14 @@ export default {
       const scrollBottom = scrollTop + window.innerHeight;
       const bottom = rect.top + scrollTop + el.clientHeight;
       const isBlog = this.$route.path === '/blog/' || this.$route.path === '/blog';
+      const page = this.currentPage + 1;
 
       if (isBlog && bottom <= scrollBottom) {
-        this.page += 1;
-        this.fetchList(this.activeCategory, this.page, true);
+        this.fetchList({
+          activeCategory: this.activeCategory,
+          currentPage: page,
+          shouldAdd: true,
+        });
       }
     },
     deletePost(code) {
