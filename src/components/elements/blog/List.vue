@@ -1,5 +1,5 @@
 <template lang="pug">
-  section.blog-list(:class="{'_loaded': list.length}")
+  section.blog-list(:class="{'_loaded': list.length}", ref="list")
     .blog-list__content
       .blog-list__item(
         v-for="item in list"
@@ -10,16 +10,56 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import ListItem from 'Components/elements/blog/ListItem';
 
 export default {
   components: {
     ListItem,
   },
-  props: {
-    list: {
-      type: Array,
-      default: () => ([]),
+  data() {
+    return {
+      isFetching: false,
+    };
+  },
+  computed: {
+    ...mapState({
+      list: state => state.post.list,
+      currentPage: state => state.post.currentPage,
+      activeCategory: state => state.post.activeCategory,
+      isBottomReached: state => state.post.isBottomReached,
+    }),
+  },
+  created() {
+    window.addEventListener('scroll', this.endlessScroll, true);
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.endlessScroll, true);
+  },
+  methods: {
+    ...mapActions([
+      'fetchList',
+    ]),
+    async endlessScroll() {
+      if (!this.isFetching && !this.isBottomReached) {
+        this.isFetching = true;
+
+        const el = this.$refs.list;
+        const rect = el.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollBottom = scrollTop + window.innerHeight;
+        const bottom = rect.top + scrollTop + el.clientHeight;
+        const page = this.currentPage + 1;
+
+        if (bottom <= scrollBottom) {
+          await this.fetchList({
+            activeCategory: this.activeCategory,
+            currentPage: page,
+          });
+        }
+
+        this.isFetching = false;
+      }
     },
   },
 };

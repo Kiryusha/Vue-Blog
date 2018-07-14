@@ -6,6 +6,7 @@ const state = {
   categories: [],
   currentPage: 1,
   activeCategory: '',
+  isBottomReached: false,
 };
 
 const mutations = {
@@ -27,10 +28,13 @@ const mutations = {
   DELETED_POST(state, payload) {
     state.list = state.list.filter(item => item.code !== payload);
   },
+  REACHED_BOTTOM(state, payload) {
+    state.isBottomReached = payload;
+  },
 };
 
 const actions = {
-  fetchList({ commit }, { activeCategory = '', currentPage = 1, shouldAdd = false }) {
+  fetchList({ commit }, { activeCategory = '', currentPage = 1 }) {
     let api = '';
 
     commit('SET_ACTIVE_CATEGORY', activeCategory);
@@ -42,12 +46,17 @@ const actions = {
     }
 
     return axios.get(api).then((response) => {
-      commit('SET_CURRENT_PAGE', currentPage);
-
-      if (shouldAdd) {
-        commit('FECHED_AND_MIXED_LIST', response.data);
+      if (currentPage > 1) {
+        if (response.data.length) {
+          commit('SET_CURRENT_PAGE', currentPage);
+          commit('FECHED_AND_MIXED_LIST', response.data);
+        } else {
+          commit('REACHED_BOTTOM', true);
+        }
       } else {
+        commit('SET_CURRENT_PAGE', currentPage);
         commit('FECHED_LIST', response.data);
+        commit('REACHED_BOTTOM', false);
       }
     }).catch(() => {});
   },

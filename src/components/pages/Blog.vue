@@ -1,11 +1,10 @@
 <template lang="pug">
-  .blog(ref="blog")
+  .blog
     Delete
     .container
       .blog__content
         section.blog__inner
           router-view(
-            :list="list"
             :key="$route.fullPath"
           )
         section.blog__sidebar
@@ -22,54 +21,23 @@ export default {
     Categories,
     Delete,
   },
-  created() {
-    this.initBlog();
-  },
-  destroyed() {
-    this.removeScroll();
-  },
   computed: {
     ...mapState({
       list: state => state.post.list,
       categories: state => state.post.categories,
-      currentPage: state => state.post.currentPage,
-      activeCategory: state => state.post.activeCategory,
     }),
+  },
+  created() {
+    this.initBlog();
   },
   methods: {
     ...mapActions([
       'fetchList',
       'fetchCategories',
     ]),
-    async initBlog() {
-      await Promise.all([
-        this.fetchCategories(),
-        this.fetchList({}),
-      ]);
-      this.addScroll();
-    },
-    endlessScroll() {
-      const el = this.$refs.blog;
-      const rect = el.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollBottom = scrollTop + window.innerHeight;
-      const bottom = rect.top + scrollTop + el.clientHeight;
-      const isBlog = this.$route.path === '/blog/' || this.$route.path === '/blog';
-      const page = this.currentPage + 1;
-
-      if (isBlog && bottom <= scrollBottom) {
-        this.fetchList({
-          activeCategory: this.activeCategory,
-          currentPage: page,
-          shouldAdd: true,
-        });
-      }
-    },
-    addScroll() {
-      window.addEventListener('scroll', this.endlessScroll, true);
-    },
-    removeScroll() {
-      window.removeEventListener('scroll', this.endlessScroll, true);
+    initBlog() {
+      this.fetchCategories();
+      this.fetchList({});
     },
   },
 };
