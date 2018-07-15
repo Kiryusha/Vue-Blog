@@ -89,33 +89,33 @@ export default {
     box-sizing border-box
     -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
-    .control
-      font-size 18px
-      line-height 1.5
-      border 1px solid rgba(#000, .15)
-      border-radius 4px
-      padding 10px 15px
-      -webkit-appearance none
-      display block
-      width 100%
-      font-family inherit
-      outline none
-      resize none
-      overflow hidden
-      word-wrap break-word
-
     &._error .control
       border-color red
 
-    .error
+  .control
+    font-size 18px
+    line-height 1.5
+    border 1px solid rgba(#000, .15)
+    border-radius 4px
+    padding 10px 15px
+    -webkit-appearance none
+    display block
+    width 100%
+    font-family inherit
+    outline none
+    resize none
+    overflow hidden
+    word-wrap break-word
+
+  .error
+    font-size 16px
+    color red
+    padding-top 10px
+
+  +phone()
+
+    .control
       font-size 16px
-      color red
-      padding-top 10px
-
-    +phone()
-
-      .control
-        font-size 16px
-        padding 10px 10px
+      padding 10px 10px
 
 </style>

@@ -50,60 +50,61 @@ export default {
       text-overflow ellipsis
       word-wrap break-word
 
-    .title-block
-      margin-bottom 30px
+  .title-block
+    margin-bottom 30px
 
-    .title
+  .title
+    font-family 'Roboto Slab', sans-serif
+    margin 0
+    font-size 34px
+    font-weight normal
+    margin-bottom 8px
+
+  .info
+    font-family 'Roboto Slab', sans-serif
+    font-size 18px
+    color #c
+
+  .text-block
+    font-size 18px
+    line-height 1.5
+
+    >>> h1, >>> h2, >>> h3, >>> h4, >>> h5
       font-family 'Roboto Slab', sans-serif
-      margin 0
-      font-size 34px
-      font-weight normal
-      margin-bottom 8px
 
-    .info
-      font-family 'Roboto Slab', sans-serif
-      font-size 18px
-      color #c
+    >>> a
+      text-decoration none
+      color $yellowDark
+      border-bottom 1px solid $yellowDark
+      transition .2s
 
-    .text-block
-      font-size 18px
-      line-height 1.5
+      &:hover
+        color $clay
+        border-color $clay
 
-      h1, h2, h3, h4, h5
-        font-family 'Roboto Slab', sans-serif
+    >>> cite
+      display inline-block
+      padding 20px 0 20px 40px
+      color #9
 
-      a
-        text-decoration none
-        color $yellowDark
-        border-bottom 1px solid $yellowDark
-        transition .2s
+    >>> img
+      max-width 100%
 
-        &:hover
-          color $clay
-          border-color $clay
-
-      cite
-        display inline-block
-        padding 20px 0 20px 40px
-        color #9
-
-      img
-        width 100%
-
-    +phone()
+  +phone()
+    .post
       padding-top 20px
 
-      .title
-        font-size 24px
+    .title
+      font-size 24px
 
-      .info
-        font-size 16px
+    .info
+      font-size 16px
 
-      .title-block
-        margin-bottom 10px
+    .title-block
+      margin-bottom 10px
 
-      .text-block
-        font-size 16px
-        line-height 1.5
+    .text-block
+      font-size 16px
+      line-height 1.5
 
 </style>

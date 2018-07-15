@@ -73,53 +73,53 @@ export default {
       text-overflow ellipsis
       word-wrap break-word
 
-    .title
-      font-family 'Roboto Slab', sans-serif
-      font-size 30px
-      max-width 630px
+  .title
+    font-family 'Roboto Slab', sans-serif
+    font-size 30px
+    max-width 630px
 
-    .info
-      font-family 'Roboto Slab', sans-serif
-      font-size 16px
-      color #CF
-      padding-top 10px
+  .info
+    font-family 'Roboto Slab', sans-serif
+    font-size 16px
+    color #CF
+    padding-top 10px
 
-    .text
-      padding-top 10px
-      font-size 16px
-      line-height 1.7
+  .text
+    padding-top 10px
+    font-size 16px
+    line-height 1.7
 
-    .controls
-      padding-top 20px
-      display flex
-      justify-content flex-end
+  .controls
+    padding-top 20px
+    display flex
+    justify-content flex-end
 
-      a + span,
-      a + a
-        margin-left 10px
+    a + span,
+    a + a
+      margin-left 10px
+
+  .image-wrapper
+    display block
+    text-decoration none
+    margin-bottom 35px
+
+  .image
+    overflow hidden
+    width 100%
+    height 300px
+    background-size cover
+    background-position center
+    border 2px solid gray
+
+  +phone()
 
     .image-wrapper
-      display block
-      text-decoration none
-      margin-bottom 35px
+      margin-bottom 15px
+
+    .title
+      font-size 24px
 
     .image
-      overflow hidden
-      width 100%
-      height 300px
-      background-size cover
-      background-position center
-      border 2px solid gray
-
-    +phone()
-
-      .image-wrapper
-        margin-bottom 15px
-
-      .title
-        font-size 24px
-
-      .image
-        height 175px
+      height 175px
 
 </style>

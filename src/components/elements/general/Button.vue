@@ -1,12 +1,12 @@
-<template lang="pug">
+.<template lang="pug">
   component.button(
     :is="type"
     :class="`_${view}`"
     @click="$emit('click')"
   )
-    .button__caption
+    .caption
       slot
-    .button__icon(
+    .icon(
       v-if="view === 'more'"
     )
       Icon(
@@ -14,7 +14,7 @@
         width=17
         height=14
       )
-    .button__icon(
+    .icon(
       v-if="view === 'github-auth'"
     )
       Icon(
@@ -22,7 +22,7 @@
         width=19
         height=20
       )
-    .button__icon(
+    .icon(
       v-if="view === 'google-auth'"
     )
       Icon(
@@ -30,7 +30,7 @@
         width=20
         height=20
       )
-    .button__icon(
+    .icon(
       v-if="view === 'delete'"
     )
       Icon(
@@ -38,7 +38,7 @@
         width=20
         height=20
       )
-    .button__icon(
+    .icon(
       v-if="view === 'edit'"
     )
       Icon(
@@ -46,7 +46,7 @@
         width=20
         height=20
       )
-    .button__icon(
+    .icon(
       v-if="view === 'login'"
     )
       Icon(
@@ -54,7 +54,7 @@
         width=20
         height=18
       )
-    .button__icon(
+    .icon(
       v-if="view === 'register'"
     )
       Icon(
@@ -153,24 +153,20 @@ export default {
         background #2b
         color #f
 
-    &__icon
-      padding-top 4px
-      margin-left 8px
-
-    &._github-auth &__icon,
-    &._google-auth &__icon
+    &._github-auth .icon,
+    &._google-auth .icon
       padding 0
       margin 0
       position absolute
       top 6px
       left 8px
 
-    &._login &__icon,
-    &._register &__icon
+    &._login .icon,
+    &._register .icon
       margin 0
 
-    &._github-auth &__caption,
-    &._google-auth &__caption
+    &._github-auth .caption,
+    &._google-auth .caption
       width 100%
       text-align center
 
@@ -180,8 +176,8 @@ export default {
       height 36px
       position relative
 
-    &._delete &__icon,
-    &._edit &__icon
+    &._delete .icon,
+    &._edit .icon
       padding 0
       margin 0
       position: absolute
@@ -198,5 +194,9 @@ export default {
       padding 7px 12px
       word-wrap break-word
       max-width 100%
+
+  .icon
+    padding-top 4px
+    margin-left 8px
 
 </style>

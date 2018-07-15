@@ -56,49 +56,49 @@ export default {
     flex-wrap wrap
     font-family 'Roboto Slab', sans-serif
 
-    .item
-      font-size 14px
-      position relative
-      padding-right 6px
+  .item
+    font-size 14px
+    position relative
+    padding-right 6px
 
-      &:after
+    &:after
+      content '/'
+      position absolute
+      top 0
+      right 0
+
+    &:first-child
+      padding-left 6px
+
+      &:before
         content '/'
         position absolute
         top 0
-        right 0
+        left 0
 
-      &:first-child
-        padding-left 6px
+  .link
+    a-reset()
+    margin 0 16px
+    cursor pointer
 
-        &:before
-          content '/'
-          position absolute
-          top 0
-          left 0
+    &._active
+      font-weight bold
 
-    .link
-      a-reset()
-      margin 0 16px
-      cursor pointer
+  +phone()
+    flex-direction column
 
-      &._active
-        font-weight bold
+    .item,
+    .item:first-child
+      padding 0
+      margin-top 10px
 
-    +phone()
-      flex-direction column
+      &:after,
+      &:before
+        display none
 
-      .item,
-      .item:first-child
-        padding 0
-        margin-top 10px
-
-        &:after,
-        &:before
-          display none
-
-      .link,
-      .item:first-child .link
-        font-size 18px
-        color #f
+    .link,
+    .item:first-child .link
+      font-size 18px
+      color #f
 
 </style>

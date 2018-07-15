@@ -190,20 +190,20 @@ export default {
     border-bottom 1px solid #0
     margin-bottom 20px
 
-    .row
+  .row
 
-      & + .row
-        margin-top 10px
+    & + .row
+      margin-top 10px
 
-    .tab-heads
-      display flex
-      justify-content space-between
-      margin-bottom 10px
+  .tab-heads
+    display flex
+    justify-content space-between
+    margin-bottom 10px
 
-    .response
-      font-size 16px
-      text-align center
-      margin-top -5px
-      margin-bottom 10px
+  .response
+    font-size 16px
+    text-align center
+    margin-top -5px
+    margin-bottom 10px
 
 </style>

@@ -50,15 +50,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .categories
+  .container
+    display flex
+    flex-wrap wrap
+    margin 0 -5px -5px 0
 
-    .container
-      display flex
-      flex-wrap wrap
-      margin 0 -5px -5px 0
-
-    .item
-      margin 0 5px 5px 0
-      min-width 47px
+  .item
+    margin 0 5px 5px 0
+    min-width 47px
 
 </style>

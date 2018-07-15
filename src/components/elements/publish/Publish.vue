@@ -253,57 +253,57 @@ export default {
     &._loaded
       opacity 1
 
-    .title
-      margin-bottom 45px
+  .title
+    margin-bottom 45px
 
-      h1
-        font-family 'Roboto Slab', sans-serif
-        margin 0
-        font-size 34px
-        font-weight normal
+    >>> h1
+      font-family 'Roboto Slab', sans-serif
+      margin 0
+      font-size 34px
+      font-weight normal
+
+  .row
+
+    &._controls
+      text-align right
+
+      button + button
+        margin-left 10px
+
+    & + .row
+      margin-top 25px
+
+  .row-title
+    font-family 'Roboto Slab', sans-serif
+    font-size 18px
+    margin-bottom 15px
+
+  .question
+    position relative
+    top 2px
+    left 10px
+    cursor pointer
+
+  +phone()
+    padding-top 20px
+
+    .title
+      margin-bottom 25px
+      text-align center
+
+      >>> h1
+        font-size 24px
+
+    .row-title
+      font-size 16px
+      margin-bottom 10px
 
     .row
 
-      &._controls
-        text-align right
-
-        button + button
-          margin-left 10px
-
       & + .row
-        margin-top 25px
+        margin-top 15px
 
-    .row-title
-      font-family 'Roboto Slab', sans-serif
-      font-size 18px
-      margin-bottom 15px
-
-    .question
-      position relative
-      top 2px
-      left 10px
-      cursor pointer
-
-    +phone()
-      padding-top 20px
-
-      .title
-        margin-bottom 25px
-        text-align center
-
-        h1
-          font-size 24px
-
-      .row-title
-        font-size 16px
-        margin-bottom 10px
-
-      .row
-
-        & + .row
-          margin-top 15px
-
-        &._controls
-          margin-top 20px
+      &._controls
+        margin-top 20px
 
 </style>

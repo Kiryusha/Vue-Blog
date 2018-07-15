@@ -1,7 +1,7 @@
 <template lang="pug">
   section.list(:class="{'_loaded': list.length}", ref="list")
     .content
-      .item(
+      .list-item(
         v-for="item in list"
       )
         Item(
@@ -73,16 +73,16 @@ export default {
     &._loaded
       opacity 1
 
-    .item
+  .list-item
 
-      & + .item
-        margin-top 40px
+    & + .list-item
+      margin-top 40px
 
-    +phone()
+  +phone()
 
-      .item
+    .list-item
 
-        & + .item
-          margin-top 20px
+      & + .list-item
+        margin-top 20px
 
 </style>
