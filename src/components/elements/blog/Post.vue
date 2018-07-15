@@ -1,10 +1,10 @@
 <template lang="pug">
   section.post(:class="{'_loaded': post.title}")
-    .post__content
-      .post__title-block
-        h1.post__title {{ post.title }}
-        .post__info {{ date }}, {{ author }}
-      .post__text-block(
+    .content
+      .title-block
+        h1.title {{ post.title }}
+        .info {{ date }}, {{ author }}
+      .text-block(
         v-html="post.detailText"
       )
 </template>
@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .post
     card()
     opacity 0
@@ -58,22 +58,22 @@ export default {
       text-overflow ellipsis
       word-wrap break-word
 
-    &__title-block
+    .title-block
       margin-bottom 30px
 
-    &__title
+    .title
       font-family 'Roboto Slab', sans-serif
       margin 0
       font-size 34px
       font-weight normal
       margin-bottom 8px
 
-    &__info
+    .info
       font-family 'Roboto Slab', sans-serif
       font-size 18px
       color #c
 
-    &__text-block
+    .text-block
       font-size 18px
       line-height 1.5
 
@@ -101,16 +101,16 @@ export default {
     +phone()
       padding-top 20px
 
-      &__title
+      .title
         font-size 24px
 
-      &__info
+      .info
         font-size 16px
 
-      &__title-block
+      .title-block
         margin-bottom 10px
 
-      &__text-block
+      .text-block
         font-size 16px
         line-height 1.5
 

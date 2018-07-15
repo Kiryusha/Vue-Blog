@@ -6,9 +6,9 @@
     @before-open="beforeOpen"
   )
     ModalWrapper._delete
-      .modal__content
-        .modal__title Вы уверены, что хотите удалить новость?
-        .modal__close
+      .content
+        .title Вы уверены, что хотите удалить новость?
+        .close
           Button(
             @click="submitDeletion"
           ) Удалить

@@ -84,7 +84,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .button
     display inline-block
     font-family 'Open Sans', sans-serif
@@ -153,16 +153,6 @@ export default {
         background #2b
         color #f
 
-    &._more use,
-    &._github-auth use,
-    &._google-auth use,
-    &._delete use,
-    &._edit use,
-    &._login use,
-    &._register use
-      fill #F
-      stroke #F
-
     &__icon
       padding-top 4px
       margin-left 8px
@@ -202,16 +192,6 @@ export default {
       width 20px
       height 20px
       margin auto
-
-    &._more:active use,
-    &._delete:active use,
-    &._edit:active use,
-    &._login:active use,
-    &._register:active use,
-    &._login._active use,
-    &._register._active use
-      stroke #0
-      fill #0
 
     &._categories
       font-size 14px

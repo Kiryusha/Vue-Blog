@@ -1,19 +1,19 @@
 <template lang="pug">
-  .header-menu
-    .header-menu__item
-      router-link.header-menu__link(
+  .menu
+    .item
+      router-link.link(
         :to="'/blog/'"
       ) Блог
-    .header-menu__item(v-if="userId")
-      router-link.header-menu__link(
+    .item(v-if="userId")
+      router-link.link(
         :to="'/publish/'"
       ) Опубликовать
-    .header-menu__item(v-else)
-      span.header-menu__link(
+    .item(v-else)
+      span.link(
         @click="$modal.show('auth')"
       ) Войти
-    .header-menu__item(v-if="userId")
-      span.header-menu__link(
+    .item(v-if="userId")
+      span.link(
         @click="logout()"
       ) Выйти
 </template>
@@ -49,14 +49,14 @@ export default {
 };
 </script>
 
-<style lang="stylus">
-  .header-menu
+<style lang="stylus" scoped>
+  .menu
     display flex
     padding-top 5px
     flex-wrap wrap
     font-family 'Roboto Slab', sans-serif
 
-    &__item
+    .item
       font-size 14px
       position relative
       padding-right 6px
@@ -76,7 +76,7 @@ export default {
           top 0
           left 0
 
-    &__link
+    .link
       a-reset()
       margin 0 16px
       cursor pointer
@@ -87,8 +87,8 @@ export default {
     +phone()
       flex-direction column
 
-      &__item,
-      &__item:first-child
+      .item,
+      .item:first-child
         padding 0
         margin-top 10px
 
@@ -96,8 +96,8 @@ export default {
         &:before
           display none
 
-      &__link,
-      &__item:first-child &__link
+      .link,
+      .item:first-child .link
         font-size 18px
         color #f
 

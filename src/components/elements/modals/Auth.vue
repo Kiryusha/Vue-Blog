@@ -5,11 +5,11 @@
     height="auto"
   )
     ModalWrapper._auth
-      .modal__content
-        .modal__title Авторизация
-        .modal__login
+      .content
+        .title Авторизация
+        .login
           Login
-        .modal__socials
+        .socials
           Button(
             :view="'github-auth'",
             @click="authenticate('github')"
@@ -18,7 +18,7 @@
             :view="'google-auth'",
             @click="authenticate('google')"
           ) google
-        .modal__close
+        .close
           Button(
             @click="$modal.hide('auth')"
           ) Закрыть

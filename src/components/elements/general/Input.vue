@@ -2,8 +2,7 @@
   .input(
     :class="['input', {'_valid': valid && !error, '_error': error}, cssClass]"
   )
-    input(
-      class="input__control"
+    input.control(
       :placeholder="placeholder"
       :name="name"
       :type="type"
@@ -14,7 +13,7 @@
       @blur="$emit('blur')"
       @focus="$emit('focus')"
     )
-    .input__error(v-if="error") {{ error }}
+    .error(v-if="error") {{ error }}
 </template>
 
 <script>
@@ -75,12 +74,12 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .input
     box-sizing border-box
     -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
-    &__control
+    .control
       width 100%
       font-size 16px
       line-height 1.5
@@ -95,10 +94,10 @@ export default {
       overflow hidden
       word-wrap break-word
 
-    &._error &__control
+    &._error .control
       border-color red
 
-    &__error
+    .error
       font-size 14px
       color red
       padding-top 10px

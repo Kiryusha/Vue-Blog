@@ -2,24 +2,24 @@
   .login(
     @submit.prevent="onSubmit"
   )
-    .login__response(v-if="response && response.length") {{response}}
-    .login__tab-heads
-      Button.login__tab-head(
+    .response(v-if="response && response.length") {{response}}
+    .tab-heads
+      Button.tab-head(
         :class="{'_active': state === 'login'}"
         :view="'login'"
         :type="'span'"
         @click="changeState('login')"
       )
-      Button.login__tab-head(
+      Button.tab-head(
         :class="{'_active': state === 'register'}"
         :view="'register'"
         :type="'span'"
         @click="changeState('register')"
       )
-    .login__content
-      form.login__block(v-if="state === 'login'")
-        .login__row
-          Input.login__input(
+    .content
+      form.block(v-if="state === 'login'")
+        .row
+          Input.input(
             :type="'email'"
             key="loginEmail"
             :name="'loginEmail'"
@@ -30,8 +30,8 @@
             @input="$v.email.$touch()"
             v-model="email"
           )
-        .login__row
-          Input.login__input(
+        .row
+          Input.input(
             :type="'password'"
             key="loginPassword"
             :name="'loginPassword'"
@@ -42,11 +42,11 @@
             @input="$v.password.$touch()"
             v-model="password"
           )
-        .login__row
-          Button.login__submit._w100 авторизоваться
-      form.login__block(v-if="state === 'register'")
-        .login__row
-          Input.login__input(
+        .row
+          Button.submit._w100 авторизоваться
+      form.block(v-if="state === 'register'")
+        .row
+          Input.input(
             :type="'text'"
             key="regName"
             :name="'regName'"
@@ -57,8 +57,8 @@
             @input="$v.name.$touch()"
             v-model="name"
           )
-        .login__row
-          Input.login__input(
+        .row
+          Input.input(
             :type="'email'"
             key="regEmail"
             :name="'regEmail'"
@@ -69,8 +69,8 @@
             @input="$v.email.$touch()"
             v-model="email"
           )
-        .login__row
-          Input.login__input(
+        .row
+          Input.input(
             :type="'password'"
             key="regPassword"
             :name="'regPassword'"
@@ -81,8 +81,8 @@
             @input="$v.password.$touch()"
             v-model="password"
           )
-        .login__row
-          Button.login__submit._w100 зарегистрироваться
+        .row
+          Button.submit._w100 зарегистрироваться
 </template>
 
 <script>
@@ -184,23 +184,23 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .login
     padding-bottom 20px
     border-bottom 1px solid #0
     margin-bottom 20px
 
-    &__row
+    .row
 
-      & + &
+      & + .row
         margin-top 10px
 
-    &__tab-heads
+    .tab-heads
       display flex
       justify-content space-between
       margin-bottom 10px
 
-    &__response
+    .response
       font-size 16px
       text-align center
       margin-top -5px

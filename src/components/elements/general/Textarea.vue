@@ -2,7 +2,7 @@
   .textarea(
     :class="['input', {'_valid': valid && !error, '_error': error}, cssClass]"
   )
-    textarea(
+    textarea.control(
       ref="textarea"
       :rows="rows"
       :placeholder="placeholder"
@@ -10,12 +10,11 @@
       :disabled="disabled"
       :maxlength="maxlength"
       v-model="innerValue"
-      class="textarea__control"
       @input="inputHandler"
       @blur="$emit('blur')"
       @focus="$emit('focus')"
     )
-    .textarea__error(v-if="error") {{ error }}
+    .error(v-if="error") {{ error }}
 </template>
 
 <script>
@@ -85,12 +84,12 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .textarea
     box-sizing border-box
     -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
-    &__control
+    .control
       font-size 18px
       line-height 1.5
       border 1px solid rgba(#000, .15)
@@ -105,17 +104,17 @@ export default {
       overflow hidden
       word-wrap break-word
 
-    &._error &__control
+    &._error .control
       border-color red
 
-    &__error
+    .error
       font-size 16px
       color red
       padding-top 10px
 
     +phone()
 
-      &__control
+      .control
         font-size 16px
         padding 10px 10px
 

@@ -15,3 +15,9 @@ export default {
   },
 };
 </script>
+
+<style lang="stylus" scoped>
+  use
+    fill currentColor
+
+</style>

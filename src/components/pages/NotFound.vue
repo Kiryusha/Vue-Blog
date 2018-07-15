@@ -1,11 +1,6 @@
 <template lang="pug">
   .not-found
     .container
-      .not-found__content
+      .content
         p Страница не найдена.
 </template>
-
-<script>
-export default {
-};
-</script>

@@ -20,13 +20,13 @@
     &._auth
       width 300px
 
-    &__content
+    .content
       height 100%
       display flex
       flex-wrap wrap
       flex-direction column
 
-    &__title
+    .title
       font-family 'Roboto Slab', sans-serif
       margin 0
       font-size 24px
@@ -35,7 +35,7 @@
       text-align center
       word-wrap break-word
 
-    &__socials
+    .socials
       margin 0 auto 20px
       width 100%
       max-width 300px
@@ -43,7 +43,7 @@
       button + button
         margin-top 10px
 
-    &__close
+    .close
       position absolute
       bottom 20px
       left 0

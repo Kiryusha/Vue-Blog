@@ -6,9 +6,9 @@
     @before-open="beforeOpen"
   )
     ModalWrapper
-      .modal__content
-        .modal__title {{title}}
-        .modal__close
+      .content
+        .title {{title}}
+        .close
           Button(
             @click="$modal.hide('response')"
           ) Закрыть

@@ -1,8 +1,8 @@
 <template lang="pug">
-  .sidebar-block
-    .sidebar-block__title
+  .sidebar
+    .title
       slot(name="title")
-    .sidebar-block__content
+    .content
       slot
 </template>
 
@@ -11,32 +11,32 @@ export default {
 };
 </script>
 
-<style lang="stylus">
-  .sidebar-block
+<style lang="stylus" scoped>
+  .sidebar
     background #f
     box-shadow 0 0 20px rgba(0, 0, 0, .2)
     border-radius 3px
 
-    &__title
+    .title
       text-align right
       font-weight bold
       padding 20px 20px 10px
 
-    &__content
+    .content
       background #F7
       padding 20px 20px 20px
 
     +mobile()
 
-      &__title
+      .title
         text-align left
 
     +phone()
 
-      &__title
+      .title
         padding 10px 10px 10px
 
-      &__content
+      .content
         padding 10px 10px 10px
 
 </style>

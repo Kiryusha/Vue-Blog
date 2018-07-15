@@ -1,17 +1,17 @@
 <template lang="pug">
-  .blog-list-item
-    .blog-list-item__heading
-      router-link.blog-list-item__image-wrapper(
+  .item
+    .heading
+      router-link.image-wrapper(
         v-if="data.previewPicture"
         :to="`${data.code}/`"
       )
-        //- .blog-list-item__image(
-        //-   :style="`background-image:url(${data.previewPicture});`"
-        //- )
-      .blog-list-item__title {{ data.title }}
-      .blog-list-item__info {{ date }}, {{ author }}
-    .blog-list-item__text {{ data.previewText }}
-    .blog-list-item__controls
+        .image(
+          :style="`background-image:url(${data.previewPicture});`"
+        )
+      .title {{ data.title }}
+      .info {{ date }}, {{ author }}
+    .text {{ data.previewText }}
+    .controls
       Button(
         v-if="isAuthor"
         :view="'delete'"
@@ -64,8 +64,8 @@ export default {
 };
 </script>
 
-<style lang="stylus">
-  .blog-list-item
+<style lang="stylus" scoped>
+  .item
     card()
 
     *
@@ -73,23 +73,23 @@ export default {
       text-overflow ellipsis
       word-wrap break-word
 
-    &__title
+    .title
       font-family 'Roboto Slab', sans-serif
       font-size 30px
       max-width 630px
 
-    &__info
+    .info
       font-family 'Roboto Slab', sans-serif
       font-size 16px
       color #CF
       padding-top 10px
 
-    &__text
+    .text
       padding-top 10px
       font-size 16px
       line-height 1.7
 
-    &__controls
+    .controls
       padding-top 20px
       display flex
       justify-content flex-end
@@ -98,12 +98,12 @@ export default {
       a + a
         margin-left 10px
 
-    &__image-wrapper
+    .image-wrapper
       display block
       text-decoration none
       margin-bottom 35px
 
-    &__image
+    .image
       overflow hidden
       width 100%
       height 300px
@@ -113,13 +113,13 @@ export default {
 
     +phone()
 
-      &__image-wrapper
+      .image-wrapper
         margin-bottom 15px
 
-      &__title
+      .title
         font-size 24px
 
-      &__image
+      .image
         height 175px
 
 </style>

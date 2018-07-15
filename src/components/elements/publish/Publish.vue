@@ -1,12 +1,12 @@
 <template lang="pug">
-  section.publish-form(:class="{'_loaded': loaded}")
-    .publish-form__title: h1 Отправить новость
-    .publish-form__content
-      form.publish-form__form(
+  section.publish(:class="{'_loaded': loaded}")
+    .title: h1 Отправить новость
+    .content
+      form.form(
         @submit.prevent=""
       )
-        .publish-form__row
-          .publish-form__row-title Название
+        .row
+          .row-title Название
           Textarea(
             :error="getErrorMessage($v.title)"
             :valid="!$v.title.$invalid"
@@ -14,10 +14,10 @@
             v-model="title"
             :maxlength="140"
           )
-        .publish-form__row
-          .publish-form__row-title
+        .row
+          .row-title
             span Символьный код
-            span.publish-form__question
+            span.question
               Icon(
                 :name="'question'"
                 width=16
@@ -33,8 +33,8 @@
             v-model="code"
             :maxlength="50"
           )
-        .publish-form__row
-          .publish-form__row-title Категория
+        .row
+          .row-title Категория
           Textarea(
             :error="getErrorMessage($v.category)"
             :valid="!$v.category.$invalid"
@@ -42,24 +42,24 @@
             v-model="category"
             :maxlength="50"
           )
-        .publish-form__row
-          .publish-form__row-title Путь к картинке для анонса
+        .row
+          .row-title Путь к картинке для анонса
           Textarea(
             :rows=1
             v-model="previewPicture"
             :maxlength="1000"
           )
-        .publish-form__row
-          .publish-form__row-title Описание для анонса
+        .row
+          .row-title Описание для анонса
           Textarea(
             :rows=3
             v-model="previewText"
             :maxlength="311"
           )
-        .publish-form__row
-          .publish-form__row-title
+        .row
+          .row-title
             span Детальное описание
-            span.publish-form__question
+            span.question
               Icon(
                 :name="'question'"
                 width=16
@@ -76,7 +76,7 @@
             v-model="detailText"
             :maxlength="5000"
           )
-        .publish-form__row._controls
+        .row._controls
           Button(
             :view="'fz16'"
             @click="submit"
@@ -236,8 +236,8 @@ export default {
 };
 </script>
 
-<style lang="stylus">
-  .publish-form
+<style lang="stylus" scoped>
+  .publish
     card()
     opacity 0
     transition opacity .2s
@@ -245,7 +245,7 @@ export default {
     &._loaded
       opacity 1
 
-    &__title
+    .title
       margin-bottom 45px
 
       h1
@@ -254,7 +254,7 @@ export default {
         font-size 34px
         font-weight normal
 
-    &__row
+    .row
 
       &._controls
         text-align right
@@ -262,15 +262,15 @@ export default {
         button + button
           margin-left 10px
 
-      & + &
+      & + .row
         margin-top 25px
 
-    &__row-title
+    .row-title
       font-family 'Roboto Slab', sans-serif
       font-size 18px
       margin-bottom 15px
 
-    &__question
+    .question
       position relative
       top 2px
       left 10px
@@ -279,20 +279,20 @@ export default {
     +phone()
       padding-top 20px
 
-      &__title
+      .title
         margin-bottom 25px
         text-align center
 
         h1
           font-size 24px
 
-      &__row-title
+      .row-title
         font-size 16px
         margin-bottom 10px
 
-      &__row
+      .row
 
-        & + &
+        & + .row
           margin-top 15px
 
         &._controls

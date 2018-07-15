@@ -4,13 +4,10 @@
     ref="header"
   )
     .container
-      .header__content
-        .header__left
-          router-link(
-            class="header__logo"
-            :to="'/'"
-          ) Kosk
-          a.header__menu-btn(
+      .content
+        .left
+          router-link.logo(:to="'/'") Kosk
+          a.menu-btn(
             :class="{'_active': isMenuActive}"
             href="#"
             @click.prevent="toggleMenu()"
@@ -18,11 +15,9 @@
             span
             span
             span
-          .header__menu(
-            :class="{'_active': isMenuActive}"
-          )
+          .menu-wrapper(:class="{'_active': isMenuActive}")
             Menu
-        .header__user(v-if="userId")
+        .user(v-if="userId")
           span Привет,
           b  {{ username }}
           | !
@@ -70,7 +65,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .header
     position absolute
     top 0
@@ -86,17 +81,17 @@ export default {
       opacity 1 !important
       position absolute !important
 
-    &__content
+    .content
       padding 30px 0
       display flex
       align-items center
       justify-content space-between
 
-    &__left
+    .left
       display flex
       align-items center
 
-    &__logo
+    .logo
       a-reset()
       font-size 30px
       margin 0 16px 0 0
@@ -109,13 +104,13 @@ export default {
       .__cov-progress
         top 54px !important
 
-    &._fixed &__content
+    &._fixed .content
       padding 9px 10px 11px
 
-    &__user
+    .user
       font-family 'Roboto Slab', sans-serif
 
-    &__menu-btn
+    .menu-btn
       display none
 
     +phone()
@@ -127,10 +122,10 @@ export default {
       .__cov-progress
         top 54px !important
 
-      &__content
+      .content
         padding 9px 10px 11px
 
-      &__menu-btn
+      .menu-btn
         display block
         width 54px
         height 54px
@@ -164,7 +159,7 @@ export default {
           top auto
           bottom 18px
 
-      &__menu-btn._active
+      .menu-btn._active
 
         span
           opacity 0
@@ -179,7 +174,7 @@ export default {
           bottom 25px
           transform rotate(-45deg)
 
-      &__menu
+      .menu-wrapper
         position fixed
         top 54px
         left 0
@@ -192,7 +187,7 @@ export default {
         &._active
           transform translateX(0)
 
-      &__user
+      .user
         max-width 145px
         overflow hidden
         text-overflow ellipsis

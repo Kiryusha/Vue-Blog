@@ -1,9 +1,9 @@
 <template lang="pug">
-  SidebarBlock
+  Sidebar
     span(slot="title") Категории
     .categories
-      .categories__container
-        .categories__item(v-for="item in categories")
+      .container
+        .item(v-for="item in categories")
           Button(
             :class="{'_active':activeCategory === item}"
             :type="'a'"
@@ -15,12 +15,12 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import Button from 'Components/elements/general/Button';
-import SidebarBlock from 'Components/elements/blog/SidebarBlock';
+import Sidebar from 'Components/elements/blog/Sidebar';
 
 export default {
   components: {
     Button,
-    SidebarBlock,
+    Sidebar,
   },
   computed: {
     ...mapState({
@@ -49,15 +49,15 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .categories
 
-    &__container
+    .container
       display flex
       flex-wrap wrap
       margin 0 -5px -5px 0
 
-    &__item
+    .item
       margin 0 5px 5px 0
       min-width 47px
 

@@ -1,18 +1,18 @@
 <template lang="pug">
   section.publish
     .container
-      .publish__content
-        Form(
+      .content
+        Publish(
           :postCode="code"
         )
 </template>
 
 <script>
-import Form from 'Components/elements/publish/Form';
+import Publish from 'Components/elements/publish/Publish';
 
 export default {
   components: {
-    Form,
+    Publish,
   },
   data() {
     return {
@@ -29,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .publish
     min-height 100%
     padding-top 60px
