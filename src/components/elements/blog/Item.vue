@@ -48,8 +48,8 @@ export default {
   },
   computed: {
     ...mapState({
-      isAdmin: state => state.auth.isAdmin,
-      userId: state => state.auth.userId,
+      isAdmin: state => state.user.isAdmin,
+      userId: state => state.user.id,
     }),
     date() {
       return formatDate(this.data.date);

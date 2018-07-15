@@ -24,10 +24,10 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state => state.post.list,
-      currentPage: state => state.post.currentPage,
-      activeCategory: state => state.post.activeCategory,
-      isBottomReached: state => state.post.isBottomReached,
+      list: state => state.list.list,
+      currentPage: state => state.list.currentPage,
+      activeCategory: state => state.list.activeCategory,
+      isBottomReached: state => state.list.isBottomReached,
     }),
   },
   created() {

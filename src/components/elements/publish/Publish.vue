@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import Textarea from 'Components/elements/general/Textarea';
 import Button from 'Components/elements/general/Button';
@@ -122,8 +122,9 @@ export default {
   },
   computed: {
     ...mapState({
-      userId: state => state.auth.userId,
-      username: state => state.auth.username,
+      post: state => state.post.data,
+      userId: state => state.user.id,
+      username: state => state.user.name,
     }),
     state() {
       return this.postCode && this.postCode.length ? 'edit' : 'post';
@@ -144,6 +145,11 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'fetchPost',
+      'sendPost',
+      'updatePost',
+    ]),
     getErrorMessage(field) {
       let message = '';
 
@@ -163,18 +169,12 @@ export default {
 
       return message;
     },
-    submit() {
+    async submit() {
       this.$v.$touch();
       this.submitted = true;
 
       if (!this.$v.$invalid) {
-        let method = 'post';
-
-        if (this.state === 'edit') {
-          method = 'put';
-        }
-
-        this.axios[method]('/api/posts/', {
+        const data = {
           title: this.title,
           id: this.id,
           code: this.code.toLowerCase(),
@@ -184,31 +184,39 @@ export default {
           detailText: this.detailText,
           username: this.username,
           userId: this.userId,
-        }).then((response) => {
-          this.$modal.show('response', { message: response.data.message });
+        };
 
-          this.submitted = false;
-          this.title = '';
-          this.code = '';
-          this.category = '';
-          this.previewPicture = '';
-          this.previewText = '';
-          this.detailText = '';
+        if (this.state === 'edit') {
+          this.response = await this.updatePost(data);
+        } else {
+          this.response = await this.sendPost(data);
+        }
 
-          this.$router.push('/blog/');
-        }).catch(() => {});
+        if (this.response) {
+          this.$modal.show('response', { message: this.response.data.message });
+        }
+
+        this.submitted = false;
+        this.title = '';
+        this.code = '';
+        this.category = '';
+        this.previewPicture = '';
+        this.previewText = '';
+        this.detailText = '';
+
+        this.$router.push('/blog/');
       }
     },
-    fetchData(code) {
-      this.axios.get(`/api/posts/post/${code}/`).then((response) => {
-        this.id = response.data.post._id;
-        this.title = response.data.post.title;
-        this.code = response.data.post.code;
-        this.category = response.data.post.category;
-        this.previewPicture = response.data.post.previewPicture;
-        this.previewText = response.data.post.previewText;
-        this.detailText = response.data.post.detailText;
-      }).catch(() => {});
+    async fetchData(code) {
+      await this.fetchPost(code);
+
+      this.id = this.post._id;
+      this.title = this.post.title;
+      this.code = this.post.code;
+      this.category = this.post.category;
+      this.previewPicture = this.post.previewPicture;
+      this.previewText = this.post.previewText;
+      this.detailText = this.post.detailText;
     },
   },
   validations() {

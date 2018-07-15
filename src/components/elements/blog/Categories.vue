@@ -24,8 +24,8 @@ export default {
   },
   computed: {
     ...mapState({
-      categories: state => state.post.categories,
-      activeCategory: state => state.post.activeCategory,
+      categories: state => state.list.categories,
+      activeCategory: state => state.list.activeCategory,
     }),
   },
   methods: {

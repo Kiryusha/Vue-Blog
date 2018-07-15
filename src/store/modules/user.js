@@ -25,15 +25,15 @@ const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
 });
 
 const state = {
-  userId: '',
-  username: '',
+  id: '',
+  name: '',
   isAdmin: false,
 };
 
 const mutations = {
   SET_USER(state, payload) {
-    state.userId = payload.userId;
-    state.username = payload.username;
+    state.id = payload.id;
+    state.name = payload.name;
     state.isAdmin = payload.isAdmin;
   },
 };
@@ -51,8 +51,8 @@ const actions = {
           })).then((response) => {
             if (vueAuth.isAuthenticated()) {
               commit('SET_USER', {
-                userId: response.data._id,
-                username: response.data.name,
+                id: response.data._id,
+                name: response.data.name,
                 isAdmin: response.data.isAdmin,
               });
             } else {
@@ -72,8 +72,8 @@ const actions = {
           })).then((response) => {
             if (vueAuth.isAuthenticated()) {
               commit('SET_USER', {
-                userId: response.data._id,
-                username: response.data.name,
+                id: response.data._id,
+                name: response.data.name,
                 isAdmin: response.data.isAdmin,
               });
             } else {
@@ -93,8 +93,8 @@ const actions = {
       .then((response) => {
         if (vueAuth.isAuthenticated()) {
           commit('SET_USER', {
-            userId: response.data.user._id,
-            username: response.data.user.name,
+            id: response.data.user._id,
+            name: response.data.user.name,
             isAdmin: response.data.user.isAdmin,
           });
         } else {
@@ -111,8 +111,8 @@ const actions = {
       .then((response) => {
         if (vueAuth.isAuthenticated()) {
           commit('SET_USER', {
-            userId: response.data.user._id,
-            username: response.data.user.name,
+            id: response.data.user._id,
+            name: response.data.user.name,
             isAdmin: response.data.user.isAdmin,
           });
         } else {
@@ -128,8 +128,8 @@ const actions = {
     return vueAuth.logout().then(() => {
       if (!vueAuth.isAuthenticated()) {
         commit('SET_USER', {
-          userId: '',
-          username: '',
+          id: '',
+          name: '',
           isAdmin: '',
         });
       } else {

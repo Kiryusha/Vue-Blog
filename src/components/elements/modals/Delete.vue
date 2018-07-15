@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import ModalWrapper from 'Components/elements/modals/Modal';
 import Button from 'Components/elements/general/Button';
 
@@ -34,10 +34,11 @@ export default {
   },
   computed: {
     ...mapState({
-      userId: state => state.auth.userId,
+      userId: state => state.user.id,
     }),
   },
   methods: {
+    ...mapMutations(['DELETED_POST_FROM_LIST']),
     ...mapActions([
       'fetchCategories',
       'deletePost',
@@ -52,6 +53,8 @@ export default {
         code: this.code,
         userId: this.userId,
       });
+
+      this.DELETED_POST_FROM_LIST(this.code);
 
       this.fetchCategories();
     },

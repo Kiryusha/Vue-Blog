@@ -23,8 +23,8 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state => state.post.list,
-      categories: state => state.post.categories,
+      list: state => state.list.list,
+      categories: state => state.list.categories,
     }),
   },
   created() {

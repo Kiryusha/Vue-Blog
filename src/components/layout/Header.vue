@@ -42,8 +42,8 @@ export default {
   },
   computed: {
     ...mapState({
-      userId: state => state.auth.userId,
-      username: state => state.auth.username,
+      userId: state => state.user.id,
+      username: state => state.user.name,
     }),
   },
   mounted() {

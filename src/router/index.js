@@ -57,7 +57,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    if (!store.state.auth.userId) {
+    if (!store.state.user.id) {
       next('/blog/');
     } else {
       next();

@@ -10,17 +10,14 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import formatDate from '@/helpers/formatDate';
-import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
-  data() {
-    return {
-      loading: false,
-      post: {},
-    };
-  },
   computed: {
+    ...mapState({
+      post: state => state.post.data,
+    }),
     date() {
       return formatDate(this.post.date);
     },
@@ -29,17 +26,12 @@ export default {
     },
   },
   created() {
-    this.fetchData(this.$route.params.code);
+    this.fetchPost(this.$route.params.code);
   },
   methods: {
-    fetchData(code) {
-      this.axios.get(`/api/posts/post/${code}/`).then((response) => {
-        this.post = response.data.post;
-      }).catch((error) => {
-        this.$router.push('/blog/');
-        callErrorModal(this, error);
-      });
-    },
+    ...mapActions([
+      'fetchPost',
+    ]),
   },
 };
 </script>

@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userId: state => state.auth.userId,
+      userId: state => state.user.id,
     }),
   },
   methods: {

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import auth from '@/store/modules/authentication';
+import user from '@/store/modules/user';
+import list from '@/store/modules/list';
 import post from '@/store/modules/post';
 
 Vue.use(Vuex);
@@ -15,7 +16,8 @@ const store = new Vuex.Store({
     },
   },
   modules: {
-    auth,
+    user,
+    list,
     post,
   },
 });
