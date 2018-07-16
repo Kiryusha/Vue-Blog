@@ -7,7 +7,6 @@ describe('Publish.vue', () => {
   const initBlog = jest.fn();
   const fetchCategories = jest.fn();
   const fetchList = jest.fn();
-
   const config = {
     stubs: ['router-view'],
     mocks: {

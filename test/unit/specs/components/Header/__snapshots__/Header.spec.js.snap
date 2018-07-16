@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Blog.vue component shallow rendering should match a snapshot - authenticated 1`] = `
+<header class="header">
+  <div class="container">
+    <div class="content">
+      <div class="left">
+        <router-link-stub to="/" class="logo"></router-link-stub>
+        <a href="#" class="menu-btn"><span></span><span></span><span></span></a>
+        <div class="menu-wrapper">
+          <menu-stub></menu-stub>
+        </div>
+      </div>
+      <div class="user"><span>Привет,</span>
+        <b> test</b>!</div>
+    </div>
+  </div>
+  <vue-progress-bar-stub></vue-progress-bar-stub>
+</header>
+`;
+
+exports[`Blog.vue component shallow rendering should match a snapshot - not authenticated 1`] = `
+<header class="header">
+  <div class="container">
+    <div class="content">
+      <div class="left">
+        <router-link-stub to="/" class="logo"></router-link-stub>
+        <a href="#" class="menu-btn"><span></span><span></span><span></span></a>
+        <div class="menu-wrapper">
+          <menu-stub></menu-stub>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <vue-progress-bar-stub></vue-progress-bar-stub>
+</header>
+`;

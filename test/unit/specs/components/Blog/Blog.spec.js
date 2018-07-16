@@ -11,7 +11,6 @@ describe('Blog.vue', () => {
   const initBlog = jest.fn();
   const fetchCategories = jest.fn();
   const fetchList = jest.fn();
-
   const config = {
     localVue,
     stubs: ['router-view'],
@@ -33,12 +32,12 @@ describe('Blog.vue', () => {
       fetchCategories: jest.fn(),
     },
   };
-
   let store = new Vuex.Store(storeConfig);
 
   describe('component shallow rendering', () => {
     it('should match a snapshot - no categories', () => {
       const wrapper = shallowMount(Blog, {...config, store});
+
       expect(wrapper.html()).toMatchSnapshot();
     });
 
