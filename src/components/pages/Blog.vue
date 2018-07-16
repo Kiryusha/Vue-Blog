@@ -23,7 +23,6 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state => state.list.list,
       categories: state => state.list.categories,
     }),
   },

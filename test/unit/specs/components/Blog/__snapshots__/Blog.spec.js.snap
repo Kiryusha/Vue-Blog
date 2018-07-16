@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Blog.vue component shallow rendering should match a snapshot - no categories 1`] = `
+<div class="blog">
+  <delete-stub></delete-stub>
+  <div class="container">
+    <div class="content">
+      <section class="inner">
+        <router-view-stub></router-view-stub>
+      </section>
+      <section class="sidebar-container">
+        <!---->
+      </section>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Blog.vue component shallow rendering should match a snapshot - with categories 1`] = `
+<div class="blog">
+  <delete-stub></delete-stub>
+  <div class="container">
+    <div class="content">
+      <section class="inner">
+        <router-view-stub></router-view-stub>
+      </section>
+      <section class="sidebar-container">
+        <categories-stub></categories-stub>
+      </section>
+    </div>
+  </div>
+</div>
+`;

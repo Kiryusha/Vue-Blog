@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish.vue component shallow rendering should match a snapshot - no $route code param 1`] = `
+<section class="publish">
+  <div class="container">
+    <div class="content">
+      <publish-stub></publish-stub>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Publish.vue component shallow rendering should match a snapshot - with $route code params 1`] = `
+<section class="publish">
+  <div class="container">
+    <div class="content">
+      <publish-stub></publish-stub>
+    </div>
+  </div>
+</section>
+`;
