@@ -1,6 +1,6 @@
 // Publish.vue
 
-import { shallowMount, createLocalVue  } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Publish from 'Components/pages/Publish.vue';
 
 describe('Publish.vue', () => {
@@ -21,7 +21,7 @@ describe('Publish.vue', () => {
 
   describe('component shallow rendering', () => {
     it('should match a snapshot - no $route code param', () => {
-      const wrapper = shallowMount(Publish, {...config});
+      const wrapper = shallowMount(Publish, config);
 
       expect(wrapper.html()).toMatchSnapshot();
       expect(wrapper.contains('publish-stub')).toBe(true);
@@ -30,14 +30,10 @@ describe('Publish.vue', () => {
     it('should match a snapshot - with $route code params', () => {
       config.mocks.$route.params.code = 'test';
 
-      const wrapper = shallowMount(Publish, {...config});
+      const wrapper = shallowMount(Publish, config);
 
       expect(wrapper.html()).toMatchSnapshot();
       expect(wrapper.contains('publish-stub')).toBe(true);
     });
   });
-
-  // describe('lifecycle-driven methods calls', () => {
-  //
-  // });
 });

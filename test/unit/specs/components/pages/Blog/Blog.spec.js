@@ -1,6 +1,6 @@
 // Blog.vue
 
-import { shallowMount, createLocalVue  } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Blog from 'Components/pages/Blog.vue';
 
@@ -36,7 +36,7 @@ describe('Blog.vue', () => {
 
   describe('component shallow rendering', () => {
     it('should match a snapshot - no categories', () => {
-      const wrapper = shallowMount(Blog, {...config, store});
+      const wrapper = shallowMount(Blog, { ...config, store });
 
       expect(wrapper.html()).toMatchSnapshot();
     });
@@ -45,7 +45,7 @@ describe('Blog.vue', () => {
       storeConfig.state.list.categories = [1, 2, 3];
       store = new Vuex.Store(storeConfig);
 
-      const wrapper = shallowMount(Blog, {...config, store});
+      const wrapper = shallowMount(Blog, { ...config, store });
 
       expect(wrapper.html()).toMatchSnapshot();
       expect(wrapper.contains('categories-stub')).toBe(true);
@@ -54,7 +54,7 @@ describe('Blog.vue', () => {
 
   describe('lifecycle-driven methods calls', () => {
     it('should call initBlog() on a created hook', () => {
-      const wrapper = shallowMount(Blog, {...config, store, methods: {
+      const wrapper = shallowMount(Blog, { ...config, store, methods: {
         initBlog,
       }});
 
@@ -62,7 +62,7 @@ describe('Blog.vue', () => {
     });
 
     it('should call fetchList() and fetchCategories() on initBlog()', () => {
-      const wrapper = shallowMount(Blog, {...config, store, methods: {
+      const wrapper = shallowMount(Blog, { ...config, store, methods: {
         fetchList,
         fetchCategories,
       }});

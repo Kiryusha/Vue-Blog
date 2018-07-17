@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Publish.vue component shallow rendering should match a snapshot - edit state 1`] = `
+<section class="publish _loaded">
+  <div class="title">
+    <h1>Отправить новость</h1>
+  </div>
+  <div class="content">
+    <form class="form">
+      <div class="row">
+        <div class="row-title">Название</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title"><span>Символьный код</span><span class="question"><icon-stub width="16" height="16"></icon-stub></span></div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title">Категория</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title">Путь к картинке для анонса</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title">Описание для анонса</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title"><span>Детальное описание</span><span class="question"><icon-stub width="16" height="16"></icon-stub></span></div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row _controls">
+        <button-stub class="submit"></button-stub>
+        <button-stub class="cancel"></button-stub>
+      </div>
+    </form>
+  </div>
+</section>
+`;
+
+exports[`Publish.vue component shallow rendering should match a snapshot - post state 1`] = `
+<section class="publish _loaded">
+  <div class="title">
+    <h1>Отправить новость</h1>
+  </div>
+  <div class="content">
+    <form class="form">
+      <div class="row">
+        <div class="row-title">Название</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title"><span>Символьный код</span><span class="question"><icon-stub width="16" height="16"></icon-stub></span></div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title">Категория</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title">Путь к картинке для анонса</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title">Описание для анонса</div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row">
+        <div class="row-title"><span>Детальное описание</span><span class="question"><icon-stub width="16" height="16"></icon-stub></span></div>
+        <textarea-stub></textarea-stub>
+      </div>
+      <div class="row _controls">
+        <button-stub class="submit"></button-stub>
+        <!---->
+      </div>
+    </form>
+  </div>
+</section>
+`;

@@ -1,6 +1,6 @@
 // Blog.vue
 
-import { shallowMount, createLocalVue  } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Header from 'Components/layout/Header.vue';
 
@@ -25,7 +25,7 @@ describe('Blog.vue', () => {
 
   describe('component shallow rendering', () => {
     it('should match a snapshot - not authenticated', () => {
-      const wrapper = shallowMount(Header, {...config, store});
+      const wrapper = shallowMount(Header, { ...config, store });
       expect(wrapper.html()).toMatchSnapshot();
     });
 
@@ -34,7 +34,7 @@ describe('Blog.vue', () => {
       storeConfig.state.user.name = 'test';
       store = new Vuex.Store(storeConfig);
 
-      const wrapper = shallowMount(Header, {...config, store});
+      const wrapper = shallowMount(Header, { ...config, store });
 
       expect(wrapper.html()).toMatchSnapshot();
     });
@@ -43,7 +43,7 @@ describe('Blog.vue', () => {
   describe('lifecycle-driven methods calls', () => {
     it('updateHeader() is attached on a mounted hook', async () => {
       const updateHeader = jest.fn();
-      const wrapper = shallowMount(Header, {...config, store, methods: {
+      const wrapper = shallowMount(Header, { ...config, store, methods: {
         updateHeader,
       }});
 
@@ -54,7 +54,7 @@ describe('Blog.vue', () => {
 
     it('updateHeader() is removed on a mounted hook', async () => {
       const updateHeader = jest.fn();
-      const wrapper = shallowMount(Header, {...config, store, methods: {
+      const wrapper = shallowMount(Header, { ...config, store, methods: {
         updateHeader,
       }});
 
@@ -68,7 +68,7 @@ describe('Blog.vue', () => {
   describe("custom actions", () => {
     it('should call toggleMenu() when click on .menu-btn', () => {
       const toggleMenu = jest.fn();
-      const wrapper = shallowMount(Header, {...config, store, methods: {
+      const wrapper = shallowMount(Header, { ...config, store, methods: {
         toggleMenu,
       }});
       const el = wrapper.find('.menu-btn');
@@ -79,7 +79,7 @@ describe('Blog.vue', () => {
     });
 
     it('should revert boolean property "isMenuActive" on toggleMenu()', () => {
-      const wrapper = shallowMount(Header, {...config, store});
+      const wrapper = shallowMount(Header, { ...config, store});
 
       wrapper.vm.toggleMenu();
 

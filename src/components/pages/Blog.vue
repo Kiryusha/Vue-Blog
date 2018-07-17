@@ -79,7 +79,8 @@ export default {
       margin 0 0 40px
 
   +phone()
-    padding-top 20px
+    .blog
+      padding-top 20px
 
     .sidebar-container
       margin 0 0 20px

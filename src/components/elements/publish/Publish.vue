@@ -77,11 +77,11 @@
             :maxlength="5000"
           )
         .row._controls
-          Button(
+          Button.submit(
             :view="'fz16'"
             @click="submit"
           ) Отправить
-          Button(
+          Button.cancel(
             v-if="this.state === 'edit'"
             :view="'fz16'"
             @click="$router.push('/blog/')"
@@ -94,6 +94,7 @@ import { required } from 'vuelidate/lib/validators';
 import Textarea from 'Components/elements/general/Textarea';
 import Button from 'Components/elements/general/Button';
 import Icon from 'Components/elements/general/Icon';
+import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
   components: {
@@ -170,53 +171,61 @@ export default {
       return message;
     },
     async submit() {
-      this.$v.$touch();
-      this.submitted = true;
+      try {
+        this.$v.$touch();
+        this.submitted = true;
 
-      if (!this.$v.$invalid) {
-        const data = {
-          title: this.title,
-          id: this.id,
-          code: this.code.toLowerCase(),
-          category: this.category ? this.category : 'Без категории',
-          previewText: this.previewText,
-          previewPicture: this.previewPicture,
-          detailText: this.detailText,
-          username: this.username,
-          userId: this.userId,
-        };
+        if (!this.$v.$invalid) {
+          const data = {
+            title: this.title,
+            id: this.id,
+            code: this.code.toLowerCase(),
+            category: this.category ? this.category : 'Без категории',
+            previewText: this.previewText,
+            previewPicture: this.previewPicture,
+            detailText: this.detailText,
+            username: this.username,
+            userId: this.userId,
+          };
 
-        if (this.state === 'edit') {
-          this.response = await this.updatePost(data);
-        } else {
-          this.response = await this.sendPost(data);
+          if (this.state === 'edit') {
+            this.response = await this.updatePost(data);
+          } else {
+            this.response = await this.sendPost(data);
+          }
+
+          if (this.response) {
+            this.$modal.show('response', { message: this.response.data.message });
+          }
+
+          this.submitted = false;
+          this.title = '';
+          this.code = '';
+          this.category = '';
+          this.previewPicture = '';
+          this.previewText = '';
+          this.detailText = '';
+
+          this.$router.push('/blog/');
         }
-
-        if (this.response) {
-          this.$modal.show('response', { message: this.response.data.message });
-        }
-
-        this.submitted = false;
-        this.title = '';
-        this.code = '';
-        this.category = '';
-        this.previewPicture = '';
-        this.previewText = '';
-        this.detailText = '';
-
-        this.$router.push('/blog/');
+      } catch (error) {
+        callErrorModal(this, error);
       }
     },
     async fetchData(code) {
-      await this.fetchPost(code);
+      try {
+        await this.fetchPost(code);
 
-      this.id = this.post._id;
-      this.title = this.post.title;
-      this.code = this.post.code;
-      this.category = this.post.category;
-      this.previewPicture = this.post.previewPicture;
-      this.previewText = this.post.previewText;
-      this.detailText = this.post.detailText;
+        this.id = this.post._id;
+        this.title = this.post.title;
+        this.code = this.post.code;
+        this.category = this.post.category;
+        this.previewPicture = this.post.previewPicture;
+        this.previewText = this.post.previewText;
+        this.detailText = this.post.detailText;
+      } catch (error) {
+        callErrorModal(this, error);
+      }
     },
   },
   validations() {
