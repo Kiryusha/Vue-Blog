@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Auth.vue component shallow rendering should match a snapshot 1`] = `<modal-stub name="auth" width="100%" height="auto"></modal-stub>`;

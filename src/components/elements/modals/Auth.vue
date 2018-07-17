@@ -12,11 +12,11 @@
         .socials
           Button(
             :view="'github-auth'",
-            @click="authenticate('github')"
+            @click="submit('github')"
           ) Я у мамы программист
           Button(
             :view="'google-auth'",
-            @click="authenticate('google')"
+            @click="submit('google')"
           ) google
         .close
           Button(
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import ModalWrapper from 'Components/elements/modals/Modal';
 import Button from 'Components/elements/general/Button';
 import Login from 'Components/elements/auth/Login';
@@ -43,10 +44,12 @@ export default {
     };
   },
   methods: {
-    authenticate(provider) {
-      this.$store.dispatch('authenticate', { provider }).catch((error) => {
+    ...mapActions(['authenticate']),
+    submit(provider) {
+      this.authenticate({ provider }).catch((error) => {
         callErrorModal(this, error);
       });
+
       this.$modal.hide('auth');
     },
   },
