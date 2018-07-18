@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input.vue component shallow rendering should match a snapshot - with error 1`] = `
+<div class="input input _error">
+  <input placeholder="" name="" maxlength="200" type="text" class="control">
+  <div class="error">test error</div>
+</div>
+`;
+
+exports[`Input.vue component shallow rendering should match a snapshot 1`] = `
+<div class="input input">
+  <input placeholder="" name="" maxlength="200" type="text" class="control">
+  <!---->
+</div>
+`;

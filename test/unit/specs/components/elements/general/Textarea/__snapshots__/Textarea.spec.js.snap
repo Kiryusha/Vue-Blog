@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Textarea.vue component shallow rendering should match a snapshot - with error 1`] = `
+<div class="textarea input _error">
+  <textarea rows="1" placeholder="" name="" maxlength="200" class="control" style="min-height: 0px;"></textarea>
+  <div class="error">test error</div>
+</div>
+`;
+
+exports[`Textarea.vue component shallow rendering should match a snapshot 1`] = `
+<div class="textarea input">
+  <textarea rows="1" placeholder="" name="" maxlength="200" class="control"></textarea>
+  <!---->
+</div>
+`;
