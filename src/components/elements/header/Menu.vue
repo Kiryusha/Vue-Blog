@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import callErrorModal from '@/helpers/callErrorModal';
 
 export default {
@@ -34,15 +34,20 @@ export default {
     }),
   },
   methods: {
-    logout() {
-      this.$Progress.start();
-      this.$store.dispatch('authLogout').then(() => {
+    ...mapActions(['authLogout']),
+    async logout() {
+      try {
+        this.$Progress.start();
+
+        await this.authLogout();
+
         this.$Progress.finish();
-      }).catch((error) => {
+
+        if (this.$route.path.lastIndexOf('/publish/', 0) === 0) {
+          this.$router.push('/blog/');
+        }
+      } catch (error) {
         callErrorModal(this, error);
-      });
-      if (this.$route.path === '/publish/') {
-        this.$router.push({ path: '/blog/' });
       }
     },
   },

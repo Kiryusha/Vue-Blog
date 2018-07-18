@@ -1,4 +1,4 @@
-// Publish.vue
+// Response.vue
 
 import { shallowMount } from '@vue/test-utils';
 import Response from 'Components/elements/modals/Response.vue';

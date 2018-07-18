@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu.vue component shallow rendering should match a snapshot 1`] = `
+<div class="menu">
+  <div class="item">
+    <router-link-stub to="/blog/" class="link"></router-link-stub>
+  </div>
+  <div class="item">
+    <router-link-stub to="/publish/" class="link"></router-link-stub>
+  </div>
+  <div class="item"><span class="link">Выйти</span></div>
+</div>
+`;
