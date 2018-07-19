@@ -22,9 +22,9 @@ describe('Menu.vue', () => {
       $route: {
         path: '/blog/',
       },
-       $router: {
-         push: jest.fn(),
-       },
+      $router: {
+        push: jest.fn(),
+      },
       $modal: {
         show: () => {},
       },
