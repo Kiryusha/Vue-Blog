@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Item.vue component shallow rendering should match a snapshot 1`] = `
+<div class="item">
+  <div class="heading">
+    <!---->
+    <div class="title">test</div>
+    <div class="info">01 Января 2001, author</div>
+  </div>
+  <div class="text">test</div>
+  <div class="controls">
+    <button-stub></button-stub>
+    <button-stub></button-stub>
+    <button-stub></button-stub>
+  </div>
+</div>
+`;

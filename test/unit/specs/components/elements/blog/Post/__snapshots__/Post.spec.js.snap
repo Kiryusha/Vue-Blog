@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Blog.vue component shallow rendering should match a snapshot - not authenticated 1`] = `
+<section class="post _loaded">
+  <div class="content">
+    <div class="title-block">
+      <h1 class="title">test</h1>
+      <div class="info">01 Января 2001, без автора</div>
+    </div>
+    <div class="text-block"></div>
+  </div>
+</section>
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List.vue component shallow rendering should match a snapshot 1`] = `
+<section class="list _loaded">
+  <div class="content">
+    <div class="list-item">
+      <item-stub></item-stub>
+    </div>
+    <div class="list-item">
+      <item-stub></item-stub>
+    </div>
+  </div>
+</section>
+`;

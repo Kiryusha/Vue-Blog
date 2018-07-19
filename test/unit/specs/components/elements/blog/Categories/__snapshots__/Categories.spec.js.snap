@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Categories.vue component shallow rendering should match a snapshot 1`] = `
+<div class="sidebar">
+  <div class="title"><span>Категории</span></div>
+  <div class="content">
+    <div class="categories">
+      <div class="container">
+        <div class="item">
+          <a class="button _categories _active">
+            <div class="caption">cat</div>
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </a>
+        </div>
+        <div class="item">
+          <a class="button _categories">
+            <div class="caption">dog</div>
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
